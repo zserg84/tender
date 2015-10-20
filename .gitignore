@@ -32,6 +32,6 @@ phpunit.phar
 /phpunit.xml
 
 # htaccess (use copy&rename .htaccess-dist to .htaccess)
-/.htaccess
+# /.htaccess
 
 /frontend/web/img
