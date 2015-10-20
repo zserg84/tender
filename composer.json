@@ -1,0 +1,58 @@
+{
+	"name": "coolrussia",
+	"description": "Yii2-Start it's a small Yii 2 application template for your fast project start.",
+	"keywords": ["yii2", "yii 2", "application", "start", "bootstrap", "tender"],
+	"homepage": "http://coolrussia.ru",
+	"type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/vova07/yii2-start/issues?q=is%3Aopen",
+        "forum": "http://yiiframework.ru/forum/viewtopic.php?f=28&t=16414",
+        "source": "https://tender.ru"
+    },
+    "authors": [
+        {
+            "name": "tender",
+            "email": "dev@tender.ru"
+        }
+    ],
+	"minimum-stability": "dev",
+	"require": {
+        "php": ">=5.4.0",
+	    "yiisoft/yii2": "*",
+	    "yiisoft/yii2-bootstrap": "*",
+        "yiisoft/yii2-authclient": "*",
+        "vova07/yii2-start-base": "*",
+        "vova07/yii2-start-themes": "*",
+        "vova07/yii2-start-admin-module": "*",
+        "vova07/yii2-start-site-module": "*",
+        "vova07/yii2-start-blogs-module": "*",
+        "vova07/yii2-start-comments-module": "*",
+	    "kartik-v/yii2-editable": "@dev",
+        "kartik-v/bootstrap-checkbox-x": "@dev",
+        "kartik-v/yii2-checkbox-x": "@dev",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-widget-datepicker": "@dev",
+        "kartik-v/yii2-grid": "v2.9.0",
+        "kartik-v/yii2-mpdf": "1.0.0.x-dev",
+        "kartik-v/yii2-widget-touchspin": "*",
+        "kartik-v/yii2-widget-timepicker": "*",
+        "kartik-v/yii2-widget-depdrop": "@dev",
+        "2amigos/yii2-file-input-widget": "~1.0",
+        "bower-asset/bootbox": "~4.3.0",
+        "faisalman/simple-excel-php" : "0.3.*"
+    },
+    "require-dev": {
+    	"yiisoft/yii2-debug": "*",
+    	"yiisoft/yii2-gii": "*"
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    }
+}
