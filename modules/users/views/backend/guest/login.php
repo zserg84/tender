@@ -17,7 +17,7 @@ $this->title = Module::t('users', 'BACKEND_LOGIN_TITLE'); ?>
     <div class="header"><?php echo Html::encode($this->title); ?></div>
     <?php $form = ActiveForm::begin(); ?>
     <div class="body bg-gray">
-        <?= $form->field($model, 'email')->input('email', ['placeholder' => $model->getAttributeLabel('email')])->label(false) ?>
+        <?= $form->field($model, 'email')->textInput(['placeholder' => $model->getAttributeLabel('email')])->label(false) ?>
         <?= $form->field($model, 'password')->passwordInput(['placeholder' => $model->getAttributeLabel('password')])->label(false) ?>
         <?= $form->field($model, 'rememberMe')->checkbox() ?>
     </div>
