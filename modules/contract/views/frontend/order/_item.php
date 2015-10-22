@@ -11,14 +11,14 @@ $buttons = $this->context->getButtons();
 <tr data-order="<?=$model->id?>" data-contract="<?=$model->contract_id?>">
     <td class="desc">
         <p>
-            <span><b>Заказ ID: <?=$zeroid?></b></span>
-            <span><b>Дата размещения: <?=$model->date_publish?></b></span>
+            <span><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_ORDER_ID')?>: <?=$zeroid?></b></span>
+            <span><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_DATE_OF_PLACEMENT')?>: <?=$model->date_publish?></b></span>
         </p>
-        <p><b>Краткое описание: <?=$model->short_description?></b></p>
+        <p><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_SHORT_DESCRIPTION')?>: <?=$model->short_description?></b></p>
     </td>
     <td>
-        <p><b>Бюджет: <?=$model->budget?></b></p>
-        <p><b>Количество: <?=$model->count?></b></p>
+        <p><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUDGET')?>: <?=$model->budget?></b></p>
+        <p><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_NUMBER')?>: <?=$model->count?></b></p>
     </td>
     <td class="links">
         <?foreach ($buttons as $button) :?>

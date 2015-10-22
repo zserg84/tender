@@ -22,7 +22,7 @@ $orderId = $order ? $order->id : "1";
 
 Modal::begin([
     'id' => 'profile-modal',
-    'header' => '<p class="title">Профиль ' . $company->name . '</p>',
+    'header' => '<p class="title">'.ContractModule::t('ALL_INTERFACES', 'PERFORMER_PROFILE_TITLE').' ' . $company->name . '</p>',
     'footer' => '
         <button onclick="
             $.get(\''.Url::toRoute(['/contract/performer/offer-order']).'\', {contractId: '.$model->id.'}, function(data){
@@ -30,9 +30,9 @@ Modal::begin([
                 $(\'.modal\').hide();
                 $(\'#offer-order-modal\').modal();
             })
-        ">Предложить заказ</button>
-        <a href="'.Url::toRoute(['favorite-add', 'favoriteContractId'=>$model->id]).'">'.ContractModule::t('CUSTOMER_INTERFACE', 'VIEW_ELEMENT_PERFORMER_FAVOURITES_BUTTON').'</a>
-        <button class="cancelBtn">Отмена</button>',
+        ">'.ContractModule::t('ALL_INTERFACES', 'PROFILE_MODAL_OFFER_ORDER_BUTTON').'</button>
+        <a href="'.Url::toRoute(['favorite-add', 'favoriteContractId'=>$model->id]).'">'.ContractModule::t('ALL_INTERFACES', 'VIEW_ELEMENT_PERFORMER_FAVOURITES_BUTTON').'</a>
+        <button class="cancelBtn">'.ContractModule::t('ALL_INTERFACES', 'PROFILE_MODAL_CANCEL_BUTTON').'</button>',
     'clientOptions' => false,
     'options' => [
         'data-comment' => 'modal',

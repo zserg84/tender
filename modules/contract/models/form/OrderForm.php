@@ -55,6 +55,7 @@ class OrderForm extends Model
     public function attributeLabels()
     {
         return [
+            'id' => Yii::t('FORM_ORDER', 'ORDER_ID'),
             'form_name' => \Yii::t('FORM_ORDER', 'ORDER_FORM_NAME'),
             'short_description' => Yii::t('FORM_ORDER', 'ORDER_SHORT_DESCRIPTION'),
             'description' => Yii::t('FORM_ORDER', 'ORDER_DESCRIPTION'),

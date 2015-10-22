@@ -73,22 +73,6 @@ class Order extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('order', 'ID'),
-            'contract_id' => Yii::t('order', 'Contract ID'),
-            'short_description' => Yii::t('order', 'Short Description'),
-            'description' => Yii::t('order', 'Description'),
-            'date_performance' => Yii::t('order', 'Date Performance'),
-            'date_publish' => Yii::t('order', 'Date Publish'),
-            'material' => Yii::t('order', 'Material'),
-            'count' => Yii::t('order', 'Count'),
-            'budget' => Yii::t('order', 'Budget'),
-            'material_belongs_customer' => Yii::t('order', 'Material Belongs Customer'),
-            'material_included_budget' => Yii::t('order', 'Material Included Budget'),
-            'has_modeling' => Yii::t('order', 'Has Modeling'),
-            'status' => Yii::t('order', 'Status'),
-            'file_model_id' => Yii::t('order', 'File Model'),
-            'image_id' => Yii::t('order', 'Image'),
-            'currency_id' => Yii::t('order', 'Currency ID'),
         ];
     }
 

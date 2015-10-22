@@ -64,10 +64,13 @@ $form = ActiveForm::begin(
 <!--                <p>“Стартовый” (до 31.01.2015)</p>-->
                 <div class="row">
                     <div class="col-sm-4">
-                        <p><?=$model->getAttributeLabel('logo')?></p>
+<!--                        <p>--><?//=$model->getAttributeLabel('logo')?><!--</p>-->
                     </div>
                     <div class="col-sm-8">
-                        <?=$form->field($model, 'logo')->fileInput(['id' => 'costum-file-logo'])->label(false)->error(false)?>
+                        <?=$form->field($model, 'logo')->fileInput([
+                            'id' => 'costum-file-logo',
+                            'data-text' => $model->getAttributeLabel('logo')
+                        ])->label(false)->error(false)?>
                     </div>
                 </div>
                 <p><a href="#" class="open-popup" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#change-tariff-popup">Изменить и оплатить</a></p>

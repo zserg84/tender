@@ -9,7 +9,8 @@ class Module extends \modules\base\components\Module
 {
 
     public static $langNames = [
-        'ALL_INTERFACES', 'CUSTOMER_INTERFACE', 'REGISTRATION_FORM_PERFORMER',
+        'ALL_INTERFACES', 'CUSTOMER_INTERFACE', 'REGISTRATION_FORM_PERFORMER', 'GUEST_INTERFACE', 'FORM_ORDER', 'PERFORMER_INTERFACE',
+        'FORM_OFFER_OF_THE_ORDER_TO_PERFORMER'
     ];
 
     /**

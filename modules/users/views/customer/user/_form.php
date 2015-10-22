@@ -155,7 +155,10 @@ $form = ActiveForm::begin(
                 <p><?=$model->getAttributeLabel('logo')?></p>
             </div>
             <div class="col-sm-8">
-                <?=$form->field($model, 'logo')->fileInput(['id' => 'costum-file-avatar'])->label(false)->error(false)?>
+                <?=$form->field($model, 'logo')->fileInput([
+                    'id' => 'costum-file-avatar',
+                    'data-text' => $model->getAttributeLabel('logo')
+                ])->label(false)->error(false)?>
             </div>
         </div>
     </div>

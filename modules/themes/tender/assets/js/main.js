@@ -163,6 +163,12 @@ function initPage() {
     var text = $('.costum-file-order-photo').data('text');
     $('.costum-file-order-photo').parent().find('.customfile-feedback').html(text);
 
+    var text = $('#costum-file-avatar').data('text');
+    $('#costum-file-avatar').parent().find('.customfile-feedback').html(text);
+
+    var text = $('#costum-file-logo').data('text');
+    $('#costum-file-logo').parent().find('.customfile-feedback').html(text);
+
     // Добавление направлений в добавлении заказа
     $('.order-direction .add').click(function () {
         var block = $(this).closest(".order-direction");

@@ -8,6 +8,8 @@
 
 namespace modules\contract\models\form;
 
+use modules\themes\Module as ThemeModule;
+
 class CommentForm extends \yii\base\Model
 {
 
@@ -37,6 +39,15 @@ class CommentForm extends \yii\base\Model
             'default' => [
                 'text', 'contract_id', 'estimate', /*'captcha',*/
             ]
+        ];
+    }
+
+    public function attributeLabels(){
+        return [
+            'add_comment' => ThemeModule::t('ALL_INTERFACES', 'COMMENT_ADD'),
+            'comment_positive' => ThemeModule::t('ALL_INTERFACES', 'COMMENT_POSITIVE'),
+            'comment_neutral' => ThemeModule::t('ALL_INTERFACES', 'COMMENT_NEUTRAL'),
+            'comment_negative' => ThemeModule::t('ALL_INTERFACES', 'COMMENT_NEGATIVE'),
         ];
     }
 } 

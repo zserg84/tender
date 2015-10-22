@@ -4,6 +4,7 @@ namespace modules\contract\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use modules\themes\Module as ThemeModule;
 
 /**
  * This is the model class for table "contract_comment".
@@ -91,9 +92,9 @@ class ContractComment extends \yii\db\ActiveRecord
 
     public static  function estimateList(){
         return [
-            self::ESTIMATE_POSITIVE => 'Положительный',
-            self::ESTIMATE_NEUTRAL => 'Нейтральный',
-            self::ESTIMATE_NEGATIVE => 'Негативный',
+            self::ESTIMATE_POSITIVE => ThemeModule::t('ALL_INTERFACES', 'COMMENT_POSITIVE'),
+            self::ESTIMATE_NEUTRAL => ThemeModule::t('ALL_INTERFACES', 'COMMENT_NEUTRAL'),
+            self::ESTIMATE_NEGATIVE => ThemeModule::t('ALL_INTERFACES', 'COMMENT_NEGATIVE'),
         ];
     }
 }
