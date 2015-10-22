@@ -111,7 +111,7 @@ class DefaultController extends Controller
                         }
                         else{
                             $categories[$row[1]] = ['name' => $row[1], 'id'=>''];
-                            $variables[$row[0]] = ['name' => $row[0], 'id'=>'', 'category' => $row[1]];
+                            $variables[] = ['name' => $row[0], 'id'=>'', 'category' => $row[1]];
                             foreach($row as $k=>$r){
                                 if($k>1){
                                     if(isset($languages[$k])) {
@@ -183,7 +183,7 @@ class DefaultController extends Controller
                             if ($messageModel->save()) {
 
                             } else {
-
+//VarDumper::dump($messageModel->getErrors(),10,1);exit;
                             }
                         }
                     }
