@@ -87,6 +87,7 @@ class DefaultController extends Controller
                 $excel = new SimpleExcel('CSV');
                 $excel->parser->setDelimiter(';');
                 $excel->parser->loadFile($dir.$file->name);
+                unlink($dir.$file->name);
                 $i = 1;
                 $parser = $excel->parser;
                 $languages = [];
@@ -110,12 +111,12 @@ class DefaultController extends Controller
                             }
                         }
                         else{
-                            $categories[$row[1]] = ['name' => $row[1], 'id'=>''];
-                            $variables[] = ['name' => $row[0], 'id'=>'', 'category' => $row[1]];
+                            $categories[$row[1]] = ['name' => trim($row[1]), 'id'=>''];
+                            $variables[] = ['name' => trim($row[0]), 'id'=>'', 'category' => trim($row[1])];
                             foreach($row as $k=>$r){
                                 if($k>1){
                                     if(isset($languages[$k])) {
-                                        $messages[$languages[$k]][] = ['category' => $row[1], 'variable' => $row[0], 'name' => $row[$k], 'id'=>''];
+                                        $messages[$languages[$k]][] = ['category' => trim($row[1]), 'variable' => trim($row[0]), 'name' => trim($row[$k]), 'id'=>''];
 //                                        $messages[$row[$k]][$languages[$k]] = ['category' => $row[1], 'variable' => $row[0], 'name' => $row[$k], 'id' => ''];
                                     }
                                 }

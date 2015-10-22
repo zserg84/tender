@@ -73,6 +73,12 @@ class OrderForm extends Model
             'file_model_note' => Yii::t('FORM_ORDER', 'ORDER_MODEL_UPLOAD_NOTE'),
             'note' => Yii::t('FORM_ORDER', 'NOTE'),
             'image_upload' => Yii::t('FORM_ORDER', 'ORDER_UPLOAD_FOTO'),
+            'directions' => Yii::t('FORM_ORDER', 'DIRECTIONS'),
+            'user' => Yii::t('FORM_ORDER', 'USER_CONTRACT'),
+            'registration_date' => Yii::t('FORM_ORDER', 'ORDER_DATE'),
+            'submit_button' => Yii::t('FORM_ORDER', 'ORDER_SAVE_BUTTON'),
+            'cancel_button' => Yii::t('FORM_ORDER', 'ORDER_CANCEL_BUTTON'),
+            'add_button' => Yii::t('FORM_ORDER', 'ORDER_ADD_DIRECTION_BUTTON'),
         ];
     }
 

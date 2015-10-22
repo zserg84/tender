@@ -109,7 +109,7 @@ if($orderId)
                     </div>
                     <div class="row">
                         <div class="col-sm-4 add pull-right">
-                            <a href="#">Добавить +</a>
+                            <a href="#"><?=$model->getAttributeLabel('add_button')?> +</a>
                         </div>
                     </div>
                 </div>
@@ -174,7 +174,11 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('file_model_id')?></p>
             </div>
             <div class="col-sm-8">
-                <?=$form->field($model, 'file_model_id')->fileInput(['class' => 'customfile-input costum-file-model'])->label(false)?>
+                <??>
+                <?=$form->field($model, 'file_model_id')->fileInput([
+                    'class' => 'customfile-input costum-file-model',
+                    'data-text' => $model->getAttributeLabel('file_model_upload')
+                ])->label(false)?>
             </div>
         </div>
 
@@ -237,7 +241,10 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('image_id')?></p>
             </div>
             <div class="col-sm-8">
-                <?=$form->field($model, 'file_model_id')->fileInput(['class' => 'customfile-input costum-file-order-photo'])->label(false)?>
+                <?=$form->field($model, 'file_model_id')->fileInput([
+                    'class' => 'customfile-input costum-file-order-photo',
+                    'data-text' => $model->getAttributeLabel('image_upload')
+                ])->label(false)?>
             </div>
         </div>
     </div>

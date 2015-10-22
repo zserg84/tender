@@ -156,9 +156,12 @@ function initPage() {
     //$('#costum-file-model').customFileInput();
     $('.costum-file-order-photo').customFileInput();
     $('.costum-file-model').customFileInput();
-    $('.costum-file-model').parent().find('.customfile-feedback').html(' Загрузить архив модели (zip, rar)');
+
+    var text = $('.costum-file-model').data('text');
+    $('.costum-file-model').parent().find('.customfile-feedback').html(' '+text);
     //$('#costum-file-model').parent().find('.customfile-feedback').html(' Загрузить архив модели (zip, rar)');
-    $('.costum-file-order-photo').parent().find('.customfile-feedback').html('Загрузить (jpg)');
+    var text = $('.costum-file-order-photo').data('text');
+    $('.costum-file-order-photo').parent().find('.customfile-feedback').html(text);
 
     // Добавление направлений в добавлении заказа
     $('.order-direction .add').click(function () {
