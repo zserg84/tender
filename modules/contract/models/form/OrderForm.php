@@ -65,6 +65,7 @@ class OrderForm extends Model
             'count' => Yii::t('FORM_ORDER', 'ORDER_NUMBER'),
             'budget' => Yii::t('FORM_ORDER', 'ORDER_BUDGET'),
             'currency_id' => Yii::t('FORM_ORDER', ''),
+            'material' => Yii::t('FORM_ORDER', 'ORDER_MATERIAL'),
             'material_belongs_customer' => Yii::t('FORM_ORDER', 'ORDER_MATERIAL_CUSTOMER'),
             'material_included_budget' => Yii::t('FORM_ORDER', 'ORDER_MATERIALS_INCLUDED_IN_THE_BUDGET'),
             'has_modeling' => Yii::t('FORM_ORDER', 'ORDER_MODEL_IS_NECESSARY'),

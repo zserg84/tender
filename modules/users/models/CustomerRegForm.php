@@ -2,7 +2,6 @@
 
 namespace modules\users\models;
 
-use kop\y2cv\ConditionalValidator;
 use modules\image\models\Image;
 use modules\users\Module;
 use modules\users\traits\ModuleTrait;
@@ -82,6 +81,7 @@ class CustomerRegForm extends Model
             'customer_registration' => Module::t('REGISTRATION_FORM_CUSTOMER', 'NAME_OF_CUSTOMER_REG_FORM'),
             'cancel_button' => Module::t('REGISTRATION_FORM_CUSTOMER', 'CANCEL_BUTTON_CUSTOMER_REG_FORM'),
             'submit_button' => Module::t('REGISTRATION_FORM_CUSTOMER', 'REGISTRATION_BUTTON_CUSTOMER_REG_FORM'),
+            'load_logo' => Module::t('REGISTRATION_FORM_CUSTOMER', 'LOAD_CUSTOMER_AVATAR'),
         ];
     }
 

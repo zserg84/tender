@@ -71,6 +71,7 @@ class Company extends \yii\db\ActiveRecord
             'additional_info' => ContractModule::t('REGISTRATION_FORM_PERFORMER', 'ADDITIONAL_INFO'),
             'site' => ContractModule::t('REGISTRATION_FORM_PERFORMER', 'COMPANY_SITE_PERFORMER_REG_FORM'),
             'email_for_order' => ContractModule::t('REGISTRATION_FORM_PERFORMER', 'EMAIL_FOR_OBTAINING_ORDERS_REG_FORM'),
+            'examples_of_works' => ContractModule::t('REGISTRATION_FORM_PERFORMER', 'EXAMPLES_OF_WORKS_PERFORMER_REG_FORM'),
             'image_id' => Yii::t('m_company', 'Logo Image ID'),
         ];
     }

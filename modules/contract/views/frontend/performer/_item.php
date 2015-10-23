@@ -1,10 +1,6 @@
 <?
 use modules\themes\tender\ThemeAsset;
 use modules\contract\Module as ContractModule;
-use yii\helpers\Url;
-use yii\helpers\Html;
-use modules\contract\models\FavoriteCompany;
-use common\components\User;
 
 $imgPath = ThemeAsset::imgSrc('', 'img');
 
@@ -22,11 +18,11 @@ $buttons = $this->context->getButtons();
     </td>
     <td class="desc">
         <p>
-            <span><b>ID <?=$zeroid?></b></span>
-            <span><b>Опыт:</b></span>
+            <span><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_PERFORMERS_COMPANY_ID')?> <?=$zeroid?></b></span>
+            <span><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_PERFORMERS_EXPERIENCE')?>:</b></span>
             <!-- <span><b>Адрес:</b>г.Москва&nbsp;ул.&nbsp;Сельскохозяйственная,...</span> -->
         </p>
-        <p><b>Специализация: <?=$company->specialization?></b></p>
+        <p><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_PERFORMERS_SPECIALIZATION')?>: <?=$company->specialization?></b></p>
     </td>
     <td class="links">
         <p><img src="<?=$imgPath?>rating.png" alt=""></p>

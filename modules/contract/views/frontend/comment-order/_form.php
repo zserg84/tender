@@ -24,7 +24,7 @@ echo $form->field($model, 'order_id')->hiddenInput()->label(false);
 <div class="form-group" data-comment="form-group">
     <div class="row">
         <div class="col-sm-4">
-            <p>Добавить коментарий</p>
+            <p><?=$model->getAttributeLabel('add_comment')?></p>
         </div>
         <div class="col-sm-8">
             <?=$form->field($model, 'text')->textarea(['rows' => 5])->label(false)?>
@@ -33,7 +33,7 @@ echo $form->field($model, 'order_id')->hiddenInput()->label(false);
 
     <div class="row capcha">
         <div class="cols-sm-3">
-            <?=Html::submitButton('Добавить')?>
+            <?=Html::submitButton($model->getAttributeLabel('add_comment'))?>
         </div>
     </div>
 </div>

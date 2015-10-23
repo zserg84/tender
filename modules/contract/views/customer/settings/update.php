@@ -1,13 +1,14 @@
 <?php
 
 use common\components\Modal;
+use modules\contract\Module as ContractModule;
 
 Modal::begin([
     'id' => 'settings-popup',
-    'header' => '<p class="title">Настройки</p>',
+    'header' => '<p class="title">'.ContractModule::t('CUSTOMER_INTERFACE', 'USER_INFO_SETTINGS').'</p>',
     'footer' => '
-        <button id="settings_submit">Сохранить</button>
-        <button class="cancelBtn">Отмена</button>
+        <button id="settings_submit">'.ContractModule::t('FORM_CUSTOMER_SETTINGS', 'BUTTON_OK').'</button>
+        <button class="cancelBtn">'.ContractModule::t('FORM_CUSTOMER_SETTINGS', 'BUTTON_CANCEL').'</button>
     ',
     'clientOptions' => false,
 ]);

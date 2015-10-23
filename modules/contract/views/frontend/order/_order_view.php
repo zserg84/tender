@@ -4,15 +4,19 @@ use modules\themes\tender\ThemeAsset;
 use yii\helpers\ArrayHelper;
 use common\components\Modal;
 use yii\helpers\Url;
+use modules\contract\models\form\OrderForm;
+use modules\contract\Module as ContractModule;
 
 $imgPath = ThemeAsset::imgSrc('', 'img');
 
 $contract = $model->contract;
 $contractUser = $contract->getUser();
 
+$orderForm = new OrderForm();
+
 Modal::begin([
     'id' => 'order-modal',
-    'header' => '<p class="title">Заказ ID '.$model->id.'</p>',
+    'header' => '<p class="title">'.$orderForm->getAttributeLabel('id').' '.$model->id.'</p>',
     'footer' => '
         <button onclick="
             $.get(\''.Url::toRoute(['/contract/order/response']).'\', {orderId: '.$model->id.'}, function(data){
@@ -21,8 +25,8 @@ Modal::begin([
                 initPage();
                 $(\'#response-modal\').modal();
             })
-        ">Отклик на заказ</button>
-        <button class="cancelBtn">Отмена</button>',
+        ">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'FORM_NAME_ANSWER_OF_THE_PERFORMER_TO_ORDER').'</button>
+        <button class="cancelBtn">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'ANSWER_OF_THE_PERFORMER_TO_ORDER_CANCEL_BUTTON').'</button>',
     'clientOptions' => false,
     'options' => [
         'data-comment' => 'modal',
@@ -36,7 +40,7 @@ Modal::begin([
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Разместил пользователь</p>
+                        <p><?=$orderForm->getAttributeLabel('user')?></p>
                     </div>
                     <div class="col-sm-6">
                         <p class="gray"><?=$contractUser->name?></p>
@@ -45,7 +49,7 @@ Modal::begin([
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Дата размещения заказа</p>
+                        <p><?=$orderForm->getAttributeLabel('registration_date')?></p>
                     </div>
                     <div class="col-sm-6">
                         <p class="gray"><?=Yii::$app->getFormatter()->asDate($model->created_at)?></p>
@@ -54,7 +58,7 @@ Modal::begin([
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Срок исполнения до</p>
+                        <p><?=$orderForm->getAttributeLabel('date_performance')?></p>
                     </div>
                     <div class="col-sm-6">
                         <p class="gray"><?=Yii::$app->getFormatter()->asDate($model->date_performance)?></p>
@@ -63,7 +67,7 @@ Modal::begin([
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Срок размещения</p>
+                        <p><?=$orderForm->getAttributeLabel('date_publish')?></p>
                     </div>
                     <div class="col-sm-6">
                         <p class="gray"><?=Yii::$app->getFormatter()->asDate($model->date_publish)?></p>
@@ -72,7 +76,7 @@ Modal::begin([
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Бюджет</p>
+                        <p><?=$orderForm->getAttributeLabel('budget')?></p>
                     </div>
                     <div class="col-sm-6">
                         <p class="gray"><?=$model->budget . ' '. $model->currency->name?></p>
@@ -81,7 +85,7 @@ Modal::begin([
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Количество</p>
+                        <p><?=$orderForm->getAttributeLabel('count')?></p>
                     </div>
                     <div class="col-sm-6">
                         <p class="gray"><?=$model->count?></p>
@@ -90,7 +94,7 @@ Modal::begin([
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Материал</p>
+                        <p><?=$orderForm->getAttributeLabel('material')?></p>
                     </div>
                     <div class="col-sm-6">
                         <p class="gray"><?=$model->material?></p>
@@ -99,7 +103,7 @@ Modal::begin([
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Материал включен в бюджет</p>
+                        <p><?=$orderForm->getAttributeLabel('material_included_budget')?></p>
                     </div>
                     <div class="col-sm-6">
                         <p class="gray"><?=Yii::$app->getFormatter()->asBoolean($model->material_included_budget)?></p>
@@ -108,7 +112,7 @@ Modal::begin([
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Материал заказчика</p>
+                        <p><?=$orderForm->getAttributeLabel('material_belongs_customer')?></p>
                     </div>
                     <div class="col-sm-6">
                         <p class="gray"><?=Yii::$app->getFormatter()->asBoolean($model->material_belongs_customer)?></p>
@@ -117,7 +121,7 @@ Modal::begin([
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Требуется моделирование</p>
+                        <p><?=$orderForm->getAttributeLabel('has_modeling')?></p>
                     </div>
                     <div class="col-sm-6">
                         <p class="gray"><?=Yii::$app->getFormatter()->asBoolean($model->has_modeling)?></p>
@@ -128,7 +132,7 @@ Modal::begin([
             <div class="col-sm-6">
                 <div class="row">
                     <div class="col-sm-2">
-                        <p>Фото</p>
+                        <p><?=$orderForm->getAttributeLabel('image_id')?></p>
                     </div>
                     <div class="col-sm-10">
                         <div class="row photos">
@@ -143,7 +147,7 @@ Modal::begin([
         </div>
         <div class="row">
             <div class="col-sm-3">
-                <p>Краткое описание</p>
+                <p><?=$orderForm->getAttributeLabel('short_description')?></p>
             </div>
             <div class="col-sm-8">
                 <p class="gray"><?=$model->short_description?></p>
@@ -151,7 +155,7 @@ Modal::begin([
         </div>
         <div class="row">
             <div class="col-sm-3">
-                <p>Описание</p>
+                <p><?=$orderForm->getAttributeLabel('description')?></p>
             </div>
             <div class="col-sm-9">
                 <p class="gray"><?=$model->description?></p>

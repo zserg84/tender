@@ -18,9 +18,9 @@ if(!$user) {
 
 Modal::begin([
     'id' => 'profile-modal',
-    'header' => '<p class="title">Профиль ' . $user->name . '</p>',
+    'header' => '<p class="title">'.ContractModule::t('CUSTOMER_INTERFACE', 'PERFORMER_PROFILE_TITLE').' ' . $user->name . '</p>',
     'footer' => '
-        <button class="cancelBtn">Отмена</button>',
+        <button class="cancelBtn">'.ContractModule::t('CUSTOMER_INTERFACE', 'PROFILE_MODAL_CANCEL_BUTTON').'</button>',
     'clientOptions' => false,
     'options' => [
         'data-comment' => 'modal',
@@ -51,7 +51,12 @@ Modal::begin([
             </div>
             <div class="col-sm-3 acc-info">
                 <p><img src="<?=$user->getLogo()?>" alt="" width="100px" height="100px"></p>
-                <p class="rating"><a href="#"><span>Рейтинг</span><img src="<?=$imgPath?>rating.png" alt=""></a></p>
+                <p class="rating"><a href="#">
+                    <span>
+                        <?=ContractModule::t('CUSTOMER_INTERFACE', 'RATING_PROFILE_PERFORMER')?>
+                    </span>
+                    <img src="<?=$imgPath?>rating.png" alt=""></a>
+                </p>
             </div>
         </div>
         <div class="row">

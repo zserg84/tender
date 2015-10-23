@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use modules\contract\widgets\comment\CommentWidget;
 use modules\contract\models\Order;
+use modules\contract\Module as ContractModule;
 
 ?>
 <div class="ad"><a href="#">Реклама</a></div>
@@ -22,7 +23,7 @@ use modules\contract\models\Order;
 
 <div id="confirm-popup" class="zoom-anim-dialog mfp-hide popup confirm-popup">
     <p class="title">&nbsp;</p>
-    <p>Просмотр информации возможен только зарегистрированными пользователями</p>
+    <p><?=ContractModule::t('GUEST_INTERFACE', 'ACCES_DENIED_GUESTINTARFACE');?></p>
     <form>
         <a href="<?=Url::toRoute(['/signup/'])?>" class="btn">Ок</a>
         <!-- <button>ОК</button> -->

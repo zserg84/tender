@@ -17,7 +17,7 @@ class ProfileButton extends Button
     public function init()
     {
         if(\Yii::$app->getUser()->isGuest){
-            $onlyReg = 'Просмотр информации возможен только зарегистрированными пользователями';
+            $onlyReg = ContractModule::t('GUEST_INTERFACE', 'ACCES_DENIED_GUESTINTARFACE');;
             $this->button = Html::a(ContractModule::t('CUSTOMER_INTERFACE', 'VIEW_ELEMENT_PERFORMER_PROFILE_BUTTON'), Url::toRoute(['/signup/']), [
                 'data-confirm' => $onlyReg
             ]);

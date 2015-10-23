@@ -143,22 +143,22 @@ echo Html::hiddenInput('form_type', 'performer');
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <input type="text" name="" placeholder="производитель оборудования" id="performer-equipment-manufacturer"/>
+                        <input type="text" name="" placeholder="<?=$model->getAttributeLabel('manufacture')?>" id="performer-equipment-manufacturer"/>
                     </div>
                     <div class="col-sm-6">
-                        <input type="text" name="" placeholder="модель оборудования" id="performer-equipment-model"/>
+                        <input type="text" name="" placeholder="<?=$model->getAttributeLabel('equipment_model')?>" id="performer-equipment-model"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-3">
-                        <input type="text" name="" placeholder="рабочее поле в мм" id="performer-equipment-field"/>
+                        <input type="text" name="" placeholder="<?=$model->getAttributeLabel('working_field')?>" id="performer-equipment-field"/>
                     </div>
                     <div class="col-sm-3">
 <!--                        <input type="text" name="" placeholder="год выпуска" class="datepicker" id="performer-equipment-year"/>-->
-                        <input type="text" name="" placeholder="год выпуска"  id="performer-equipment-year"/>
+                        <input type="text" name="" placeholder="<?=$model->getAttributeLabel('year_of_release')?>"  id="performer-equipment-year"/>
                     </div>
                     <div class="col-sm-3 add">
-                        <a href="#">Добавить +</a>
+                        <a href="#"><?=$model->getAttributeLabel('add_button')?></a>
                     </div>
                 </div>
             </div>
@@ -331,7 +331,10 @@ echo Html::hiddenInput('form_type', 'performer');
             <p><?=$model->getAttributeLabel('logo')?></p>
         </div>
         <div class="col-sm-8">
-            <?=$form->field($model, 'logo')->fileInput(['id' => 'costum-file-logo'])->label(false)->error(false)?>
+            <?=$form->field($model, 'logo')->fileInput([
+                'id' => 'costum-file-logo',
+                'data-text' => $model->getAttributeLabel('load_logo')
+            ])->label(false)->error(false)?>
         </div>
     </div>
 
@@ -351,6 +354,7 @@ echo Html::hiddenInput('form_type', 'performer');
                             'removeClass' => 'btn btn-danger',
                             'removeIcon' => '<i class="glyphicon glyphicon-trash"></i> ',
                             'showUpload' => false,
+                            'browseLabel' => $model->getAttributeLabel('pic_file')
                         ]
                     ])->label(false)->error(false);?>
                 </div>

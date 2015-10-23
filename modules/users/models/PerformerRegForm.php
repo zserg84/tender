@@ -114,6 +114,15 @@ class PerformerRegForm extends Model
             'customer_registration' => Module::t('REGISTRATION_FORM_PERFORMER', 'NAME_OF_PERFORMER_REG_FORM'),
             'cancel_button' => Module::t('REGISTRATION_FORM_PERFORMER', 'CANCEL_BUTTON_PERFORMER_REG_FORM'),
             'submit_button' => Module::t('REGISTRATION_FORM_PERFORMER', 'REGISTRATION_BUTTON_PERFORMER_REG_FORM'),
+
+            'actual_address' => Module::t('REGISTRATION_FORM_PERFORMER', 'ACTUAL_ADRESS_LOCATION_OF_PRODUCTION_PERFORMER_REGFORM'),
+            'manufacture' => Module::t('REGISTRATION_FORM_PERFORMER', 'HARDWARE_MANUFACTURE_PERFORMER_REGFORM'),
+            'equipment_model' => Module::t('REGISTRATION_FORM_PERFORMER', 'EQUIPMENT_MODEL_PERFORMER_REGFORM'),
+            'working_field' => Module::t('REGISTRATION_FORM_PERFORMER', 'WORKING_FIELD_PERFORMER_REGFORM'),
+            'year_of_release' => Module::t('REGISTRATION_FORM_PERFORMER', 'YEAR_OF_RELEASE_OF_THE_EQUIPMENT_PERFORMER_REGFORM'),
+            'add_button' => Module::t('REGISTRATION_FORM_PERFORMER', 'BUTTON_TO_ADD_THE_DIRECTION_PERFORMER_REGFORM'),
+            'load_logo' => Module::t('REGISTRATION_FORM_PERFORMER', 'LOAD_PERFORMER_LOGO'),
+            'pic_file' => Module::t('REGISTRATION_FORM_PERFORMER', 'PICTURE_BROWSE_FILE_PERFORMER_REGFORM'),
         ];
     }
 

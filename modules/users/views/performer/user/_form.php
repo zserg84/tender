@@ -10,6 +10,7 @@ use yii\helpers\Url;
 use \yii\helpers\Html;
 use modules\direction\models\Direction;
 use modules\contract\models\ContractPerformerHasDirection;
+use modules\contract\Module as ContractModule;
 
 $form = ActiveForm::begin(
     [
@@ -57,7 +58,7 @@ $form = ActiveForm::begin(
 
             <!-- acc info -->
             <div class="col-sm-3 acc-info">
-                <p class="rating"><a href="#"><span>Рейтинг</span><img src="img/rating.png" alt=""></a></p>
+                <p class="rating"><a href="#"><span><?=ContractModule::t('PERFORMER_INTERFACE', 'RATING_PROFILE_PERFORMER')?></span><img src="img/rating.png" alt=""></a></p>
                 <p><img src="<?=$model->user->getLogo()?>" alt="" width="75px" height="75px"></p>
 <!--                <p><a href="#">Сменить логотип</a></p>-->
 <!--                <p><b>Тарифный план:</b></p>-->
@@ -73,8 +74,12 @@ $form = ActiveForm::begin(
                         ])->label(false)->error(false)?>
                     </div>
                 </div>
-                <p><a href="#" class="open-popup" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#change-tariff-popup">Изменить и оплатить</a></p>
-                <p><a href="#" class="open-popup" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#payment-history-popup">История платежей</a></p>
+                <p><a href="#" class="open-popup" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#change-tariff-popup">
+                        <?=ContractModule::t('PERFORMER_INTERFACE', 'TO_CHANGE_AND_PAY')?>
+                </a></p>
+                <p><a href="#" class="open-popup" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#payment-history-popup">
+                        <?=ContractModule::t('PERFORMER_INTERFACE', 'HISTORY_OF_PAYMENTS')?>
+                </a></p>
             </div>
         </div>
         <div class="row">
@@ -172,22 +177,22 @@ $form = ActiveForm::begin(
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <input type="text" name="" placeholder="производитель оборудования" id="performer-equipment-manufacturer"/>
+                            <input type="text" name="" placeholder="<?=ContractModule::t('REGISTRATION_FORM_PERFORMER', 'HARDWARE_MANUFACTURE_PERFORMER_REGFORM')?>" id="performer-equipment-manufacturer"/>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" name="" placeholder="модель оборудования" id="performer-equipment-model"/>
+                            <input type="text" name="" placeholder="<?=ContractModule::t('REGISTRATION_FORM_PERFORMER', 'EQUIPMENT_MODEL_PERFORMER_REGFORM')?>" id="performer-equipment-model"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-3">
-                            <input type="text" name="" placeholder="рабочее поле в мм" id="performer-equipment-field"/>
+                            <input type="text" name="" placeholder="<?=ContractModule::t('REGISTRATION_FORM_PERFORMER', 'WORKING_FIELD_PERFORMER_REGFORM')?>" id="performer-equipment-field"/>
                         </div>
                         <div class="col-sm-3">
                             <!--                        <input type="text" name="" placeholder="год выпуска" class="datepicker" id="performer-equipment-year"/>-->
-                            <input type="text" name="" placeholder="год выпуска"  id="performer-equipment-year"/>
+                            <input type="text" name="" placeholder="<?=ContractModule::t('REGISTRATION_FORM_PERFORMER', 'YEAR_OF_RELEASE_OF_THE_EQUIPMENT_PERFORMER_REGFORM')?>"  id="performer-equipment-year"/>
                         </div>
                         <div class="col-sm-3 add">
-                            <a href="#">Добавить +</a>
+                            <a href="#"><?=ContractModule::t('REGISTRATION_FORM_PERFORMER', 'BUTTON_TO_ADD_THE_DIRECTION_PERFORMER_REGFORM')?></a>
                         </div>
                     </div>
                 </div>
@@ -389,6 +394,8 @@ $form = ActiveForm::begin(
                                 'showUpload' => false,
                                 'initialPreview' => $exampleArray,
                                 'initialPreviewConfig' => $previewConfig,
+                                'browseLabel' => $model->getAttributeLabel('pic_file'),
+                                'showRemove' => false,
                             ]
                         ])->label(false)->error(false);?>
                     </div>

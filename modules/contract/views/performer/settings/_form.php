@@ -14,6 +14,7 @@ use common\models\Country;
 use common\models\State;
 use common\models\City;
 use modules\contract\models\ContractSettingsRegion;
+use modules\contract\Module as ContractModule;
 
 $form = ActiveForm::begin(
     [
@@ -183,7 +184,7 @@ $form = ActiveForm::begin(
                     <p>&nbsp;</p>
                 </div>
                 <div class="col-sm-8 ">
-                    <a class="add button" href="#">Добавить</a>
+                    <a class="add button" href="#"><?=ContractModule::t('FORM_PERFORMER_SETTINGS', 'PERFORMER_SETTINGS_ADD_BUTTON')?></a>
                 </div>
             </div>
 

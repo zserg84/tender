@@ -22,13 +22,22 @@ class OrderLinkButton extends Button
     public function init()
     {
         if(\Yii::$app->getUser()->isGuest){
-            $onlyReg = 'Просмотр информации возможен только зарегистрированными пользователями';
-            $this->button = Html::a(ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_CUSTOMER_PROFILE'), Url::toRoute(['/signup/']), [
+            $onlyReg = ContractModule::t('GUEST_INTERFACE', 'ACCES_DENIED_GUESTINTARFACE');;
+            $this->button = Html::a(ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_BROWSING'), Url::toRoute(['/signup/']), [
                 'data-confirm' => $onlyReg
             ]);
         }
         else{
-            $this->button = Html::a(ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_CUSTOMER_PROFILE'), "javascript:void(0)", [
+            $contract = $this->model->contract;
+            $company = $contract->performer;
+            $title = '';
+            if($company){
+                $title = ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_BROWSING');
+            }
+            elseif($contract->customer){
+                $title = ContractModule::t('CUSTOMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_BROWSING');
+            }
+            $this->button = Html::a($title, "javascript:void(0)", [
                 'class' => 'order_link'
             ]);
 

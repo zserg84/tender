@@ -22,8 +22,8 @@ class CustomerProfileButton extends Button
     public function init()
     {
         if(\Yii::$app->getUser()->isGuest){
-            $onlyReg = 'Просмотр информации возможен только зарегистрированными пользователями';
-            $this->button = Html::a(ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_BROWSING'), Url::toRoute(['/signup/']), [
+            $onlyReg = ContractModule::t('GUEST_INTERFACE', 'ACCES_DENIED_GUESTINTARFACE');
+            $this->button = Html::a(ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_CUSTOMER_PROFILE'), Url::toRoute(['/signup/']), [
                 'data-confirm' => $onlyReg
             ]);
         }
@@ -31,14 +31,17 @@ class CustomerProfileButton extends Button
             $contract = $this->model->contract;
             $company = $contract->performer;
             $profileClass = 'error';
+            $title = '';
             if($company){
                 $profileClass = 'performer';
+                $title = ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_CUSTOMER_PROFILE');
             }
             elseif($contract->customer){
                 $profileClass = 'customer';
+                $title = ContractModule::t('CUSTOMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_CUSTOMER_PROFILE');
             }
 
-            $this->button = Html::a(ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_BROWSING'), "javascript:void(0)", [
+            $this->button = Html::a($title, "javascript:void(0)", [
                 'class' => 'profile_link ' .$profileClass
             ]);
 

@@ -4,15 +4,16 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use modules\contract\models\Currency;
+use modules\contract\Module as ContractModule;
 
 Modal::begin([
     'id' => 'response-modal',
-    'header' => '<p class="title">Отклик на заказ</p>',
+    'header' => '<p class="title">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'FORM_NAME_ANSWER_OF_THE_PERFORMER_TO_ORDER').'</p>',
     'footer' => '
         <div class="tip">
-        <p style="text-align: left">* Указать сумму предложения Заказчику, за которую Ваша компания готова выполнить заказ.</p></div>
-        <button id="response_form_submit">Подтвердить</button>
-        <button class="cancelBtn">Отмена</button>',
+        <p style="text-align: left">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'ANSWER_OF_THE_PERFORMER_TO_ORDER_NOTE').'</p></div>
+        <button id="response_form_submit">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'ANSWER_OF_THE_PERFORMER_TO_ORDER_OK_BUTTON').'</button>
+        <button class="cancelBtn">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'ANSWER_OF_THE_PERFORMER_TO_ORDER_CANCEL_BUTTON').'</button>',
     'clientOptions' => false,
 ]);
 
@@ -33,7 +34,7 @@ Modal::begin([
         ?>
         <div class="row">
             <div class="col-sm-4">
-                <p><b>Предложение исполнителя<span>*</span></b></p>
+                <p><b><?=ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'ANSWER_OF_THE_PERFORMER_TO_ORDER_PROPOSAL_OF_THE_PERFORMER')?><span>*</span></b></p>
             </div>
             <div class="col-sm-6">
                 <?=$form->field($model, 'price')->textInput(['class'=>''])->label(false)->error(false)?>
@@ -45,7 +46,7 @@ Modal::begin([
 
         <div class="row">
             <div class="col-sm-4">
-                <p><b>Комментарий</b></p>
+                <p><b><?=ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'ANSWER_OF_THE_PERFORMER_TO_ORDER_COMMENT')?></b></p>
             </div>
             <div class="col-sm-8">
                 <?=$form->field($model, 'description')->textarea(['rows'=>5])->label(false)->error(false)?>
