@@ -168,7 +168,7 @@ Modal::begin([
         ?>
         <div class="row">
             <div class="col-sm-3">
-                <p><?=$model->getAttributeLabel('directions')?></p>
+                <p><?=$orderForm->getAttributeLabel('directions')?></p>
             </div>
             <div class="col-sm-9">
                 <p class="gray"><?=$directions?></p>

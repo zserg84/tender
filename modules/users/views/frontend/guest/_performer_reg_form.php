@@ -295,7 +295,7 @@ echo Html::hiddenInput('form_type', 'performer');
             <p><?=$model->getAttributeLabel('street')?><span>*</span></p>
         </div>
         <div class="col-sm-8">
-            <?=$form->field($model, 'street')->textInput(['class'=>'', 'placeholder' => 'фактический адрес местонахождения производства'])->label(false)->error(false)?>
+            <?=$form->field($model, 'street')->textInput(['class'=>'', 'placeholder' => $model->getAttributeLabel('actual_address')])->label(false)->error(false)?>
         </div>
     </div>
 

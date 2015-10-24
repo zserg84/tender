@@ -5,7 +5,7 @@ Yii::setAlias('backend', dirname(__DIR__));
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
-    'defaultRoute' => 'admin/default/index',
+    'defaultRoute' => '/users/default/index',
     'modules' => [
         'admin' => [
             'class' => 'vova07\admin\Module'
@@ -49,7 +49,7 @@ return [
         ],
         'urlManager' => [
             'rules' => [
-                '' => 'admin/default/index',
+                '' => '/users/default/index',
                 '<_m>/<_c>/<_a>' => '<_m>/<_c>/<_a>',
             ]
         ],

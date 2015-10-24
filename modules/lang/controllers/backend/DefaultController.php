@@ -6,13 +6,14 @@ use common\actions\CreateAction;
 use common\actions\DeleteAction;
 use common\actions\IndexAction;
 use common\actions\UpdateAction;
+use modules\base\components\BackendController;
 use modules\lang\models\backend\LangSearch;
 use modules\lang\models\Lang;
 use yii\filters\VerbFilter;
 use vova07\admin\components\Controller;
 use yii\helpers\Url;
 
-class DefaultController extends Controller
+class DefaultController extends BackendController
 {
 
     /**

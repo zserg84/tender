@@ -3,6 +3,7 @@
 namespace modules\translations\controllers\backend;
 
 use common\actions\CreateAction;
+use modules\base\components\BackendController;
 use modules\translations\models\Message;
 use yii\base\Model;
 use yii\helpers\Url;
@@ -15,7 +16,7 @@ use modules\translations\models\search\SourceMessageSearch;
 use modules\translations\models\SourceMessage;
 use modules\translations\Module;
 
-class DefaultController extends Controller
+class DefaultController extends BackendController
 {
 
     public function actionIndex()

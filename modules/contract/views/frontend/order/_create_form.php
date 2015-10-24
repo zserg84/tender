@@ -146,7 +146,7 @@ if($orderId)
             </div>
             <div class="col-sm-4">
                 <?$model->date_performance = $model->date_performance ? Yii::$app->getFormatter()->asDate($model->date_performance) : null?>
-                <?=$form->field($model, 'date_performance')->textInput(['class'=>'datepicker', 'placeholder'=>$model->getAttributeLabel('date')])->label(false)?>
+                <?=$form->field($model, 'date_performance')->textInput(['class'=>'datepicker'])->label(false)?>
             </div>
         </div>
 
@@ -156,7 +156,7 @@ if($orderId)
             </div>
             <div class="col-sm-4">
                 <?$model->date_publish = $model->date_publish ? Yii::$app->getFormatter()->asDate($model->date_publish) : null?>
-                <?=$form->field($model, 'date_publish')->textInput(['class'=>'datepicker', 'placeholder'=>$model->getAttributeLabel('date')])->label(false)?>
+                <?=$form->field($model, 'date_publish')->textInput(['class'=>'datepicker'])->label(false)?>
             </div>
         </div>
 

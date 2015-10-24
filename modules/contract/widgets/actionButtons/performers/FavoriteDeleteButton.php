@@ -26,7 +26,7 @@ class FavoriteDeleteButton extends Button
         }
         else{
             $this->button = Html::a(ContractModule::t('CUSTOMER_INTERFACE', 'VIEW_ELEMENT_PERFORMER_REMOVE_BUTTON'), Url::toRoute(['favorite-delete', 'favoriteContractId' => $this->model->id]), [
-                'data-confirm' => "Вы подтвержаете удаление исполнителя ?"
+                'data-confirm' => ContractModule::t('PERFORMER_INTERFACE', 'SERVICE_MESSAGE_REMOVE_FROM_MY_FAVORITES_PERF_INTERFACE')
             ]);
         }
 

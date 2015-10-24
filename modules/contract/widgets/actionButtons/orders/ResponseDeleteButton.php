@@ -21,7 +21,7 @@ class ResponseDeleteButton extends Button
     public function init()
     {
         $this->button = Html::a(ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_PERFORMER_3_REMOVE_BUTTON'), Url::toRoute(['response-delete', 'orderId'=>$this->model->id]), [
-            'data-confirm' => 'Вы подтвержаете удаление отклика ?',
+            'data-confirm' => ContractModule::t('PERFORMER_INTERFACE', 'SERVICE_MESSAGE_CONFIRM_DEL_OF_A_RESPONSE'),
             'class' => 'response_delete_link',
         ]);
 

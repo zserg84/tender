@@ -2,6 +2,7 @@
 
 namespace modules\rbac\controllers\backend;
 
+use modules\base\components\BackendController;
 use vova07\admin\components\Controller;
 use modules\rbac\models\Permission;
 use modules\rbac\Module;
@@ -16,7 +17,7 @@ use yii\web\Response;
 /**
  * Permissions controller.
  */
-class PermissionsController extends Controller
+class PermissionsController extends BackendController
 {
     /**
      * @inheritdoc

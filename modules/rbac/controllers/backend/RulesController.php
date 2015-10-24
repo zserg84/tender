@@ -2,6 +2,7 @@
 
 namespace modules\rbac\controllers\backend;
 
+use modules\base\components\BackendController;
 use vova07\admin\components\Controller;
 use modules\rbac\models\Rule;
 use modules\rbac\Module;
@@ -15,7 +16,7 @@ use yii\web\Response;
 /**
  * Rules controller.
  */
-class RulesController extends Controller
+class RulesController extends BackendController
 {
     /**
      * @inheritdoc

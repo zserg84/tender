@@ -13,13 +13,14 @@ use common\actions\CreateAction;
 use common\actions\DeleteAction;
 use common\actions\IndexAction;
 use common\actions\UpdateAction;
+use modules\base\components\BackendController;
 use modules\direction\models\Direction;
 use modules\direction\models\search\DirectionSearch;
 use vova07\admin\components\Controller;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
-class DefaultController extends Controller
+class DefaultController extends BackendController
 {
 
     public function actions()

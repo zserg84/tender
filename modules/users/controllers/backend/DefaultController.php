@@ -2,6 +2,7 @@
 
 namespace modules\users\controllers\backend;
 
+use modules\base\components\BackendController;
 use vova07\admin\components\Controller;
 use vova07\fileapi\actions\UploadAction as FileAPIUpload;
 use modules\users\models\backend\User;
@@ -19,7 +20,7 @@ use yii\widgets\ActiveForm;
 /**
  * Default backend controller.
  */
-class DefaultController extends Controller
+class DefaultController extends BackendController
 {
     /**
      * @inheritdoc

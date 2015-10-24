@@ -177,7 +177,7 @@ echo Html::hiddenInput('form_type', 'customer');
         <div class="col-sm-8">
             <?=$form->field($model, 'logo')->fileInput([
                 'id' => 'costum-file-avatar',
-                'data-text' => $model->getAttributeLabel('logo_logo')
+                'data-text' => $model->getAttributeLabel('load_logo')
             ])->label(false)->error(false)?>
         </div>
     </div>

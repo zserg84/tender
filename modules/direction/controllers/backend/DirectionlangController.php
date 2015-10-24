@@ -10,6 +10,7 @@ namespace modules\direction\controllers\backend;
 
 
 use common\actions\DeleteAction;
+use modules\base\components\BackendController;
 use modules\direction\models\Directionlang;
 use modules\direction\models\search\DirectionlangSearch;
 use modules\direction\Module;
@@ -19,7 +20,7 @@ use yii\bootstrap\ActiveForm;
 use yii\web\HttpException;
 use yii\web\Response;
 
-class DirectionlangController extends Controller
+class DirectionlangController extends BackendController
 {
 
     public function actions()

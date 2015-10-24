@@ -8,6 +8,7 @@
 
 namespace modules\exchange\controllers\backend;
 
+use modules\base\components\BackendController;
 use modules\exchange\models\form\ExportForm;
 use modules\exchange\models\form\ImportForm;
 use modules\lang\models\Lang;
@@ -15,12 +16,11 @@ use modules\translations\models\Message;
 use modules\translations\models\MessageCategory;
 use modules\translations\models\SourceMessage;
 use SimpleExcel\SimpleExcel;
-use vova07\admin\components\Controller;
 use yii\db\Query;
 use yii\helpers\VarDumper;
 use yii\web\UploadedFile;
 
-class DefaultController extends Controller
+class DefaultController extends BackendController
 {
 
     public function actionExport()

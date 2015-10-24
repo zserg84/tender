@@ -2,6 +2,7 @@
 
 namespace modules\users\controllers\backend;
 
+use modules\base\components\BackendController;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use Yii;
@@ -9,7 +10,7 @@ use Yii;
 /**
  * Backend controller for authenticated users.
  */
-class UserController extends Controller
+class UserController extends BackendController
 {
     /**
      * @inheritdoc
