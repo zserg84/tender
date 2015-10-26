@@ -91,21 +91,21 @@ class OrderSearch extends FilterModelBase
         $query->innerJoinWith([
             'contract.city' => function($query) {
               if($this->filter_territory_city)
-                $query->where(['city.ID' => $this->filter_territory_city]);
+                $query->andWhere(['city.ID' => $this->filter_territory_city]);
             }
         ]);
 
         $query->innerJoinWith([
             'contract.city.state' => function($query) {
               if($this->filter_territory_state)
-                $query->where(['state.ID' => $this->filter_territory_state]);
+                $query->andWhere(['state.ID' => $this->filter_territory_state]);
             }
         ]);
 
         $query->innerJoinWith([
             'contract.city.country' => function($query) {
               if($this->filter_territory_country)
-                $query->where(['country.ID' => $this->filter_territory_country]);
+                $query->andWhere(['country.ID' => $this->filter_territory_country]);
             }
         ]);
         
@@ -117,7 +117,7 @@ class OrderSearch extends FilterModelBase
           }
           $query->innerJoinWith([
               'directions' => function($query) use($directions){
-                $query->where(['direction.ID' => $directions]);
+                $query->andWhere(['direction.ID' => $directions]);
               }
           ]);
         }
