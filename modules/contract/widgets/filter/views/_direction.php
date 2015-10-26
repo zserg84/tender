@@ -14,11 +14,12 @@ if($directionTree):
 <ul>
 <?
 foreach($directionTree as $direction){
+  $active = in_array($direction->id, $checkboxes);
     ?>
     <li>
-        <label class="costum-checkbox ">
+        <label class="costum-checkbox <?=($active ? 'active' : '')?>">
             <span><?=$direction->getName()?></span>
-            <?=Html::checkbox('filter_direction_checkbox[]', in_array($direction->id, $checkboxes), [
+            <?=Html::checkbox('filter_direction_checkbox[]', $active, [
                 'value' => $direction->id,
             ])?>
         </label>

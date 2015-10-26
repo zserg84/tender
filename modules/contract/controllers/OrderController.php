@@ -43,10 +43,13 @@ class OrderController extends Controller
 
     public function getOrderList($params = []){
         $model = new OrderSearch();
+        $params = array_merge(\Yii::$app->getRequest()->post(), $params);
+        /*
         foreach($params as $paramKey=>$paramValue){
             $model->$paramKey = $paramValue;
         }
-        return $model->search();
+        */
+        return $model->search($params);
     }
 
     public function actionListMine(){
