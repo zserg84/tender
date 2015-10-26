@@ -2,6 +2,7 @@
 
 namespace modules\direction\models;
 
+use modules\contract\models\ContractPerformerHasDirection;
 use Yii;
 
 /**

@@ -12,6 +12,7 @@ use modules\contract\models\Contract;
 use modules\contract\models\OfferToCustomer;
 use modules\contract\models\Order;
 use modules\contract\widgets\actionButtons\orders\OrderLinkButton;
+use modules\contract\widgets\actionButtons\orders\RefuseButton;
 use modules\contract\widgets\actionButtons\orders\ResponseDeleteButton;
 use modules\contract\widgets\actionButtons\orders\ResponseOrderLinkButton;
 use modules\contract\widgets\actionButtons\orders\UpdateButton;
@@ -54,6 +55,40 @@ class OrderController extends \modules\contract\controllers\OrderController
         ];
 
         return parent::actionListMine();
+    }
+
+    public function actionListWork(){
+        $this->_buttons = [
+            OrderLinkButton::className(),
+            RefuseButton::className(),
+        ];
+        $dataProvider = $this->getOrderList([
+            'toWork' => true,
+        ]);
+        return $this->render('list',[
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionMyProfile(){
+        $dataProvider = $this->getOrderList([
+            'myProfile' => true,
+        ]);
+        return $this->render('list',[
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionRefuse(){
+        $curContract = Contract::getCurContract();
+        $order = Order::findOne([
+            'performer_id'=>$curContract->id
+        ]);
+        if($order) {
+            $order->performer_id = null;
+            $order->save();
+        }
+        $this->redirect(Url::toRoute(['order/list-work']));
     }
 
     public function actionResponse($orderId){

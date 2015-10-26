@@ -53,9 +53,9 @@ class Module extends \modules\base\components\Module
                 ], 'options' => ['class'=>'has']],
                 ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS'), 'url' => ['/contract/order/list'], 'items' => [
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS1'), 'url' => ['/contract/order/list']],
-                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS2'), 'url' => '#',],
-                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS3'), 'url' => ['/contract/order/list-my-response'],],
-                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS4'), 'url' => '#',],
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS2'), 'url' => ['/contract/order/my-profile']],
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS3'), 'url' => ['/contract/order/list-my-response']],
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS4'), 'url' => ['/contract/order/list-work']],
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS5'), 'url' => ['/contract/order/list-mine'],],
                 ], 'options' => ['class'=>'has']],
                 ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS'), 'url' => ['#'], 'items' => [
