@@ -19,11 +19,11 @@ class CommentForm extends \yii\base\Model
 
     public $estimate;
 
-    public $contract_id;
+    public $self_contract_id;
 
     public function rules(){
         return [
-            [['text',/* 'captcha',*/ 'contract_id'], 'required'],
+            [['text',/* 'captcha',*/ 'self_contract_id'], 'required'],
             [['text'], 'string'],
             [['estimate'], 'number'],
 //            ['captcha', 'captcha', 'captchaAction'=>'/site/default/captcha'],
@@ -34,10 +34,10 @@ class CommentForm extends \yii\base\Model
     {
         return [
             'ajax' => [
-                'text', 'contract_id', 'estimate', /*'captcha',*/
+                'text', 'self_contract_id', 'estimate', /*'captcha',*/
             ],
             'default' => [
-                'text', 'contract_id', 'estimate', /*'captcha',*/
+                'text', 'self_contract_id', 'estimate', /*'captcha',*/
             ]
         ];
     }

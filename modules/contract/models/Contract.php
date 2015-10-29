@@ -149,7 +149,7 @@ class Contract extends \yii\db\ActiveRecord
      */
     public function getContractComments()
     {
-        return $this->hasMany(ContractComment::className(), ['contract_id' => 'id']);
+        return $this->hasMany(ContractComment::className(), ['self_contract_id' => 'id']);
     }
 
     /**

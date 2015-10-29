@@ -49,7 +49,7 @@ class CommentController extends Controller
         $post = \Yii::$app->getRequest()->post();
 //        $this->performAjaxValidation($model);
         if($model->load($post)){
-            $contract = Contract::findOne($model->contract_id);
+            $contract = Contract::findOne($model->self_contract_id);
             if($model->validate()){
                 $comment = new ContractComment();
                 $comment->setAttributes($model->attributes);

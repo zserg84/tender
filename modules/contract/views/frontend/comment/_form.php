@@ -17,9 +17,9 @@ $form = ActiveForm::begin(
     ]
 );
 $model = new CommentForm();
-$model->contract_id = $contract ? $contract->id : null;
+$model->self_contract_id = $contract ? $contract->id : null;
 
-echo $form->field($model, 'contract_id')->hiddenInput()->label(false);
+echo $form->field($model, 'self_contract_id')->hiddenInput()->label(false);
 ?>
 <div class="form-group" data-comment="form-group">
     <div class="row">
