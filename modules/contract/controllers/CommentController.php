@@ -53,7 +53,7 @@ class CommentController extends Controller
             if($model->validate()){
                 $comment = new ContractComment();
                 $comment->setAttributes($model->attributes);
-                $comment->comment_contract_id = $curContract->id;
+                $comment->contract_id = $curContract->id;
                 if($comment->save()){
                     return Json::encode(['output'=>'success']);
                 }
