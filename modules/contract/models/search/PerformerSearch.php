@@ -31,6 +31,8 @@ class PerformerSearch extends FilterModelBase
      * */
     public $favorite = false;
 
+    public $competitors = false;
+
     public function rules(){
         return [
             [['filter_specialization',
@@ -74,10 +76,15 @@ class PerformerSearch extends FilterModelBase
             ]);
         }
 
+        $curContract = Contract::getCurContract();
         if($this->favorite){
-            $curContract = Contract::getCurContract();
             if($curContract)
                 $query->favorite($curContract->id);
+        }
+
+        if($this->competitors){
+            if($curContract)
+                $query->competitors($curContract);
         }
 
         $this->_dataProvider = new ActiveDataProvider([

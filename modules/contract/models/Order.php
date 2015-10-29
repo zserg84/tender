@@ -28,11 +28,10 @@ use yii\helpers\VarDumper;
  * @property string $file_model_id
  * @property string $image_id
  * @property integer $currency_id
- * @property integer $performer_id
  *
+ * @property ContractOrder[] $contractOrders
  * @property OfferToCustomer[] $offerToCustomers
  * @property OfferToPerformer[] $offerToPerformers
- * @property Contract $performer
  * @property Contract $contract
  * @property Currency $currency
  * @property OrderComment[] $orderComments
@@ -110,6 +109,14 @@ class Order extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getContractOrders()
+    {
+        return $this->hasMany(ContractOrder::className(), ['order_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getOfferToCustomers()
     {
         return $this->hasMany(OfferToCustomer::className(), ['order_id' => 'id']);
@@ -121,14 +128,6 @@ class Order extends \yii\db\ActiveRecord
     public function getOfferToPerformers()
     {
         return $this->hasMany(OfferToPerformer::className(), ['order_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPerformer()
-    {
-        return $this->hasOne(Contract::className(), ['id' => 'performer_id']);
     }
 
     /**

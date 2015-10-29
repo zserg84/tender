@@ -10,6 +10,7 @@ namespace modules\contract\models\query;
 
 use modules\contract\models\Contract;
 use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 
 class ContractQuery extends ActiveQuery
 {
@@ -56,6 +57,22 @@ class ContractQuery extends ActiveQuery
                 $query->where(['contract_id' => $contractId]);
             }
         ]);
+    }
+
+    public function competitors($contract){
+        $directions = ArrayHelper::getColumn($contract->directions, 'id');
+        $this->innerJoinWith([
+            'directions' => function($query) use($directions){
+                $query->andWhere([
+                    'direction.id' => $directions
+                ]);
+            }
+        ])->andWhere([
+            'contract.city_id' => $contract->city_id,
+        ])->andWhere([
+            '<>', 'contract.id', $contract->id
+        ]);
+        return $this;
     }
 
 } 

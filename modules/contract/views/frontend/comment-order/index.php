@@ -8,7 +8,7 @@ echo $this->render('_form', [
 $orderId = $order ? $order->id : null;
 ?>
 <hr>
-<div data-comment="list" class="comments" data-comment-url="<?=Url::to(['list', 'orderId'=>$orderId])?>">
+<div data-comment="list" class="comments" data-comment-url="<?=Url::to(['get-list', 'orderId'=>$orderId])?>">
 <?=$this->render('_list', [
     'comments' => $comments,
 ])?>

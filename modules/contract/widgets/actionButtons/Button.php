@@ -38,6 +38,8 @@ class Button extends Widget
      * */
     public $pjaxContainerId;
 
+    public $title;
+
     public function init(){
         $this->registerClientScript();
     }

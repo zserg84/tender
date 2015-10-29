@@ -15,6 +15,7 @@ use modules\direction\models\Direction;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 
 class OrderSearch extends FilterModelBase
 {
@@ -63,8 +64,12 @@ class OrderSearch extends FilterModelBase
         }
 
         if($this->toWork){
-            $query->andWhere([
-                'performer_id' => $curContract->id
+            $query->innerJoinWith([
+                'contractOrders' => function($query) use($curContract){
+                    $query->andWhere([
+                        'contract_order.contract_id' => $curContract->id
+                    ]);
+                }
             ]);
         }
 
@@ -117,11 +122,10 @@ class OrderSearch extends FilterModelBase
           }
           $query->innerJoinWith([
               'directions' => function($query) use($directions){
-                $query->andWhere(['direction.ID' => $directions]);
+                  $query->andWhere(['direction.id' => $directions]);
               }
           ]);
         }
-
         $this->_dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => new Pagination([

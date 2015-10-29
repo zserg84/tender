@@ -17,9 +17,9 @@ class PerformerController extends \modules\contract\controllers\PerformerControl
 
     public function actionList(){
         $this->_buttons = [
-            ProfileButton::className(),
-            OfferOrderButton::className(),
-            FavoriteDeleteButton::className(),
+            ['class' => ProfileButton::className(), 'params' =>[]],
+            ['class' => OfferOrderButton::className(), 'params' =>[]],
+            ['class' => FavoriteDeleteButton::className(), 'params' =>[]],
         ];
 
         return parent::actionList();

@@ -30,20 +30,21 @@ class OrderLinkButton extends Button
         else{
             $contract = $this->model->contract;
             $company = $contract->performer;
-            $title = '';
-            if($company){
-                $title = ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_BROWSING');
+            if(!$this->title){
+                if($company){
+                    $this->title = ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_BROWSING');
+                }
+                elseif($contract->customer){
+                    $this->title = ContractModule::t('CUSTOMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_BROWSING');
+                }
             }
-            elseif($contract->customer){
-                $title = ContractModule::t('CUSTOMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_BROWSING');
-            }
-            $this->button = Html::a($title, "javascript:void(0)", [
+            $this->button = Html::a($this->title, "javascript:void(0)", [
                 'class' => 'order_link'
             ]);
 
             $this->jsHandler = '
                 $(".order_link").click(function() {
-                    var url = "' . Url::toRoute(['view']) . '";
+                    var url = "' . Url::toRoute(['/contract/order/view']) . '";
                     $.pjax({url: url, container: "#'.$this->pjaxContainerId.'", data:{orderId: $(this).closest("tr").data("order")}, push:false, replace:false});
                 });
 

@@ -21,11 +21,15 @@ $buttons = $this->context->getButtons();
         <p><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_NUMBER')?>: <?=$model->count?></b></p>
     </td>
     <td class="links">
-        <?foreach ($buttons as $button) :?>
-            <p><?=$button::widget([
-                    'model' => $model,
-                    'pjaxContainerId' => 'pjax-order-modal-container',
-                ])?>
+        <?foreach ($buttons as $button) :
+            $btn = $button['class'];
+            $params = isset($button['params']) ? $button['params'] : [];
+            $params = array_merge([
+                'model' => $model,
+                'pjaxContainerId' => 'pjax-order-modal-container',
+            ], $params);
+            ?>
+            <p><?=$btn::widget($params)?>
             </p>
         <?endforeach;?>
     </td>

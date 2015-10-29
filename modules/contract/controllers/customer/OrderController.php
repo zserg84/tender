@@ -19,8 +19,8 @@ class OrderController extends \modules\contract\controllers\OrderController
 
     public function actionList(){
         $this->_buttons = [
-            OrderLinkButton::className(),
-            CustomerProfileButton::className(),
+            ['class' => OrderLinkButton::className(), 'params' =>[]],
+            ['class' => CustomerProfileButton::className(), 'params' =>[]],
         ];
 
         return parent::actionList();
@@ -28,8 +28,8 @@ class OrderController extends \modules\contract\controllers\OrderController
 
     public function actionListMine(){
         $this->_buttons = [
-            OrderLinkButton::className(),
-            CustomerProfileButton::className(),
+            ['class' => OrderLinkButton::className(), 'params' =>[]],
+            ['class' => CustomerProfileButton::className(), 'params' =>[]],
         ];
 
         return parent::actionListMine();

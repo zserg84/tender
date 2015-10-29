@@ -1,5 +1,5 @@
 <?foreach($comments as $comment):
-    $contract = $comment->commentContract;
+    $contract = $comment->contract;
     if(! ($user = $contract->customer)){
         $company = $contract->performer;
         if(!$company)

@@ -18,9 +18,9 @@ class PerformerController extends \modules\contract\controllers\PerformerControl
 
     public function actionList(){
         $this->_buttons = [
-            ProfileButton::className(),
-            OfferOrderButton::className(),
-            FavoriteAddButton::className(),
+            ['class' => ProfileButton::className(), 'params' =>[]],
+            ['class' => OfferOrderButton::className(), 'params' =>[]],
+            ['class' => FavoriteAddButton::className(), 'params' =>[]],
         ];
 
         return parent::actionList();
@@ -28,11 +28,27 @@ class PerformerController extends \modules\contract\controllers\PerformerControl
 
     public function actionListFavorite(){
         $this->_buttons = [
-            ProfileButton::className(),
-            OfferOrderButton::className(),
-            FavoriteDeleteButton::className(),
+            ['class' => ProfileButton::className(), 'params' =>[]],
+            ['class' => OfferOrderButton::className(), 'params' =>[]],
+            ['class' => FavoriteDeleteButton::className(), 'params' =>[]],
         ];
 
         return parent::actionListFavorite();
+    }
+
+    public function actionListCompetitor(){
+        $this->_buttons = [
+            ['class' => ProfileButton::className(), 'params' =>[]],
+            ['class' => OfferOrderButton::className(), 'params' =>[]],
+            ['class' => FavoriteAddButton::className(), 'params' =>[]],
+        ];
+
+        $dataProvider = $this->getPerformerList([
+            'competitors' => 1
+        ]);
+        return $this->render('list', [
+            'dataProvider' => $dataProvider,
+            'favorite' => 0,
+        ]);
     }
 } 

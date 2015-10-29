@@ -28,8 +28,8 @@ class OrderController extends \modules\contract\controllers\OrderController
 
     public function actionList(){
         $this->_buttons = [
-            OrderLinkButton::className(),
-            ResponseOrderLinkButton::className(),
+            ['class' => OrderLinkButton::className(), 'params' =>[]],
+            ['class' => ResponseOrderLinkButton::className(), 'params' =>[]],
         ];
 
         return parent::actionList();
@@ -37,8 +37,8 @@ class OrderController extends \modules\contract\controllers\OrderController
 
     public function actionListMyResponse(){
         $this->_buttons = [
-            OrderLinkButton::className(),
-            ResponseDeleteButton::className(),
+            ['class' => OrderLinkButton::className(), 'params' =>[]],
+            ['class' => ResponseDeleteButton::className(), 'params' =>[]],
         ];
 
         $dataProvider = $this->getOrderList([
@@ -51,7 +51,7 @@ class OrderController extends \modules\contract\controllers\OrderController
 
     public function actionListMine(){
         $this->_buttons = [
-            UpdateButton::className(),
+            ['class' => UpdateButton::className(), 'params' =>[]],
         ];
 
         return parent::actionListMine();
@@ -59,8 +59,8 @@ class OrderController extends \modules\contract\controllers\OrderController
 
     public function actionListWork(){
         $this->_buttons = [
-            OrderLinkButton::className(),
-            RefuseButton::className(),
+            ['class' => OrderLinkButton::className(), 'params' =>[]],
+            ['class' => RefuseButton::className(), 'params' =>[]],
         ];
         $dataProvider = $this->getOrderList([
             'toWork' => true,

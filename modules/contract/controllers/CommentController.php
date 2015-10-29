@@ -20,6 +20,11 @@ use yii\web\Response;
 
 class CommentController extends Controller
 {
+    protected  $_buttons = [];
+
+    public function getButtons(){
+        return $this->_buttons;
+    }
 
     public function actionIndex($contractId){
         $contract = Contract::findOne($contractId);
@@ -30,7 +35,7 @@ class CommentController extends Controller
         ]);
     }
 
-    public function actionList($contractId){
+    public function actionGetList($contractId){
         $contract = Contract::findOne($contractId);
         $comments = $contract ? $contract->contractComments : [];
         return $this->renderPartial('_list', [

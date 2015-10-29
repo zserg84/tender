@@ -37,6 +37,7 @@ use yii\helpers\VarDumper;
  * @property City $city
  * @property Tariff $tariff
  * @property ContractComment[] $contractComments
+ * @property ContractOrder[] $contractOrders
  * @property Company[] $companies
  * @property ContractPerformerHasDirection[] $contractPerformerHasDirections
  * @property Direction[] $directions
@@ -44,7 +45,6 @@ use yii\helpers\VarDumper;
  * @property FavoriteCompany[] $favoriteCompanies
  * @property OfferToCustomer[] $offerToCustomers
  * @property OfferToPerformer[] $offerToPerformers
- * @property Order[] $orders
  * @property OrderComment[] $orderComments
  * @property OrderPerformer[] $orderPerformers
  * @property PaymentHistory[] $paymentHistories
@@ -152,6 +152,13 @@ class Contract extends \yii\db\ActiveRecord
         return $this->hasMany(ContractComment::className(), ['contract_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getContractOrders()
+    {
+        return $this->hasMany(ContractOrder::className(), ['contract_id' => 'id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -212,14 +219,6 @@ class Contract extends \yii\db\ActiveRecord
     public function getOfferToPerformers()
     {
         return $this->hasMany(OfferToPerformer::className(), ['contract_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrders()
-    {
-        return $this->hasMany(Order::className(), ['contract_id' => 'id']);
     }
 
     /**

@@ -48,7 +48,7 @@ class Module extends \modules\base\components\Module
             $items = [
                 ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_PERFORMERS'), 'url' => ['/contract/performer/list'], 'items'=>[
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_PERFORMER1'), 'url' => ['/contract/performer/list']],
-                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_PERFORMER2'), 'url' => ['#'],],
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_PERFORMER2'), 'url' => ['/contract/performer/list-competitor']],
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_PERFORMER3'), 'url' => ['/contract/performer/list-favorite']],
                 ], 'options' => ['class'=>'has']],
                 ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS'), 'url' => ['/contract/order/list'], 'items' => [
@@ -58,9 +58,9 @@ class Module extends \modules\base\components\Module
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS4'), 'url' => ['/contract/order/list-work']],
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS5'), 'url' => ['/contract/order/list-mine'],],
                 ], 'options' => ['class'=>'has']],
-                ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS'), 'url' => ['#'], 'items' => [
-                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS1'), 'url' => '#',],
-                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS2'), 'url' => '#',],
+                ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS'), 'url' => ['/contract/comment/list'], 'items' => [
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS1'), 'url' => ['/contract/comment/list']],
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS2'), 'url' => ['/contract/comment-order/list']],
                 ], 'options' => ['class'=>'has']],
             ];
         }

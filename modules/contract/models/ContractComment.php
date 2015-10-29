@@ -11,14 +11,14 @@ use modules\themes\Module as ThemeModule;
  *
  * @property integer $id
  * @property integer $contract_id
- * @property integer $comment_contract_id
+ * @property integer $self_contract_id
  * @property string $created_at
  * @property string $updated_at
  * @property string $text
  * @property integer $estimate
  *
  * @property Contract $contract
- * @property Contract $commentContract
+ * @property Contract $selfContract
  */
 class ContractComment extends \yii\db\ActiveRecord
 {
@@ -40,8 +40,8 @@ class ContractComment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['contract_id', 'comment_contract_id'], 'required'],
-            [['contract_id', 'comment_contract_id', 'estimate'], 'integer'],
+            [['contract_id', 'self_contract_id'], 'required'],
+            [['contract_id', 'self_contract_id', 'estimate'], 'integer'],
             [['text'], 'string'],
             [['created_at', 'updated_at'], 'string', 'max' => 45]
         ];
@@ -55,7 +55,7 @@ class ContractComment extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('contract_comment', 'ID'),
             'contract_id' => Yii::t('contract_comment', 'Contract ID'),
-            'comment_contract_id' => Yii::t('contract_comment', 'Comment Contract ID'),
+            'self_contract_id' => Yii::t('contract_comment', 'Comment Contract ID'),
             'created_at' => Yii::t('contract_comment', 'created_at'),
             'text' => Yii::t('contract_comment', 'Text'),
             'estimate' => Yii::t('contract_comment', 'Estimate'),
@@ -85,9 +85,9 @@ class ContractComment extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCommentContract()
+    public function getSelfContract()
     {
-        return $this->hasOne(Contract::className(), ['id' => 'comment_contract_id']);
+        return $this->hasOne(Contract::className(), ['id' => 'self_contract_id']);
     }
 
     public static  function estimateList(){

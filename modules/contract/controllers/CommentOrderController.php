@@ -22,6 +22,12 @@ use yii\web\Response;
 class CommentOrderController extends Controller
 {
 
+    protected  $_buttons = [];
+
+    public function getButtons(){
+        return $this->_buttons;
+    }
+
     public function actionIndex($orderId){
         $order = Order::findOne($orderId);
         $comments = $order ? $order->orderComments : [];
@@ -31,7 +37,7 @@ class CommentOrderController extends Controller
         ]);
     }
 
-    public function actionList($orderId){
+    public function actionGetList($orderId){
         $order = Order::findOne($orderId);
         $comments = $order ? $order->orderComments : [];
         echo $this->renderPartial('_list', [

@@ -131,6 +131,8 @@ $form = ActiveForm::begin(
                         foreach($cphds as $cphd):
                             $subdirection = $cphd->direction;
                             $direction = $subdirection->parent;
+                            if(!$direction)
+                                continue;
                             ?>
                             <div class="row">
                                 <div>

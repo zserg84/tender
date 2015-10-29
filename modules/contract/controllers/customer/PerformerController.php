@@ -19,19 +19,18 @@ class PerformerController extends \modules\contract\controllers\PerformerControl
 
     public function actionList(){
         $this->_buttons = [
-            ProfileButton::className(),
-            OfferOrderButton::className(),
-            FavoriteAddButton::className(),
+            ['class' => ProfileButton::className(), 'params' =>[]],
+            ['class' => OfferOrderButton::className(), 'params' =>[]],
+            ['class' => FavoriteAddButton::className(), 'params' =>[]],
         ];
-
         return parent::actionList();
     }
 
     public function actionListFavorite(){
         $this->_buttons = [
-            ProfileButton::className(),
-            OfferOrderButton::className(),
-            FavoriteDeleteButton::className(),
+            ['class' => ProfileButton::className(), 'params' =>[]],
+            ['class' => OfferOrderButton::className(), 'params' =>[]],
+            ['class' => FavoriteDeleteButton::className(), 'params' =>[]],
         ];
 
         return parent::actionListFavorite();

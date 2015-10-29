@@ -26,11 +26,15 @@ $buttons = $this->context->getButtons();
     </td>
     <td class="links">
         <p><img src="<?=$imgPath?>rating.png" alt=""></p>
-        <?foreach ($buttons as $button) :?>
-            <p><?=$button::widget([
-                    'model' => $model,
-                    'pjaxContainerId' => 'pjax-item-modal-container',
-                ])?>
+        <?foreach ($buttons as $button) :
+            $btn = $button['class'];
+            $params = isset($button['params']) ? $button['params'] : [];
+            $params = array_merge([
+                'model' => $model,
+                'pjaxContainerId' => 'pjax-item-modal-container',
+            ], $params);
+            ?>
+            <p><?=$btn::widget($params)?>
             </p>
         <?endforeach;?>
     </td>
