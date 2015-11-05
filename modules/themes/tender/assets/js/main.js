@@ -342,6 +342,12 @@ function initPage() {
         $('.modal').modal('hide');
         return false;
     });
+
+
+    $(document).on("click", ".more", function(){
+        $(this).css("display","none");
+        $(this).parent().find('.hidden-text').removeClass('hidden-text');
+    });
 }
 
 // INITIALISATION

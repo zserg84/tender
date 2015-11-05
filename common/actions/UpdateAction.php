@@ -20,4 +20,11 @@ class UpdateAction extends CreateAction{
         return $model;
     }
 
+    public function getFormModel(){
+        $model = $this->getModel();
+        $formModel = parent::getFormModel();
+        $formModel->setAttributes($model->getAttributes(), false);
+        return $formModel;
+    }
+
 } 

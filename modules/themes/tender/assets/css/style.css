@@ -2328,3 +2328,11 @@ input#upload:hover {
 }
 
 */
+
+.hidden-text{
+    display: none;
+}
+
+.visible-text{
+    display: '';
+}

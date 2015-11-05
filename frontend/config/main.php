@@ -7,6 +7,7 @@ return [
     'modules' => [
         'site' => [
             'class' => 'modules\site\Module',
+            'controllerNamespace' => 'modules\site\controllers\frontend',
         ],
         'themes' => [
             'class' => 'modules\themes\Module',

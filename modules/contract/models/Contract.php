@@ -51,6 +51,7 @@ use yii\helpers\VarDumper;
  */
 class Contract extends \yii\db\ActiveRecord
 {
+    public $contractType;
     /**
      * @inheritdoc
      */
@@ -248,11 +249,13 @@ class Contract extends \yii\db\ActiveRecord
     public static function getCurContract(){
         $contract = null;
         $currentUser = User::getCurrentUser();
-        if(ContractModule::module()->interfaceType == 'customer'){
+        if((ContractModule::module() && ContractModule::module()->interfaceType == 'customer') || $currentUser->customerContracts){
             $contract = $currentUser->customerContracts ? $currentUser->customerContracts[0] : null;
+            $contract->contractType = 'customer';
         }
-        elseif(ContractModule::module()->interfaceType == 'performer'){
+        elseif((ContractModule::module() && ContractModule::module()->interfaceType == 'performer') || $currentUser->performerContracts){
             $contract = $currentUser->performerContracts ? $currentUser->performerContracts[0] : null;
+            $contract->contractType = 'performer';
         }
         return $contract;
     }

@@ -9,12 +9,21 @@
 namespace common\actions;
 
 
+use yii\web\ServerErrorHttpException;
+
 class DeleteAction extends Action{
 
     public function run(){
         $model = $this->getModel();
 
-        if ($model->delete() === false) {
+        if($model->delete()){
+            if($this->redirectUrl){
+                $this->controller->redirect($this->redirectUrl);
+                \Yii::$app->end();
+            }
+            return true;
+        }
+        else{
             throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
         }
 

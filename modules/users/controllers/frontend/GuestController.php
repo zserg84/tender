@@ -106,8 +106,8 @@ class GuestController extends Controller
                                 }
                                 if ($this->module->requireEmailConfirmation === true) {
                                     Yii::$app->session->setFlash(
-                                        'ThemeModule',
-                                        Module::t(
+                                        'success',
+                                        ThemeModule::t(
                                             'GUEST_INTERFACE',
                                             'FRONTEND_FLASH_CONFIRM_REGISTER',
                                             [

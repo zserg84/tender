@@ -44,6 +44,7 @@ $this->registerJs('
     })
 ');
 
+//echo \modules\users\widgets\profile\ProfileWidget::widget();
 echo SettingsWidget::widget();
 
 /*не удалять*/

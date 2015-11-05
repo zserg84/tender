@@ -22,7 +22,7 @@ class BatchDeleteAction extends Action
             foreach ($models as $model) {
                 $model->delete();
             }
-            return $this->controller->redirect([$this->redirectUrl]);
+            return $this->controller->redirect($this->redirectUrl);
         } else {
             throw new HttpException(400);
         }

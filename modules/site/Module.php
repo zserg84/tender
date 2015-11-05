@@ -8,24 +8,17 @@ use Yii;
 /**
  * Main frontend module.
  */
-class Module extends \yii\base\Module
+class Module extends \modules\base\components\Module
 {
 
-    public function init()
-    {
-        $app = \Yii::$app;
-        if (!isset($app->i18n->translations['site'])) {
-            $app->i18n->translations['site'] = [
-                'class' => DbMessageSource::className(),
-                'forceTranslation' => true,
-            ];
-        }
+    /**
+     * @inheritdoc
+     */
+    public static $author = 'modules';
 
-        parent::init();
-    }
+    /**
+     * @inheritdoc
+     */
+    public static $name = 'site';
 
-    public static function t($category, $message, $params = [], $language = null)
-    {
-        return Yii::t($category, $message, $params, $language);
-    }
 }

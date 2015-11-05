@@ -93,6 +93,47 @@ echo Menu::widget(
                     ]
                 ]
             ],
+            [
+                'label' => 'Меню фронтенда',
+                'url' => '#',
+//                'icon' => 'fa-arrows-h',
+                'active' => Yii::$app->controller->module->id == 'site',
+                'items' => [
+                    [
+                        'label' => 'О проекте',
+                        'url' => ['/site/about/index/'],
+                        'active'=>\Yii::$app->controller->id == 'about',
+                    ],
+                    [
+                        'label' => 'Новости',
+                        'url' => ['/site/news/index/'],
+                        'active'=>\Yii::$app->controller->id == 'news',
+                    ],
+                    [
+                        'label' => 'Технологии',
+                        'url' => ['/site/technology/index/'],
+                        'active'=>\Yii::$app->controller->id == 'technology',
+                    ],
+                    [
+                        'label' => 'Статьи',
+                        'url' => ['/site/article/index/'],
+                        'active'=>\Yii::$app->controller->id == 'article',
+                    ],
+                    [
+                        'label' => 'Обучение',
+                        'url' => ['/site/education/index/'],
+                        'active'=>\Yii::$app->controller->id == 'education',
+                    ],
+                    /*[
+                        'label' => 'Партнеры',
+                        'url' => ['/site/partner/index/'],
+                    ],
+                    [
+                        'label' => 'Контакты',
+                        'url' => ['/site/contact/index/'],
+                    ],*/
+                ]
+            ],
         ]
     ]
 );

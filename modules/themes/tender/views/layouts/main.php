@@ -18,6 +18,8 @@ use modules\users\widgets\userinfo\UserinfoWidget;
 use \modules\contract\widgets\filter\FilterSpecWidget;
 use \modules\contract\widgets\filter\FilterDirectionWidget;
 use \modules\contract\widgets\filter\FilterTerritoryWidget;
+use yii\helpers\Url;
+use modules\direction\models\Direction;
 
 $imgPath = ThemeAsset::imgSrc('', 'images');
 
@@ -77,18 +79,23 @@ $imgPath = ThemeAsset::imgSrc('', 'images');
                             <input type="text" class="form-control" placeholder="<?= ThemeModule::t('Horizontal menu ALL pages', 'SEARCH') ?>">
                         </div>
                     </form>
+                    <?
+                    $directions = Direction::find()->where(['parent_id'=>null])->all();
+                    ?>
                     <ul class="nav navbar-nav">
-                        <li><a href="about.html"><?= ThemeModule::t('Horizontal menu ALL pages', 'ABOUT_MENU_ALL_PAGES') ?></a></li>
-                        <li><a href="news.html"><?= ThemeModule::t('Horizontal menu ALL pages', 'NEWS_MENU_ALL_PAGES') ?></a></li>
-                        <li><a href="about.html"><?= ThemeModule::t('Horizontal menu ALL pages', 'TECHNOLOGIES_MENU_ALL_PAGES') ?></a>
+                        <li><a href="<?=Url::toRoute(['/site/about/index'])?>"><?= ThemeModule::t('Horizontal menu ALL pages', 'ABOUT_MENU_ALL_PAGES') ?></a></li>
+                        <li><a href="<?=Url::toRoute(['/site/news/index'])?>"><?= ThemeModule::t('Horizontal menu ALL pages', 'NEWS_MENU_ALL_PAGES') ?></a></li>
+                        <li><a href="#"><?= ThemeModule::t('Horizontal menu ALL pages', 'TECHNOLOGIES_MENU_ALL_PAGES') ?></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Напрвление 1</a></li>
+                                <?foreach($directions as $direction):?>
+                                    <li><a href="<?=Url::toRoute(['/site/technology/index', 'directionId'=>$direction->id])?>"><?=$direction->name?></a></li>
+                                <?endforeach?>
                             </ul>
                         </li>
-                        <li><a href="news.html"><?= ThemeModule::t('Horizontal menu ALL pages', 'ARTICLES_MENU_ALL_PAGES') ?></a></li>
-                        <li><a href="news.html"><?= ThemeModule::t('Horizontal menu ALL pages', 'TRAININGS_MENU_ALL_PAGES') ?></a></li>
-                        <li><a href="about.html"><?= ThemeModule::t('Horizontal menu ALL pages', 'PARTNERS_MENU_ALL_PAGES') ?></a></li>
-                        <li><a href="about.html"><?= ThemeModule::t('Horizontal menu ALL pages', 'CONTACTS_MENU_ALL_PAGES') ?></a></li>
+                        <li><a href="<?=Url::toRoute(['/site/article/index'])?>"><?= ThemeModule::t('Horizontal menu ALL pages', 'ARTICLES_MENU_ALL_PAGES') ?></a></li>
+                        <li><a href="<?=Url::toRoute(['/site/education/index'])?>"><?= ThemeModule::t('Horizontal menu ALL pages', 'TRAININGS_MENU_ALL_PAGES') ?></a></li>
+                        <li><a href="<?=Url::toRoute(['/site/partner/index'])?>"><?= ThemeModule::t('Horizontal menu ALL pages', 'PARTNERS_MENU_ALL_PAGES') ?></a></li>
+                        <li><a href="<?=Url::toRoute(['/site/contact/index'])?>"><?= ThemeModule::t('Horizontal menu ALL pages', 'CONTACTS_MENU_ALL_PAGES') ?></a></li>
                     </ul>
                 </div>
             </div>

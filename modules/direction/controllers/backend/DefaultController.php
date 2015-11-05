@@ -33,22 +33,22 @@ class DefaultController extends BackendController
             'create' => [
                 'class' => CreateAction::className(),
                 'modelClass' => Direction::className(),
-                'beforeAction' => function($action, $model){
+                'beforeAction' => function($action, $model, $formModel){
                     $parentId = \Yii::$app->getRequest()->get('parent_id');
-                    $model->parent_id = $parentId;
+                    $formModel->parent_id = $parentId;
                     $action->redirectUrl = $parentId ? Url::toRoute(['update', 'id'=>$parentId]) : Url::toRoute(['index']);
-                    return $model;
+                    return $formModel;
                 },
             ],
             'update' => [
                 'class' => UpdateAction::className(),
                 'modelClass' => Direction::className(),
                 'redirectUrl' => Url::toRoute('index'),
-                'beforeAction' => function($action, $model){
+                'beforeAction' => function($action, $model, $formModel){
                     $parentId = \Yii::$app->getRequest()->get('parent_id');
-                    $model->parent_id = $parentId;
+                    $formModel->parent_id = $parentId;
                     $action->redirectUrl = $parentId ? Url::toRoute(['update', 'id'=>$parentId]) : Url::toRoute(['index']);
-                    return $model;
+                    return $formModel;
                 },
             ],
             'delete' => [

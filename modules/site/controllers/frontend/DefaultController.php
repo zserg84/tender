@@ -1,6 +1,6 @@
 <?php
 
-namespace modules\site\controllers;
+namespace modules\site\controllers\frontend;
 
 use modules\site\components\Controller;
 use modules\site\models\ContactForm;

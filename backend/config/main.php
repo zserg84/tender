@@ -40,6 +40,11 @@ return [
             'controllerNamespace' => 'modules\exchange\controllers\backend',
             'interfaceType' => 'backend',
         ],
+        'site' => [
+            'class' => 'modules\site\Module',
+            'controllerNamespace' => 'modules\site\controllers\backend',
+            'interfaceType' => 'backend',
+        ],
     ],
     'components' => [
         'request' => [
