@@ -9,6 +9,8 @@
 namespace common\actions;
 
 
+use yii\web\NotFoundHttpException;
+
 abstract class Action extends \yii\base\Action{
 
     /**
@@ -90,7 +92,8 @@ abstract class Action extends \yii\base\Action{
     public static function findModel($modelClass, $id, $idName = null)
     {
         if (!$id) {
-            $id = \Yii::$app->getRequest()->getQueryParam($idName);
+            $id = \Yii::$app->getRequest()->get($idName);
+            $id = $id ? $id : \Yii::$app->getRequest()->post($idName);
         }
         if (!$id) {
             throw new NotFoundHttpException('The model ID is undefined');

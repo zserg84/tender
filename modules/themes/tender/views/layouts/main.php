@@ -20,6 +20,7 @@ use \modules\contract\widgets\filter\FilterDirectionWidget;
 use \modules\contract\widgets\filter\FilterTerritoryWidget;
 use yii\helpers\Url;
 use modules\direction\models\Direction;
+use common\components\Modal;
 
 $imgPath = ThemeAsset::imgSrc('', 'images');
 
@@ -196,6 +197,16 @@ $imgPath = ThemeAsset::imgSrc('', 'images');
         </div>
     </div>
 
+    <?
+    echo Modal::widget([
+        'id' => 'modal-popup',
+        'header'=>'<span class="modal-title">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <p class="title"></p>
+        </span>',
+        'footer' => '<span></span>',
+    ]);
+    ?>
 
     <?php $this->endBody(); ?>
     </body>

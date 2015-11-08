@@ -348,6 +348,14 @@ function initPage() {
         $(this).css("display","none");
         $(this).parent().find('.hidden-text').removeClass('hidden-text');
     });
+
+    $(document).on("click", ".list-block .title a", function(){
+        $.get($(this).attr("href"), function(data){
+            $("#modal-popup .modal-body").html(data);
+            $("#modal-popup").modal();
+        });
+        return false;
+    });
 }
 
 // INITIALISATION

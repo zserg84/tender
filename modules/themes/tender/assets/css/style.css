@@ -853,7 +853,7 @@ header .navbar .search-block input[type=text]:focus {
   color: #00bd9f;
   text-decoration: none;
 }
-.content-wrapper .centerbar table.orders {
+.content-wrapper .centerbar table.orders, .content-wrapper .centerbar table.list-block {
   width: 98%;
   margin: 0 auto;
   border-collapse: separate;
@@ -862,36 +862,46 @@ header .navbar .search-block input[type=text]:focus {
   -webkit-border-radius: 10px;
 }
 .content-wrapper .centerbar table.orders tr.space td,
-.content-wrapper .centerbar table.orders tr.space th {
+.content-wrapper .centerbar table.orders tr.space th,
+.content-wrapper .centerbar table.list-block tr.space td,
+.content-wrapper .centerbar table.list-block tr.space th{
   border: none;
   padding: 4px;
 }
 .content-wrapper .centerbar table.orders tr.space td,
-.content-wrapper .centerbar table.orders tr.space th {
+.content-wrapper .centerbar table.orders tr.space th,
+.content-wrapper .centerbar table.list-block tr.space td,
+.content-wrapper .centerbar table.list-block tr.space th{
   border: none;
   padding: 3px;
 }
-.content-wrapper .centerbar table.orders tr.space td:first-child {
+.content-wrapper .centerbar table.orders tr.space td:first-child,
+.content-wrapper .centerbar table.list-block tr.space td:first-child{
   border: none;
 }
-.content-wrapper .centerbar table.orders tr.space td:last-child {
+.content-wrapper .centerbar table.orders tr.space td:last-child,
+.content-wrapper .centerbar table.list-block tr.space td:last-child{
   border: none;
 }
-.content-wrapper .centerbar table.orders tr td:first-child {
+.content-wrapper .centerbar table.orders tr td:first-child,
+.content-wrapper .centerbar table.list-block tr td:first-child{
   border-radius: 5px 0 0 5px;
   -moz-border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
   border-left: 1px solid #9a9ca0;
   padding-left: 8px;
 }
-.content-wrapper .centerbar table.orders tr td:last-child {
+.content-wrapper .centerbar table.orders tr td:last-child,
+.content-wrapper .centerbar table.list-block tr td:last-child{
   border-radius: 0 5px 5px 0;
   -moz-border-radius: 0 5px 5px 0;
   -webkit-border-radius: 0 5px 5px 0;
   border-right: 1px solid #9a9ca0;
 }
 .content-wrapper .centerbar table.orders th,
-.content-wrapper .centerbar table.orders td {
+.content-wrapper .centerbar table.orders td,
+.content-wrapper .centerbar table.list-block th,
+.content-wrapper .centerbar table.list-block td{
   overflow: hidden;
   padding: 6px 8px;
   font: 11px georgia, serif;
@@ -901,37 +911,47 @@ header .navbar .search-block input[type=text]:focus {
   border-bottom: 1px solid #9a9ca0;
 }
 .content-wrapper .centerbar table.orders th p,
-.content-wrapper .centerbar table.orders td p {
+.content-wrapper .centerbar table.orders td p,
+.content-wrapper .centerbar table.list-block th p,
+.content-wrapper .centerbar table.list-block td p{
   font: 12px "Myriad Pro", sans-serif;
   color: #2d2929;
   margin: 0;
 }
 .content-wrapper .centerbar table.orders th p b,
-.content-wrapper .centerbar table.orders td p b {
+.content-wrapper .centerbar table.orders td p b,
+.content-wrapper .centerbar table.list-block th p b,
+.content-wrapper .centerbar table.list-block td p b{
   margin-right: 5px;
 }
 .content-wrapper .centerbar table.orders th p span,
-.content-wrapper .centerbar table.orders td p span {
+.content-wrapper .centerbar table.orders td p span,
+.content-wrapper .centerbar table.list-block th p span,
+.content-wrapper .centerbar table.list-block td p span{
   margin: 0 5px 0 0;
 }
-.content-wrapper .centerbar table.orders td.desc {
+.content-wrapper .centerbar table.orders td.desc,
+.content-wrapper .centerbar table.list-block td.desc{
   border-radius: 5px 0 0 5px;
   -moz-border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
   border-left: 1px solid #9a9ca0;
 }
-.content-wrapper .centerbar table.orders td.links {
+.content-wrapper .centerbar table.orders td.links,
+.content-wrapper .centerbar table.list-block td.links{
   width: 116px;
   border-right: 1px solid #9a9ca0;
   border-radius: 0 5px 5px 0;
   -moz-border-radius: 0 5px 5px 0;
   -webkit-border-radius: 0 5px 5px 0;
 }
-.content-wrapper .centerbar table.orders td.links a {
+.content-wrapper .centerbar table.orders td.links a,
+.content-wrapper .centerbar table.list-block td.links a{
   color: #00bd9f;
   border-bottom: 1px solid #d4f0e9;
 }
-.content-wrapper .centerbar table.orders td.links a:hover {
+.content-wrapper .centerbar table.orders td.links a:hover,
+.content-wrapper .centerbar table.list-block td.links a:hover{
   text-decoration: none;
   border-color: transparent;
 }

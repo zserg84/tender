@@ -9,14 +9,16 @@
 namespace modules\site\models\backend\form;
 
 
+use modules\base\behaviors\ImageBehavior;
 use modules\base\validators\EachValidator;
 use modules\base\validators\LangRequiredValidator;
 use modules\site\models\Education;
 
 class EducationForm extends Education
 {
-    public $translationTitle = [];
-    public $translationText = [];
+    public $title;
+    public $text;
+    public $image;
 
     /**
      * @inheritdoc
@@ -24,8 +26,9 @@ class EducationForm extends Education
     public function rules()
     {
         return [
-            [['translationTitle', 'translationText'], EachValidator::className(), 'rule'=>['filter', 'filter'=>'trim']],
-            [['translationTitle', 'translationText'], LangRequiredValidator::className(), 'langUrls' => 'ru', 'currentLangRequired' => false],
+            [['title', 'text', 'original_language_id'], 'required'],
+            [['original_language_id', 'image_id', 'video_url', 'date'], 'safe'],
+            [['image'], 'file', 'mimeTypes'=> ['image/png', 'image/jpeg', 'image/gif'], 'wrongMimeType'=>'Допустимы только файлы jpg, png, gif'],
         ];
     }
 
@@ -35,9 +38,22 @@ class EducationForm extends Education
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
-                'translationTitle' => 'Название',
-                'translationText' => 'Текст',
+                'title' => 'Название',
+                'text' => 'Текст',
+                'original_language_id' => 'Оригинальный язык',
+                'date' => 'Дата публикации',
+                'image' => 'Картинка',
+                'video_url' => 'Видео',
             ]
         );
+    }
+
+    public function behaviors()
+    {
+        return [
+            'imageBehavior' => [
+                'class' => ImageBehavior::className(),
+            ]
+        ];
     }
 } 

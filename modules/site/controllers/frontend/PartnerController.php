@@ -14,7 +14,7 @@ use modules\site\components\Controller;
 class PartnerController extends Controller
 {
 
-    public function index(){
+    public function actionIndex(){
         return $this->render('index');
     }
 } 

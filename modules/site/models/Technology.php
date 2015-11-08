@@ -5,6 +5,8 @@ namespace modules\site\models;
 use modules\base\behaviors\LangSaveBehavior;
 use modules\base\behaviors\TranslateBehavior;
 use modules\direction\models\Direction;
+use modules\image\models\Image;
+use modules\lang\models\Lang;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -14,9 +16,16 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $id
  * @property integer $direction_id
  * @property integer $created_at
+ * @property integer $original_language_id
+ * @property string $date
+ * @property integer $image_id
+ * @property string $video_url
  *
  * @property Direction $direction
  * @property TechnologyLang[] $technologyLangs
+ * @property Image $image
+ * @property Lang $originalLanguage
+ * @property Lang[] $langs
  */
 class Technology extends \yii\db\ActiveRecord
 {
@@ -38,8 +47,9 @@ class Technology extends \yii\db\ActiveRecord
     {
         return [
             [['direction_id'], 'required'],
-            [['direction_id', 'created_at'], 'integer'],
-//            [['direction_id'], 'exist', 'skipOnError' => true, 'targetClass' => Direction::className(), 'targetAttribute' => ['direction_id' => 'id']],
+            [['direction_id', 'created_at', 'original_language_id', 'image_id'], 'integer'],
+            [['date'], 'safe'],
+            [['video_url'], 'string', 'max' => 255],
         ];
     }
 
@@ -75,6 +85,22 @@ class Technology extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getImage()
+    {
+        return $this->hasOne(Image::className(), ['id' => 'image_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOriginalLanguage()
+    {
+        return $this->hasOne(Lang::className(), ['id' => 'original_language_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getDirection()
     {
         return $this->hasOne(Direction::className(), ['id' => 'direction_id']);
@@ -89,11 +115,33 @@ class Technology extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLangs()
+    {
+        return $this->hasMany(Lang::className(), ['id' => 'lang_id'])->viaTable('technology_lang', ['technology_id' => 'id']);
+    }
+
+    /**
      * @inheritdoc
      * @return \modules\site\models\query\TechnologyQuery the active query used by this AR class.
      */
     public static function find()
     {
         return new \modules\site\models\query\TechnologyQuery(get_called_class());
+    }
+
+    public function beforeSave($insert){
+        if(parent::beforeSave($insert)){
+            $this->date = $this->date ? Yii::$app->getFormatter()->asTimestamp($this->date) : null;
+            $this->date = $this->date ? date('Y-m-d', $this->date) : date('Y-m-d');
+            return true;
+        }
+        return false;
+    }
+
+    public function afterFind(){
+        parent::afterFind();
+        $this->date = $this->date ? Yii::$app->getFormatter()->asDate($this->date) : null;
     }
 }

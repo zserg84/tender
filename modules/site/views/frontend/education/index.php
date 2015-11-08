@@ -7,7 +7,7 @@ use yii\widgets\ListView;
     <h1>Обучение</h1>
 </div>
 
-<table class="orders">
+<table class="list-block">
     <tbody>
     <?
     echo ListView::widget([

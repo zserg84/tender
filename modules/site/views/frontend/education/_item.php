@@ -1,12 +1,12 @@
+<?
+use yii\helpers\Url;
+?>
 <tr>
     <td width="30px">
         <p><b><?=Yii::$app->getFormatter()->asDate($model->created_at)?></b></p>
     </td>
     <td>
-        <div><?=$model->title?></div>
-        <?
-
-        ?>
+        <div><p class="title"><a href="<?=Url::toRoute(['/site/education/get-modal-info', 'id'=>$model->id])?>"><?=$model->title?></a></p></div>
         <div><?
             if(strlen($model->text) > 200){
                 $textBegin = mb_substr($model->text,0, 200, 'UTF-8');

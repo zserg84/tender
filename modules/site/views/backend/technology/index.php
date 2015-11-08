@@ -6,6 +6,8 @@ use yii\grid\ActionColumn;
 use modules\themes\admin\widgets\GridView;
 use yii\grid\CheckboxColumn;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use modules\lang\models\Lang;
 
 $this->title = 'Технологии';
 $this->params['subtitle'] = 'Список';
@@ -24,7 +26,15 @@ $gridConfig = [
         ],
         'title',
         'text',
-        'directionName'
+        'directionName',
+        [
+            'attribute' => 'originalLanguageName',
+            'format' => 'raw',
+            'filter' => Html::activeDropDownList($searchModel, 'originalLanguageName',
+                ArrayHelper::map(Lang::find()->all(), 'id', 'name'),
+                ['class'=>'form-control','prompt' => 'Все языки']
+            ),
+        ],
     ]
 ];
 

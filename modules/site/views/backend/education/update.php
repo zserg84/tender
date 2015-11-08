@@ -1,6 +1,7 @@
 <?php
 
 use modules\themes\admin\widgets\Box;
+use modules\site\widgets\modellang\EducationLangFormWidget;
 
 $this->title = 'Обучение';
 $this->params['subtitle'] = 'Редактирование';
@@ -44,3 +45,8 @@ $boxButtons = !empty($boxButtons) ? implode(' ', $boxButtons) : null; ?>
         Box::end(); ?>
     </div>
 </div>
+
+<h3>Переводы</h3>
+<?=EducationLangFormWidget::widget([
+    'educationModel' => $model,
+]);

@@ -10,8 +10,10 @@ namespace modules\site\controllers\frontend;
 
 
 use modules\direction\models\Direction;
+use modules\lang\models\Lang;
 use modules\site\components\Controller;
 use modules\site\models\Technology;
+use modules\site\models\TechnologyLang;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
 
@@ -33,5 +35,19 @@ class TechnologyController extends Controller
             'dataProvider' => $dataProvider,
             'direction' => $direction,
         ]);
+    }
+
+    public function actionGetModalInfo($id){
+        $model = Technology::findOne($id);
+        $lang = Lang::getCurrent();
+        $modelLang = TechnologyLang::findOne([
+            'technology_id' => $model->id,
+            'lang_id' => $lang->id
+        ]);
+        if($modelLang)
+            return $this->renderAjax('modal-info', [
+                'model' => $model,
+                'modelLang' => $modelLang,
+            ]);
     }
 } 

@@ -5,13 +5,16 @@ use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use modules\lang\models\Lang;
+use kartik\date\DatePicker;
+use dosamigos\fileinput\BootstrapFileInput;
 use modules\direction\models\Direction;
 ?>
 <?php $form = ActiveForm::begin([
     'enableAjaxValidation' => true,
 //    'enableClientValidation' => true,
     'options' => [
-        'id' => 'news_form',
+        'id' => 'technology_form',
+        'enctype' => 'multipart/form-data',
     ]
 ]); ?>
 <?php $box->beginBody(); ?>
@@ -20,27 +23,61 @@ use modules\direction\models\Direction;
             <?= $form->field($formModel, 'direction_id')->dropDownList(ArrayHelper::map(Direction::find()->andWhere(['parent_id'=>null])->all(), 'id', 'name'));?>
         </div>
     </div>
-    <?
-    $languages = Lang::find()->all();
-    foreach($languages as $language):?>
-        <div class="row">
-            <div class="col-sm-6">
-                <?= $form->field($formModel, 'translationTitle[' . $language->id . ']', ['options' => ['class' => 'form-group']])->textInput()->label(
-                    $formModel->getAttributeLabel('translationTitle').', '.$language->name
-                );?>
-            </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($formModel, 'date')->widget(DatePicker::className(), [
+
+            ])?>
         </div>
-    <?endforeach;?>
-    <?
-    foreach($languages as $language):?>
-        <div class="row">
-            <div class="col-sm-6">
-                <?= $form->field($formModel, 'translationText[' . $language->id . ']', ['options' => ['class' => 'form-group']])->textarea()->label(
-                    $formModel->getAttributeLabel('translationText').', '.$language->name
-                );?>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($formModel, 'original_language_id')->dropDownList(ArrayHelper::map(Lang::find()->all(), 'id', 'name'))?>
         </div>
-    <?endforeach;?>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($formModel, 'title', ['options' => ['class' => 'form-group']]);?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($formModel, 'text', ['options' => ['class' => 'form-group']])->textarea();?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <?
+            $initialPreview = [];
+            $previewConfig = [];
+            if($formModel->image){
+                $initialPreview[] = '<img src="'.$formModel->image->getSrc().'" alt="" class="file-preview-image">';
+                $previewConfig[] = [
+                    'url' => Url::toRoute(['image-delete']),
+                    'key' => $formModel->image->id,
+                ];
+            }
+            ?>
+            <?= $form->field($formModel, 'image')->widget(BootstrapFileInput::className(), [
+                'options' => ['accept' => 'image/*'],
+                'clientOptions' => [
+                    'browseClass' => 'btn btn-success',
+                    'uploadClass' => 'btn btn-info',
+                    'removeClass' => 'btn btn-danger',
+                    'removeIcon' => '<i class="glyphicon glyphicon-trash"></i> ',
+                    'showUpload' => false,
+                    'initialPreview' => $initialPreview,
+                    'initialPreviewConfig' => $previewConfig,
+                    'showRemove' => false,
+                ]
+            ])->error(false);?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($formModel, 'video_url', ['options' => ['class' => 'form-group']]);?>
+        </div>
+    </div>
 
 <?php $box->endBody(); ?>
 <?php $box->beginFooter(); ?>

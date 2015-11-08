@@ -1,5 +1,6 @@
 <?
 use yii\widgets\ListView;
+use modules\themes\Module as ThemeModule;
 ?>
 <div class="ad"><a href="#">Реклама</a></div>
 
@@ -7,7 +8,7 @@ use yii\widgets\ListView;
     <h1>Новости</h1>
 </div>
 
-<table class="orders">
+<table class="list-block">
     <tbody>
     <?
     echo ListView::widget([
@@ -18,3 +19,15 @@ use yii\widgets\ListView;
     ?>
     </tbody>
 </table>
+
+<?
+$this->registerJs('
+    $(document).on("click", ".list-block .title a", function(){
+        $.get($(this).attr("href"), function(data){
+            $("#modal-popup .modal-body").html(data);
+            $("#modal-popup .modal-footer").html("<button class=\"cancelBtn\">'.ThemeModule::t('themes-site', 'close_button').'</button>");
+            $("#modal-popup").modal();
+        });
+        return false;
+    });
+');

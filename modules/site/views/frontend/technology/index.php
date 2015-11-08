@@ -9,7 +9,7 @@ use yii\widgets\ListView;
         <h1><?=$direction->name?></h1>
     </div>
 
-    <table class="orders">
+    <table class="list-block">
         <tbody>
         <?
         echo ListView::widget([

@@ -13,7 +13,7 @@ use modules\site\components\Controller;
 
 class ContactController extends Controller
 {
-    public function index(){
+    public function actionIndex(){
         return $this->render('index');
     }
 } 
