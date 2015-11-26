@@ -8,16 +8,19 @@
 
 namespace modules\contract\controllers;
 
+use modules\base\components\FrontendController;
 use modules\contract\models\Contract;
+use modules\contract\models\ContractOrder;
 use modules\contract\models\FavoriteCompany;
 use modules\contract\models\OfferToPerformer;
 use modules\contract\models\Order;
 use modules\contract\models\search\PerformerSearch;
+use yii\base\Exception;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
 use \yii\web\Controller;
 
-class PerformerController extends Controller
+class PerformerController extends FrontendController
 {
     protected  $_buttons = [];
 
@@ -87,7 +90,11 @@ class PerformerController extends Controller
     }
 
     public function actionOfferOrder($contractId){
-        $orders = Order::find()->all();
+        $currentContract = Contract::getCurContract();
+        $orders = Order::find()->where([
+            'contract_id' => $currentContract->id,
+            'status' => Order::STATUS_OPEN
+        ])->all();
         $model = Contract::findOne($contractId);
 
         if(\Yii::$app->getRequest()->post()){
@@ -103,6 +110,10 @@ class PerformerController extends Controller
                 $otp->order_id = $orderId;
                 $otp->contract_id = $contractId;
                 $otp->save();
+
+                /*$order = Order::findOne($orderId);
+                $order->status = Order::STATUS_WORK;
+                $order->save();*/
             }
             $this->redirect(Url::toRoute(['list']));
         }
@@ -111,5 +122,25 @@ class PerformerController extends Controller
             'model' => $model,
             'orders' => $orders,
         ]);
+    }
+
+    public function actionChoosePerformer($orderId, $contractId){
+        $order = Order::findOne($orderId);
+        $curContract = Contract::getCurContract();
+        if($order->contract_id != $curContract->id)
+            throw new Exception('Access denied');
+        $contractOrder = ContractOrder::findOne([
+            'order_id' => $orderId,
+        ]);
+        if(!$contractOrder){
+            $contractOrder = new ContractOrder();
+            $contractOrder->contract_id = $contractId;
+            $contractOrder->order_id = $orderId;
+            if($contractOrder->save()){
+                $order->status = Order::STATUS_WORK;
+                $order->save(false, ['status']);
+            }
+        }
+        return $contractOrder->contract_id;
     }
 } 

@@ -14,11 +14,13 @@ use common\actions\DeleteAction;
 use common\actions\IndexAction;
 use common\actions\UpdateAction;
 use modules\base\components\BackendController;
+use modules\image\models\Image;
 use modules\lang\models\Lang;
 use modules\site\models\backend\form\EducationForm;
 use modules\site\models\backend\form\EducationLangForm;
 use modules\site\models\backend\search\EducationSearch;
 use modules\site\models\Education;
+use modules\site\models\EducationImage;
 use modules\site\models\EducationLang;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -58,15 +60,30 @@ class EducationController extends BackendController
                 'modelClass' => Education::className(),
                 'redirectUrl' => Url::toRoute(['index'])
             ],
+            'image-delete' => [
+                'class' => DeleteAction::className(),
+                'modelClass' => Image::className(),
+                'modelIdName' => 'key',
+                'redirectUrl' => false,
+            ],
         ];
     }
 
     public function afterEdit($model, $formModel)
     {
-        $formModel->image = UploadedFile::getInstance($formModel, 'image');
-        if ($image = $formModel->getImageModel('image')) {
-            $model->image_id = $image->id;
-            $model->save();
+        $images = UploadedFile::getInstances($formModel, 'images');
+        foreach($images as $image){
+            $formModel->dop_image = $image;
+            if ($imageModel = $formModel->getImageModel('dop_image')) {
+                $ei = EducationImage::find()->where([
+                    'image_id' => $imageModel->id,
+                    'education_id' => $model->id,
+                ])->one();
+                $ei = $ei ? $ei : new EducationImage();
+                $ei->image_id = $imageModel->id;
+                $ei->education_id = $model->id;
+                $ei->save();
+            }
         }
 
         $modelLang = EducationLang::findOne([
@@ -88,7 +105,8 @@ class EducationController extends BackendController
         $model = Education::findOne($id);
         $formModel = new EducationForm();
         $formModel->setAttributes($model->attributes);
-        $formModel->image = $model->image;
+
+        $formModel->images = $model->educationImages;
 
         $modelLang = $model->getEducationLangs()->andWhere([
             'lang_id' => $model->original_language_id

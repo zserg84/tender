@@ -2,6 +2,7 @@
 
 namespace modules\site\components;
 
+use modules\base\components\FrontendController;
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Json;
@@ -10,7 +11,7 @@ use yii\web\Response;
 /**
  * Main frontend controller.
  */
-class Controller extends \yii\web\Controller
+class Controller extends FrontendController
 {
     protected function performAjaxValidation($model)
     {

@@ -19,7 +19,8 @@ class TechnologyForm extends Technology
 
     public $title;
     public $text;
-    public $image;
+    public $images = [];
+    public $dop_image;
 
     /**
      * @inheritdoc
@@ -28,8 +29,7 @@ class TechnologyForm extends Technology
     {
         return [
             [['title', 'text', 'original_language_id'], 'required'],
-            [['original_language_id', 'image_id', 'video_url', 'date', 'direction_id'], 'safe'],
-            [['image'], 'file', 'mimeTypes'=> ['image/png', 'image/jpeg', 'image/gif'], 'wrongMimeType'=>'Допустимы только файлы jpg, png, gif'],
+            [['original_language_id', 'video_url', 'date', 'direction_id'], 'safe'],
         ];
     }
 
@@ -44,7 +44,7 @@ class TechnologyForm extends Technology
                 'direction_id' => 'Направление',
                 'original_language_id' => 'Оригинальный язык',
                 'date' => 'Дата публикации',
-                'image' => 'Картинка',
+                'images' => 'Картинки',
                 'video_url' => 'Видео',
             ]
         );

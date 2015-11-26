@@ -16,12 +16,11 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $created_at
  * @property integer $original_language_id
  * @property string $date
- * @property string $source
- * @property integer $image_id
  * @property string $video_url
  *
- * @property Image $image
  * @property Lang $originalLanguage
+ * @property ArticleImage[] $articleImages
+ * @property Image[] $images
  * @property ArticleLang[] $articleLangs
  * @property Lang[] $langs
  */
@@ -44,7 +43,7 @@ class Article extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'original_language_id', 'image_id'], 'integer'],
+            [['created_at', 'original_language_id'], 'integer'],
             [['date'], 'safe'],
             [['video_url'], 'string', 'max' => 255],
         ];
@@ -57,6 +56,10 @@ class Article extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'created_at' => 'Created At',
+            'original_language_id' => 'Original Language ID',
+            'date' => 'Date',
+            'video_url' => 'Video Url',
         ];
     }
 
@@ -81,14 +84,6 @@ class Article extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getImage()
-    {
-        return $this->hasOne(Image::className(), ['id' => 'image_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getOriginalLanguage()
     {
         return $this->hasOne(Lang::className(), ['id' => 'original_language_id']);
@@ -97,9 +92,25 @@ class Article extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getArticleImages()
+    {
+        return $this->hasMany(ArticleImage::className(), ['article_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(Image::className(), ['id' => 'image_id'])->viaTable('article_image', ['article_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getArticleLangs()
     {
-        return $this->hasMany(ArticleLang::className(), ['article_id' => 'id'])->indexBy('lang_id');
+        return $this->hasMany(ArticleLang::className(), ['article_id' => 'id']);
     }
 
     /**

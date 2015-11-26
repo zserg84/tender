@@ -34,6 +34,10 @@ class OrderSearch extends FilterModelBase
 
     public $myProfile;
 
+    public $offersToMe;
+
+    public $visibleStatuses = [];
+
     public function rules(){
         return [
             [['filter_specialization',
@@ -56,8 +60,22 @@ class OrderSearch extends FilterModelBase
             $query->innerJoinWith([
                 'offerToCustomers' => function($query) use($curContract){
                     $query->from('offer_to_customer as OTC');
-                    $query->where([
+                    $query->andWhere([
                         'OTC.contract_id' => $curContract->id,
+                    ]);
+                }
+            ]);
+        }
+
+        if($this->offersToMe){
+            $query->andWhere([
+                '<>', 'order.status', Order::STATUS_WORK
+            ]);
+            $query->innerJoinWith([
+                'offerToPerformers' => function($query) use($curContract){
+                    $query->from('offer_to_performer as OTP');
+                    $query->andWhere([
+                        'OTP.contract_id' => $curContract->id,
                     ]);
                 }
             ]);
@@ -115,17 +133,24 @@ class OrderSearch extends FilterModelBase
         ]);
         
         if($this->filter_direction_checkbox){
-          $directions = [];
-          foreach($this->filter_direction_checkbox as $directionId){
-            $dir = Direction::findOne($directionId);
-            $directions = array_merge($directions, $dir->getAllChildrenArray());
-          }
-          $query->innerJoinWith([
-              'directions' => function($query) use($directions){
-                  $query->andWhere(['direction.id' => $directions]);
-              }
-          ]);
+            $directions = [];
+            foreach($this->filter_direction_checkbox as $directionId){
+                $dir = Direction::findOne($directionId);
+                $directions = array_merge($directions, $dir->getAllChildrenArray());
+            }
+            $query->innerJoinWith([
+                'directions' => function($query) use($directions){
+                    $query->andWhere(['direction.id' => $directions]);
+                }
+            ]);
         }
+
+        if($this->visibleStatuses){
+            $query->andWhere([
+                'order.status' => $this->visibleStatuses
+            ]);
+        }
+
         $this->_dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => new Pagination([

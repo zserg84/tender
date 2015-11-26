@@ -16,8 +16,10 @@ use common\actions\DeleteAction;
 use common\actions\IndexAction;
 use common\actions\UpdateAction;
 use modules\base\components\BackendController;
+use modules\image\models\Image;
 use modules\lang\models\Lang;
 use modules\site\models\Article;
+use modules\site\models\ArticleImage;
 use modules\site\models\ArticleLang;
 use modules\site\models\backend\form\ArticleForm;
 use modules\site\models\backend\form\ArticleLangForm;
@@ -60,15 +62,30 @@ class ArticleController extends BackendController
                 'modelClass' => Article::className(),
                 'redirectUrl' => Url::toRoute(['index'])
             ],
+            'image-delete' => [
+                'class' => DeleteAction::className(),
+                'modelClass' => Image::className(),
+                'modelIdName' => 'key',
+                'redirectUrl' => false,
+            ],
         ];
     }
 
     public function afterEdit($model, $formModel)
     {
-        $formModel->image = UploadedFile::getInstance($formModel, 'image');
-        if ($image = $formModel->getImageModel('image')) {
-            $model->image_id = $image->id;
-            $model->save();
+        $images = UploadedFile::getInstances($formModel, 'images');
+        foreach($images as $image){
+            $formModel->dop_image = $image;
+            if ($imageModel = $formModel->getImageModel('dop_image')) {
+                $ai = ArticleImage::find()->where([
+                    'image_id' => $imageModel->id,
+                    'article_id' => $model->id,
+                ])->one();
+                $ai = $ai ? $ai : new ArticleImage();
+                $ai->image_id = $imageModel->id;
+                $ai->article_id = $model->id;
+                $ai->save();
+            }
         }
 
         $modelLang = ArticleLang::findOne([
@@ -90,7 +107,8 @@ class ArticleController extends BackendController
         $model = Article::findOne($id);
         $formModel = new ArticleForm();
         $formModel->setAttributes($model->attributes);
-        $formModel->image = $model->image;
+
+        $formModel->images = $model->articleImages;
 
         $modelLang = $model->getArticleLangs()->andWhere([
             'lang_id' => $model->original_language_id

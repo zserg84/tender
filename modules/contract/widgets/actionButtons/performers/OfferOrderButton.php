@@ -30,7 +30,7 @@ class OfferOrderButton extends Button
             ]);
 
             $this->jsHandler = '
-                $(".offer_order_link").click(function() {
+                $(document).on("click", ".offer_order_link", function() {
                     var url = "'.Url::toRoute(['/contract/performer/offer-order']).'";
                     $.pjax({url: url, container: "#'.$this->pjaxContainerId.'", data:{contractId: $(this).closest("tr").data("contract")}, push:false, replace:false});
                 });

@@ -11,6 +11,8 @@ namespace modules\contract\controllers\customer;
 use customer\components\CustomerTrait;
 use modules\contract\widgets\actionButtons\orders\CustomerProfileButton;
 use modules\contract\widgets\actionButtons\orders\OrderLinkButton;
+use modules\contract\widgets\actionButtons\orders\OrderResponsesButton;
+use modules\contract\widgets\actionButtons\orders\UpdateButton;
 
 class OrderController extends \modules\contract\controllers\OrderController
 {
@@ -28,8 +30,8 @@ class OrderController extends \modules\contract\controllers\OrderController
 
     public function actionListMine(){
         $this->_buttons = [
-            ['class' => OrderLinkButton::className(), 'params' =>[]],
-            ['class' => CustomerProfileButton::className(), 'params' =>[]],
+            ['class' => UpdateButton::className(), 'params' =>[]],
+            ['class' => OrderResponsesButton::className(), 'params' =>[]],
         ];
 
         return parent::actionListMine();

@@ -16,11 +16,11 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $created_at
  * @property integer $original_language_id
  * @property string $date
- * @property integer $image_id
  * @property string $video_url
  *
- * @property Image $image
  * @property Lang $originalLanguage
+ * @property EducationImage[] $educationImages
+ * @property Image[] $images
  * @property EducationLang[] $educationLangs
  * @property Lang[] $langs
  */
@@ -43,7 +43,7 @@ class Education extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'original_language_id', 'image_id'], 'integer'],
+            [['created_at', 'original_language_id'], 'integer'],
             [['date'], 'safe'],
             [['video_url'], 'string', 'max' => 255],
         ];
@@ -56,6 +56,10 @@ class Education extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'created_at' => 'Created At',
+            'original_language_id' => 'Original Language ID',
+            'date' => 'Date',
+            'video_url' => 'Video Url',
         ];
     }
 
@@ -80,14 +84,6 @@ class Education extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getImage()
-    {
-        return $this->hasOne(Image::className(), ['id' => 'image_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getOriginalLanguage()
     {
         return $this->hasOne(Lang::className(), ['id' => 'original_language_id']);
@@ -96,9 +92,25 @@ class Education extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getEducationImages()
+    {
+        return $this->hasMany(EducationImage::className(), ['education_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(Image::className(), ['id' => 'image_id'])->viaTable('education_image', ['education_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getEducationLangs()
     {
-        return $this->hasMany(EducationLang::className(), ['education_id' => 'id'])->indexBy('lang_id');
+        return $this->hasMany(EducationLang::className(), ['education_id' => 'id']);
     }
 
     /**

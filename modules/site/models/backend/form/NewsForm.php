@@ -16,7 +16,8 @@ class NewsForm extends News
 
     public $title;
     public $text;
-    public $image;
+    public $images = [];
+    public $dop_image;
 
     /**
      * @inheritdoc
@@ -24,9 +25,9 @@ class NewsForm extends News
     public function rules()
     {
         return [
+            [['lit', 'source', 'source_image'], 'safe'],
             [['title', 'text', 'original_language_id'], 'required'],
-            [['original_language_id', 'image_id', 'video_url', 'source', 'date'], 'safe'],
-            [['image'], 'file', 'mimeTypes'=> ['image/png', 'image/jpeg', 'image/gif'], 'wrongMimeType'=>'Допустимы только файлы jpg, png, gif'],
+            [['original_language_id', 'video_url', 'source', 'date'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class NewsForm extends News
                 'text' => 'Текст',
                 'original_language_id' => 'Оригинальный язык',
                 'date' => 'Дата публикации',
-                'image' => 'Картинка',
+                'images' => 'Картинки',
                 'video_url' => 'Видео',
             ]
         );

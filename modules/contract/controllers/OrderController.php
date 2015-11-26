@@ -8,9 +8,14 @@
 
 namespace modules\contract\controllers;
 
+use modules\contract\models\ContractOrder;
 use modules\contract\models\form\OrderFormCreate;
 use modules\contract\models\form\OrderFormUpdate;
+use modules\contract\models\OfferToCustomer;
 use modules\contract\models\OfferToPerformer;
+use modules\contract\widgets\actionButtons\performers\ChoosePerformer;
+use modules\contract\widgets\actionButtons\performers\OfferOrderButton;
+use modules\contract\widgets\actionButtons\performers\ProfileButton;
 use modules\site\components\Controller;
 use modules\users\models\User;
 use Yii;
@@ -35,7 +40,10 @@ class OrderController extends Controller
     }
 
     public function actionList(){
-        $dataProvider = $this->getOrderList();
+        $params['visibleStatuses'] = [
+            Order::STATUS_OPEN
+        ];
+        $dataProvider = $this->getOrderList($params);
         return $this->render('list', [
             'dataProvider' => $dataProvider,
         ]);
@@ -68,6 +76,7 @@ class OrderController extends Controller
 
         return $this->renderAjax('create', [
             'model' => $model,
+            'order' => $order,
         ]);
     }
 
@@ -75,7 +84,13 @@ class OrderController extends Controller
         $orderId = Yii::$app->getRequest()->post('orderId');
         $model = new OrderFormUpdate();
         $order = Order::findOne($orderId);
+
         $model->setAttributes($order->attributes);//VarDumper::dump($model,10,1);exit;
+
+        if(!in_array($order->status, [Order::STATUS_PREPARED, Order::STATUS_TEMP_REMOVE])){
+            $model->setScenario('status');
+            $order->setScenario('status');
+        }
 
         if($errors = $this->edit($model, $order))
             return $errors;
@@ -84,6 +99,7 @@ class OrderController extends Controller
 
         return $this->renderAjax('_create_modal', [
             'model' => $model,
+            'order' => $order,
         ]);
     }
 
@@ -183,5 +199,28 @@ class OrderController extends Controller
                 return Json::encode(ActiveForm::validate($model));
 //            \Yii::$app->end();
         }
+    }
+
+    public function actionResponses($orderId){
+        $responses = OfferToCustomer::find()->andWhere([
+            'order_id' => $orderId,
+        ])->all();
+
+        $buttons = [
+            ['class' => ProfileButton::className(), 'params' =>[]],
+            ['class' => ChoosePerformer::className(), 'params' =>[
+                'orderId' => $orderId
+            ]],
+        ];
+
+        $contractOrder = ContractOrder::findOne([
+            'order_id' => $orderId,
+        ]);
+
+        return $this->renderAjax('responses', [
+            'responses' => $responses,
+            'contractOrder' => $contractOrder,
+            'buttons' => $buttons,
+        ]);
     }
 } 

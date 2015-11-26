@@ -50,16 +50,19 @@ use modules\direction\models\Direction;
             <?
             $initialPreview = [];
             $previewConfig = [];
-            if($formModel->image){
-                $initialPreview[] = '<img src="'.$formModel->image->getSrc().'" alt="" class="file-preview-image">';
-                $previewConfig[] = [
-                    'url' => Url::toRoute(['image-delete']),
-                    'key' => $formModel->image->id,
-                ];
+            if($formModel->images){
+                foreach($formModel->images as $technologyImage){
+                    $image = $technologyImage->image;
+                    $initialPreview[] = '<img src="'.$image->getSrc().'" alt="" class="file-preview-image">';
+                    $previewConfig[] = [
+                        'url' => Url::toRoute(['image-delete']),
+                        'key' => $image->id,
+                    ];
+                }
             }
             ?>
-            <?= $form->field($formModel, 'image')->widget(BootstrapFileInput::className(), [
-                'options' => ['accept' => 'image/*'],
+            <?= $form->field($formModel, 'images[]')->widget(BootstrapFileInput::className(), [
+                'options' => ['accept' => 'image/*', 'multiple' => true],
                 'clientOptions' => [
                     'browseClass' => 'btn btn-success',
                     'uploadClass' => 'btn btn-info',
@@ -69,6 +72,7 @@ use modules\direction\models\Direction;
                     'initialPreview' => $initialPreview,
                     'initialPreviewConfig' => $previewConfig,
                     'showRemove' => false,
+                    'overwriteInitial' => false,
                 ]
             ])->error(false);?>
         </div>

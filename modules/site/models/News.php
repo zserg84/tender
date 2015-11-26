@@ -17,11 +17,13 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $original_language_id
  * @property string $date
  * @property string $source
- * @property integer $image_id
  * @property string $video_url
+ * @property string $lit
+ * @property string $source_image
  *
- * @property Image $image
  * @property Lang $originalLanguage
+ * @property NewsImage[] $newsImages
+ * @property Image[] $images
  * @property NewsLang[] $newsLangs
  * @property Lang[] $langs
  */
@@ -43,9 +45,9 @@ class News extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'original_language_id', 'image_id'], 'integer'],
+            [['created_at', 'original_language_id'], 'integer'],
             [['date'], 'safe'],
-            [['source', 'video_url'], 'string', 'max' => 255],
+            [['source', 'video_url', 'lit', 'source_image'], 'string', 'max' => 255],
         ];
     }
 
@@ -56,6 +58,13 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'created_at' => 'Created At',
+            'original_language_id' => 'Original Language ID',
+            'date' => 'Date',
+            'source' => 'Source',
+            'video_url' => 'Video Url',
+            'lit' => 'Lit',
+            'source_image' => 'Source Image',
         ];
     }
 
@@ -80,17 +89,25 @@ class News extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getImage()
+    public function getOriginalLanguage()
     {
-        return $this->hasOne(Image::className(), ['id' => 'image_id']);
+        return $this->hasOne(Lang::className(), ['id' => 'original_language_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOriginalLanguage()
+    public function getNewsImages()
     {
-        return $this->hasOne(Lang::className(), ['id' => 'original_language_id']);
+        return $this->hasMany(NewsImage::className(), ['news_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(Image::className(), ['id' => 'image_id'])->viaTable('news_image', ['news_id' => 'id']);
     }
 
     /**

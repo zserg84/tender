@@ -16,7 +16,8 @@ class ArticleForm extends Article
 
     public $title;
     public $text;
-    public $image;
+    public $images = [];
+    public $dop_image;
 
     /**
      * @inheritdoc
@@ -25,8 +26,7 @@ class ArticleForm extends Article
     {
         return [
             [['title', 'text', 'original_language_id'], 'required'],
-            [['original_language_id', 'image_id', 'video_url', 'date'], 'safe'],
-            [['image'], 'file', 'mimeTypes'=> ['image/png', 'image/jpeg', 'image/gif'], 'wrongMimeType'=>'Допустимы только файлы jpg, png, gif'],
+            [['original_language_id', 'video_url', 'date'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class ArticleForm extends Article
                 'text' => 'Текст',
                 'original_language_id' => 'Оригинальный язык',
                 'date' => 'Дата публикации',
-                'image' => 'Картинка',
+                'images' => 'Картинки',
                 'video_url' => 'Видео',
             ]
         );

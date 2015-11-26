@@ -196,6 +196,7 @@ $imgPath = ThemeAsset::imgSrc('', 'images');
             </div>
         </div>
     </div>
+    <div id="modal-log"></div>
 
     <?
     echo Modal::widget([

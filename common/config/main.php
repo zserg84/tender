@@ -41,6 +41,7 @@ return [
             'class' => \common\components\User::className(),
             'identityClass' => 'modules\users\models\User',
             'loginUrl' => ['/users/guest/login'],
+            'enableAutoLogin' => true
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -67,7 +68,8 @@ return [
             'ruleTable' => '{{%auth_rule}}',
             /**/
             'defaultRoles' => [
-                'user', 'customer', 'performer',
+                'guest', 'user'
+//                'user', 'customer', 'performer'
             ],
         ],
         'assetManager' => [

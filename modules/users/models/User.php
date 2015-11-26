@@ -466,4 +466,8 @@ class User extends ActiveRecord implements IdentityInterface
         $userId = Yii::$app->getUser()->getId();
         return self::findOne($userId);
     }
+
+    public function getZeroId(){
+        return substr($this->id + 10000000000, 1, 11);
+    }
 }

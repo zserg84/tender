@@ -18,13 +18,13 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $created_at
  * @property integer $original_language_id
  * @property string $date
- * @property integer $image_id
  * @property string $video_url
  *
  * @property Direction $direction
- * @property TechnologyLang[] $technologyLangs
- * @property Image $image
  * @property Lang $originalLanguage
+ * @property TechnologyImage[] $technologyImages
+ * @property Image[] $images
+ * @property TechnologyLang[] $technologyLangs
  * @property Lang[] $langs
  */
 class Technology extends \yii\db\ActiveRecord
@@ -47,7 +47,7 @@ class Technology extends \yii\db\ActiveRecord
     {
         return [
             [['direction_id'], 'required'],
-            [['direction_id', 'created_at', 'original_language_id', 'image_id'], 'integer'],
+            [['direction_id', 'created_at', 'original_language_id'], 'integer'],
             [['date'], 'safe'],
             [['video_url'], 'string', 'max' => 255],
         ];
@@ -61,6 +61,10 @@ class Technology extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'direction_id' => 'Direction ID',
+            'created_at' => 'Created At',
+            'original_language_id' => 'Original Language ID',
+            'date' => 'Date',
+            'video_url' => 'Video Url',
         ];
     }
 
@@ -85,9 +89,9 @@ class Technology extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getImage()
+    public function getDirection()
     {
-        return $this->hasOne(Image::className(), ['id' => 'image_id']);
+        return $this->hasOne(Direction::className(), ['id' => 'direction_id']);
     }
 
     /**
@@ -101,9 +105,17 @@ class Technology extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDirection()
+    public function getTechnologyImages()
     {
-        return $this->hasOne(Direction::className(), ['id' => 'direction_id']);
+        return $this->hasMany(TechnologyImage::className(), ['technology_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(Image::className(), ['id' => 'image_id'])->viaTable('technology_image', ['technology_id' => 'id']);
     }
 
     /**
@@ -111,7 +123,7 @@ class Technology extends \yii\db\ActiveRecord
      */
     public function getTechnologyLangs()
     {
-        return $this->hasMany(TechnologyLang::className(), ['technology_id' => 'id'])->indexBy('lang_id');
+        return $this->hasMany(TechnologyLang::className(), ['technology_id' => 'id']);
     }
 
     /**

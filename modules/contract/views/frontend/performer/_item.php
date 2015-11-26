@@ -9,7 +9,7 @@ $user = $model->getUser();
 if(!$user)
     return;
 
-$zeroid=substr($user->id + 10000000000, 1, 11);
+$zeroid = $user->getZeroId();
 $buttons = $this->context->getButtons();
 ?>
 <tr data-contract="<?=$model->id?>">

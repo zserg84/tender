@@ -21,6 +21,7 @@ use modules\site\models\backend\form\NewsForm;
 use modules\site\models\backend\form\NewsLangForm;
 use modules\site\models\backend\search\NewsSearch;
 use modules\site\models\News;
+use modules\site\models\NewsImage;
 use modules\site\models\NewsLang;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -73,10 +74,19 @@ class NewsController extends BackendController
 
     public function afterEdit($model, $formModel)
     {
-        $formModel->image = UploadedFile::getInstance($formModel, 'image');
-        if ($image = $formModel->getImageModel('image')) {
-            $model->image_id = $image->id;
-            $model->save();
+        $images = UploadedFile::getInstances($formModel, 'images');
+        foreach($images as $image){
+            $formModel->dop_image = $image;
+            if ($imageModel = $formModel->getImageModel('dop_image')) {
+                $ni = NewsImage::find()->where([
+                    'image_id' => $imageModel->id,
+                    'news_id' => $model->id,
+                ])->one();
+                $ni = $ni ? $ni : new NewsImage();
+                $ni->image_id = $imageModel->id;
+                $ni->news_id = $model->id;
+                $ni->save();
+            }
         }
 
         $modelLang = NewsLang::findOne([
@@ -98,7 +108,8 @@ class NewsController extends BackendController
         $model = News::findOne($id);
         $formModel = new NewsForm();
         $formModel->setAttributes($model->attributes);
-        $formModel->image = $model->image;
+
+        $formModel->images = $model->newsImages;
 
         $modelLang = $model->getNewsLangs()->andWhere([
             'lang_id' => $model->original_language_id
@@ -119,7 +130,6 @@ class NewsController extends BackendController
                     return $this->redirect(Url::toRoute(['/site/news/index']));
                 }
             }
-
         }
 
         return $this->render('update', [

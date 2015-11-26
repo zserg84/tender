@@ -15,11 +15,13 @@ use common\actions\DeleteAction;
 use common\actions\IndexAction;
 use common\actions\UpdateAction;
 use modules\base\components\BackendController;
+use modules\image\models\Image;
 use modules\lang\models\Lang;
 use modules\site\models\backend\form\TechnologyForm;
 use modules\site\models\backend\form\TechnologyLangForm;
 use modules\site\models\backend\search\TechnologySearch;
 use modules\site\models\Technology;
+use modules\site\models\TechnologyImage;
 use modules\site\models\TechnologyLang;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -60,15 +62,30 @@ class TechnologyController extends BackendController
                 'modelClass' => Technology::className(),
                 'redirectUrl' => Url::toRoute(['index'])
             ],
+            'image-delete' => [
+                'class' => DeleteAction::className(),
+                'modelClass' => Image::className(),
+                'modelIdName' => 'key',
+                'redirectUrl' => false,
+            ],
         ];
     }
 
     public function afterEdit($model, $formModel)
     {
-        $formModel->image = UploadedFile::getInstance($formModel, 'image');
-        if ($image = $formModel->getImageModel('image')) {
-            $model->image_id = $image->id;
-            $model->save();
+        $images = UploadedFile::getInstances($formModel, 'images');
+        foreach($images as $image){
+            $formModel->dop_image = $image;
+            if ($imageModel = $formModel->getImageModel('dop_image')) {
+                $ti = TechnologyImage::find()->where([
+                    'image_id' => $imageModel->id,
+                    'technology_id' => $model->id,
+                ])->one();
+                $ti = $ti ? $ti : new TechnologyImage();
+                $ti->image_id = $imageModel->id;
+                $ti->technology_id = $model->id;
+                $ti->save();
+            }
         }
 
         $modelLang = TechnologyLang::findOne([
@@ -92,7 +109,8 @@ class TechnologyController extends BackendController
         $model = Technology::findOne($id);
         $formModel = new TechnologyForm();
         $formModel->setAttributes($model->attributes);
-        $formModel->image = $model->image;
+
+        $formModel->images = $model->technologyImages;
 
         $modelLang = $model->getTechnologyLangs()->andWhere([
             'lang_id' => $model->original_language_id

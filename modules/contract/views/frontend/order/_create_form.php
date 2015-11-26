@@ -7,8 +7,13 @@ use modules\contract\models\Currency;
 use modules\direction\models\Direction;
 use modules\contract\models\OrderHasDirection;
 use kartik\depdrop\DepDrop;
+use modules\contract\models\Order;
 
 $yesno = [1=>\Yii::$app->getFormatter()->asBoolean(1), 0=>\Yii::$app->getFormatter()->asBoolean(0)];
+
+$disabled = !in_array($order->status, [Order::STATUS_PREPARED, Order::STATUS_TEMP_REMOVE]);
+if($order->isNewRecord)
+    $disabled = false;
 
 $form = ActiveForm::begin(
     [
@@ -80,6 +85,7 @@ if($orderId)
                         <div class="col-sm-6 spec-main-select">
                             <?=Html::dropDownList('select-spec-main-select' ,false, $directions, [
                                 'id'=>$orderDirectionId,
+                                'disabled' => $disabled,
                             ])?>
                         </div>
                         <div class="col-sm-6 spec-second-select">
@@ -89,6 +95,7 @@ if($orderId)
                                 'data' => ArrayHelper::map(Direction::find()->where(['parent_id' => key($directions)])->all(), 'id', 'name'),
                                 'options'=>[
                                     'id'=>$orderSubDirectionId,
+                                    'disabled' => $disabled,
                                 ],
                                 'pluginOptions'=>[
                                     'depends'=>[$orderDirectionId],
@@ -107,11 +114,13 @@ if($orderId)
                             ?>
                         </div>
                     </div>
+                    <?if(!$disabled):?>
                     <div class="row">
                         <div class="col-sm-4 add pull-right">
                             <a href="#"><?=$model->getAttributeLabel('add_button')?> +</a>
                         </div>
                     </div>
+                    <?endif?>
                 </div>
             </div>
         </div>
@@ -127,7 +136,9 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('short_description')?></p>
             </div>
             <div class="col-sm-8">
-                <?=$form->field($model, 'short_description')->textInput(['class'=>''])->label(false)?>
+                <?=$form->field($model, 'short_description')->textInput([
+                    'disabled' => $disabled,
+                ])->label(false)?>
             </div>
         </div>
 
@@ -136,7 +147,9 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('description')?></p>
             </div>
             <div class="col-sm-8">
-                <?=$form->field($model, 'description')->textInput(['class'=>''])->label(false)?>
+                <?=$form->field($model, 'description')->textInput([
+                    'disabled' => $disabled,
+                ])->label(false)?>
             </div>
         </div>
 
@@ -146,7 +159,10 @@ if($orderId)
             </div>
             <div class="col-sm-4">
                 <?$model->date_performance = $model->date_performance ? Yii::$app->getFormatter()->asDate($model->date_performance) : null?>
-                <?=$form->field($model, 'date_performance')->textInput(['class'=>'datepicker'])->label(false)?>
+                <?=$form->field($model, 'date_performance')->textInput([
+                    'class'=>'datepicker',
+                    'disabled' => $disabled,
+                ])->label(false)?>
             </div>
         </div>
 
@@ -156,7 +172,10 @@ if($orderId)
             </div>
             <div class="col-sm-4">
                 <?$model->date_publish = $model->date_publish ? Yii::$app->getFormatter()->asDate($model->date_publish) : null?>
-                <?=$form->field($model, 'date_publish')->textInput(['class'=>'datepicker'])->label(false)?>
+                <?=$form->field($model, 'date_publish')->textInput([
+                    'class'=>'datepicker',
+                    'disabled' => $disabled,
+                ])->label(false)?>
             </div>
         </div>
 
@@ -165,7 +184,9 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('material')?></p>
             </div>
             <div class="col-sm-8">
-                <?=$form->field($model, 'material')->textInput(['class'=>''])->label(false)?>
+                <?=$form->field($model, 'material')->textInput([
+                    'disabled' => $disabled,
+                ])->label(false)?>
             </div>
         </div>
 
@@ -174,11 +195,15 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('file_model_id')?></p>
             </div>
             <div class="col-sm-8">
-                <??>
-                <?=$form->field($model, 'file_model_id')->fileInput([
+                <?
+                $options = [
                     'class' => 'customfile-input costum-file-model',
-                    'data-text' => $model->getAttributeLabel('file_model_upload')
-                ])->label(false)?>
+                    'data-text' => $model->getAttributeLabel('file_model_upload'),
+                ];
+                if($disabled)
+                    $options['disabled'] = $disabled;
+                ?>
+                <?=$form->field($model, 'file_model_id')->fileInput($options)->label(false)?>
             </div>
         </div>
 
@@ -193,7 +218,9 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('count')?></p>
             </div>
             <div class="col-sm-2">
-                <?=$form->field($model, 'count')->textInput(['class'=>''])->label(false)?>
+                <?=$form->field($model, 'count')->textInput([
+                    'disabled' => $disabled,
+                ])->label(false)?>
             </div>
         </div>
 
@@ -202,10 +229,14 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('budget')?></p>
             </div>
             <div class="col-sm-4">
-                <?=$form->field($model, 'budget')->textInput(['class'=>''])->label(false)?>
+                <?=$form->field($model, 'budget')->textInput([
+                    'disabled' => $disabled,
+                ])->label(false)?>
             </div>
             <div class="col-sm-2">
-                <?=$form->field($model, 'currency_id')->dropDownList(ArrayHelper::map(Currency::find()->all(), 'id', 'name'))->label(false)?>
+                <?=$form->field($model, 'currency_id')->dropDownList(ArrayHelper::map(Currency::find()->all(), 'id', 'name'), [
+                    'disabled' => $disabled,
+                ])->label(false)?>
             </div>
         </div>
 
@@ -214,7 +245,9 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('material_belongs_customer')?></p>
             </div>
             <div class="col-sm-2">
-                <?=$form->field($model, 'material_belongs_customer')->dropDownList($yesno)->label(false)?>
+                <?=$form->field($model, 'material_belongs_customer')->dropDownList($yesno, [
+                    'disabled' => $disabled,
+                ])->label(false)?>
             </div>
         </div>
 
@@ -223,7 +256,9 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('material_included_budget')?></p>
             </div>
             <div class="col-sm-2">
-                <?=$form->field($model, 'material_included_budget')->dropDownList($yesno)->label(false)?>
+                <?=$form->field($model, 'material_included_budget')->dropDownList($yesno, [
+                    'disabled' => $disabled,
+                ])->label(false)?>
             </div>
         </div>
 
@@ -232,7 +267,52 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('has_modeling')?></p>
             </div>
             <div class="col-sm-2">
-                <?=$form->field($model, 'has_modeling')->dropDownList($yesno)->label(false)?>
+                <?=$form->field($model, 'has_modeling')->dropDownList($yesno, [
+                    'disabled' => $disabled,
+                ])->label(false)?>
+            </div>
+        </div>
+
+        <?
+        $statuses = [Order::STATUS_OPEN => Order::STATUS_OPEN, Order::STATUS_PREPARED => Order::STATUS_PREPARED];
+        if(!$order->isNewRecord){
+            if($order->status == Order::STATUS_OPEN){
+                $statuses = [Order::STATUS_OPEN => Order::STATUS_OPEN,
+                    Order::STATUS_TEMP_REMOVE => Order::STATUS_TEMP_REMOVE,
+                    Order::STATUS_CLOSE => Order::STATUS_CLOSE,
+                ];
+            }
+            elseif($order->status == Order::STATUS_PREPARED){
+                $statuses = [Order::STATUS_OPEN => Order::STATUS_OPEN, Order::STATUS_PREPARED => Order::STATUS_PREPARED];
+            }
+            elseif($order->status == Order::STATUS_WORK){
+                $statuses = [Order::STATUS_WORK => Order::STATUS_WORK,
+                    Order::STATUS_CLOSE => Order::STATUS_CLOSE,
+                    Order::STATUS_FINISHED => Order::STATUS_FINISHED
+                ];
+            }
+            elseif($order->status == Order::STATUS_TEMP_REMOVE){
+                $statuses = [Order::STATUS_OPEN => Order::STATUS_OPEN, Order::STATUS_TEMP_REMOVE => Order::STATUS_TEMP_REMOVE];
+            }
+            else{
+                $statuses[Order::STATUS_CLOSE] = Order::STATUS_CLOSE;
+                $statuses[Order::STATUS_TEMP_REMOVE] = Order::STATUS_TEMP_REMOVE;
+                $statuses[Order::STATUS_DONE] = Order::STATUS_DONE;
+                $statuses[Order::STATUS_FINISHED] = Order::STATUS_FINISHED;
+            }
+
+        }
+        $statusesArray = [];
+        foreach($statuses as $k=>$status){
+            $statuses[$k] = Order::getStatus($status);
+        }
+        ?>
+        <div class="row">
+            <div class="col-sm-4">
+                <p><?=$model->getAttributeLabel('status')?></p>
+            </div>
+            <div class="col-sm-8">
+                <?=$form->field($model, 'status')->dropDownList($statuses)->label(false)?>
             </div>
         </div>
 
@@ -241,10 +321,15 @@ if($orderId)
                 <p><?=$model->getAttributeLabel('image_id')?></p>
             </div>
             <div class="col-sm-8">
-                <?=$form->field($model, 'file_model_id')->fileInput([
+                <?
+                $options = [
                     'class' => 'customfile-input costum-file-order-photo',
-                    'data-text' => $model->getAttributeLabel('image_upload')
-                ])->label(false)?>
+                    'data-text' => $model->getAttributeLabel('image_upload'),
+                ];
+                if($disabled)
+                    $options['disabled'] = $disabled;
+                ?>
+                <?=$form->field($model, 'file_model_id')->fileInput($options)->label(false)?>
             </div>
         </div>
     </div>

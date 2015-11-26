@@ -29,7 +29,7 @@ class UpdateButton extends Button
             });
 
             $("#'.$this->pjaxContainerId.'").on("pjax:end", function() {
-                initPage();
+//                initPage();
                 initPopup();
                 $("#order-update-modal").modal();
             });

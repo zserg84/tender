@@ -2356,3 +2356,8 @@ input#upload:hover {
 .visible-text{
     display: '';
 }
+
+.leftimg {
+    float:left;
+    margin: 7px 7px 7px 0; /* Отступы вокруг картинки */
+}

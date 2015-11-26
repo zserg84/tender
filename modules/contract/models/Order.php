@@ -7,6 +7,7 @@ use modules\image\models\Image;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\VarDumper;
+use modules\themes\Module as ThemeModule;
 
 /**
  * This is the model class for table "order".
@@ -37,12 +38,22 @@ use yii\helpers\VarDumper;
  * @property OrderComment[] $orderComments
  * @property OrderHasDirection[] $orderHasDirections
  * @property Direction[] $directions
+ * @property OrderLog[] $orderLogs
  * @property OrderPerformer[] $orderPerformers
  */
 class Order extends \yii\db\ActiveRecord
 {
 
     const DEFAULT_COVER_SRC = '';
+
+    const STATUS_OPEN = 1;          //  открыт
+    const STATUS_PREPARED = 2;      //  подготовлен
+    const STATUS_WORK = 3;          //  в работе
+    const STATUS_CLOSE = 4;         //  отменен и закрыт
+    const STATUS_REFUSE = 5;        //  отказ от исполнения
+    const STATUS_TEMP_REMOVE = 6;   //  временно снят
+    const STATUS_DONE = 7;      //  выполнен
+    const STATUS_FINISHED = 8;        //  Закрыт
 
     public $image;
 
@@ -87,23 +98,45 @@ class Order extends \yii\db\ActiveRecord
                 'class' => TimestampBehavior::className(),
                 'updatedAtAttribute' => false,
             ],
-            /*'timestampBehaviorPerformance' => [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'date_performance',
-                'updatedAtAttribute' => false,
-            ],
-            'timestampBehaviorPublish' => [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'date_publish',
-                'updatedAtAttribute' => false,
-            ]*/
         ];
     }
 
     public function beforeSave($insert){
         $this->date_performance = Yii::$app->getFormatter()->asTimestamp($this->date_performance);
         $this->date_publish = Yii::$app->getFormatter()->asTimestamp($this->date_publish);
+
+        $this->status = $this->status ? $this->status : self::STATUS_OPEN;
         return parent::beforeSave($insert);
+    }
+
+    public function afterSave($insert, $changedAttributes = []){
+        parent::afterSave($insert, $changedAttributes);
+
+        if($insert || (isset($changedAttributes['status']) && $this->status != $changedAttributes['status'])){
+            $log = new OrderLog();
+            $log->user_id = Yii::$app->getUser()->getId();
+            $log->order_id = $this->id;
+            $log->status = $this->status;
+            $log->save();
+        }
+    }
+
+    public static function getStatuses(){
+        return [
+            self::STATUS_OPEN => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_OPEN'),
+            self::STATUS_PREPARED => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_PREPARED'),
+            self::STATUS_WORK => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_WORK'),
+            self::STATUS_CLOSE => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_CLOSE'),
+            self::STATUS_REFUSE => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_REFUSE'),
+            self::STATUS_TEMP_REMOVE => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_TEMP_REMOVE'),
+            self::STATUS_DONE => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_DONE'),
+            self::STATUS_FINISHED => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_FINISHED'),
+        ];
+    }
+
+    public static function getStatus($status){
+        $statuses = self::getStatuses();
+        return $statuses[$status];
     }
 
     /**
@@ -173,6 +206,14 @@ class Order extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getOrderLogs()
+    {
+        return $this->hasMany(OrderLog::className(), ['order_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getOrderPerformers()
     {
         return $this->hasMany(OrderPerformer::className(), ['order_id' => 'id']);
@@ -211,5 +252,15 @@ class Order extends \yii\db\ActiveRecord
                 $this->save();
             }
         }
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['status'] = [
+            'status'
+        ];
+
+        return $scenarios;
     }
 }

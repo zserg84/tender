@@ -13,4 +13,13 @@ class OrderFormUpdate extends OrderForm{
 
     public $orderId;
 
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['status'] = [
+            'status'
+        ];
+
+        return $scenarios;
+    }
 } 

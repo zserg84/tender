@@ -43,10 +43,12 @@ class OrderForm extends Model
 
     public $file_model_id;
 
+    public $status;
+
     public function rules(){
         return [
             [['short_description', 'description', 'date_performance', 'date_publish', 'material', 'count', 'budget',
-                'currency_id', 'material_belongs_customer', 'material_included_budget', 'has_modeling'], 'required'],
+                'currency_id', 'material_belongs_customer', 'material_included_budget', 'has_modeling', 'status'], 'required'],
             [['count', 'budget'], 'number'],
             [['image_id', 'file_model_id'], 'safe'],
         ];
@@ -81,6 +83,7 @@ class OrderForm extends Model
             'submit_button' => Yii::t('FORM_ORDER', 'ORDER_SAVE_BUTTON'),
             'cancel_button' => Yii::t('FORM_ORDER', 'ORDER_CANCEL_BUTTON'),
             'add_button' => Yii::t('FORM_ORDER', 'ORDER_ADD_DIRECTION_BUTTON'),
+            'status' => Yii::t('FORM_ORDER', 'ORDER_STATUS'),
         ];
     }
 
@@ -90,10 +93,12 @@ class OrderForm extends Model
             'default' => [
                 'short_description', 'description', 'date_performance', 'date_publish', 'material', 'count', 'budget',
                 'currency_id', 'material_belongs_customer', 'material_included_budget', 'has_modeling', 'image_id', 'file_model_id',
+                'status',
             ],
             'ajax' => [
                 'short_description', 'description', 'date_performance', 'date_publish', 'material', 'count', 'budget',
                 'currency_id', 'material_belongs_customer', 'material_included_budget', 'has_modeling', 'image_id', 'file_model_id',
+                'status',
             ],
         ];
     }

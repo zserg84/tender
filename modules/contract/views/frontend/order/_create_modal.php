@@ -2,8 +2,7 @@
 use common\components\Modal;
 use modules\themes\Module as ThemeModule;
 
-$createFlag = isset($createFlag) ? $createFlag : false;
-$modalId = $createFlag ? 'order-create-modal' : 'order-update-modal';
+$modalId = $order->isNewRecord ? 'order-create-modal' : 'order-update-modal';
 
 Modal::begin([
     'id' => $modalId,
@@ -16,6 +15,7 @@ Modal::begin([
 
 echo $this->render('_create_form', [
     'model' => $model,
+    'order' => $order,
 ]);
 
 Modal::end();

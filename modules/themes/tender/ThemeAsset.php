@@ -26,7 +26,7 @@ class ThemeAsset extends AssetBundle
      */
     public $depends = [
         'yii\bootstrap\BootstrapAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
+//        'yii\bootstrap\BootstrapPluginAsset',
         'common\components\BootboxAsset',
     ];
 

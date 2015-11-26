@@ -1,16 +1,32 @@
 <?
 use yii\bootstrap\Html;
 use modules\base\components\Helper;
+use modules\themes\Module as ThemeModule;
 ?>
 <div>
     <div class="popup-wrapper">
-        <strong><?=$modelLang->title?></strong>
+        <h4><strong><?=$modelLang->title?></strong></h4>
         <div><p><?=$modelLang->text?></p></div>
+        <div style="height: 230px">
+            <p><?if($model->images){
+                    echo Html::img($model->images[0]->getSrc(), [
+                        'width' => '132px',
+                        'height' => '174px',
+                        'class'=>"leftimg"
+                    ]);
+                }?><?=$modelLang->text?></p>
+        </div>
         <div>
-            <?if($model->image){
-                echo Html::img($model->image->getSrc(), [
-                    'width' => '300px'
-                ]);
+            <?if($model->images){
+                foreach($model->images as $k=>$image){
+                    if(!$k)
+                        continue;
+                    echo Html::img($image->getSrc(), [
+                        'width' => '300px',
+                        'height' => '200px',
+                    ]);
+                }
+
             }?>
         </div>
         <div>
@@ -32,4 +48,5 @@ use modules\base\components\Helper;
 <?
 $this->registerJs('
     $("#modal-popup .modal-header .title").html("Технологии '.$model->date.'");
+    $("#modal-popup .modal-footer").html("<button class=\"cancelBtn\">'.ThemeModule::t('ALL_INTERFACES', 'MODAL_CLOSE_BUTTON').'</button>");
 ');

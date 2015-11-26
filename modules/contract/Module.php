@@ -55,6 +55,7 @@ class Module extends \modules\base\components\Module
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS1'), 'url' => ['/contract/order/list']],
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS2'), 'url' => ['/contract/order/my-profile']],
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS3'), 'url' => ['/contract/order/list-my-response']],
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS6'), 'url' => ['/contract/order/list-offers']],
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS4'), 'url' => ['/contract/order/list-work']],
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS5'), 'url' => ['/contract/order/list-mine'],],
                 ], 'options' => ['class'=>'has']],
