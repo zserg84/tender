@@ -16,6 +16,7 @@ use modules\themes\Module as ThemeModule;
  * @property string $updated_at
  * @property string $text
  * @property integer $estimate
+ * @property integer $parent_id
  *
  * @property Contract $contract
  * @property Contract $selfContract
@@ -43,7 +44,6 @@ class ContractComment extends \yii\db\ActiveRecord
             [['contract_id', 'self_contract_id'], 'required'],
             [['contract_id', 'self_contract_id', 'estimate'], 'integer'],
             [['text'], 'string'],
-            [['created_at', 'updated_at'], 'string', 'max' => 45]
         ];
     }
 
@@ -96,5 +96,23 @@ class ContractComment extends \yii\db\ActiveRecord
             self::ESTIMATE_NEUTRAL => ThemeModule::t('ALL_INTERFACES', 'COMMENT_NEUTRAL'),
             self::ESTIMATE_NEGATIVE => ThemeModule::t('ALL_INTERFACES', 'COMMENT_NEGATIVE'),
         ];
+    }
+
+    public static function getEstimateText($estimate){
+        $list = self::estimateList();
+        return isset($list[$estimate]) ? $list[$estimate] : $list[self::ESTIMATE_NEUTRAL];
+    }
+
+    public static function estimateClasses(){
+        return [
+            self::ESTIMATE_POSITIVE => 'green',
+            self::ESTIMATE_NEUTRAL => 'gray',
+            self::ESTIMATE_NEGATIVE => 'red',
+        ];
+    }
+
+    public static function getEstimateClass($estimate){
+        $list = self::estimateClasses();
+        return isset($list[$estimate]) ? $list[$estimate] : $list[self::ESTIMATE_NEUTRAL];
     }
 }

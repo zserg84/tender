@@ -29,6 +29,7 @@ class ProfileButton extends Button
 
             $this->jsHandler = '
                 $(".profile_link").click(function() {
+                    $(".modal").hide();
                     var url = "'.Url::toRoute(['/contract/performer/profile']).'";
                     $.pjax({url: url, container: "#'.$this->pjaxContainerId.'", data:{contractId: $(this).closest("tr").data("contract")}, push:false, replace:false});
                 });

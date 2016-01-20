@@ -2,7 +2,7 @@
 
 namespace modules\site\controllers\frontend;
 
-use modules\site\components\Controller;
+use yii\web\Controller;
 use modules\site\models\ContactForm;
 use modules\site\Module;
 use yii\captcha\CaptchaAction;

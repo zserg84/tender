@@ -17,7 +17,7 @@ class CommentForm extends \yii\base\Model
 
 //    public $captcha;
 
-    public $estimate;
+    public $estimate = 0;
 
     public $self_contract_id;
 
@@ -45,6 +45,9 @@ class CommentForm extends \yii\base\Model
     public function attributeLabels(){
         return [
             'add_comment' => ThemeModule::t('ALL_INTERFACES', 'COMMENT_ADD'),
+            'text' => ThemeModule::t('ALL_INTERFACES', 'COMMENT'),
+            'edit_comment' => ThemeModule::t('ALL_INTERFACES', 'UPDATE_COMMENT'),
+            'response_comment' => ThemeModule::t('ALL_INTERFACES', 'RESPONSE_COMMENT'),
             'comment_positive' => ThemeModule::t('ALL_INTERFACES', 'COMMENT_POSITIVE'),
             'comment_neutral' => ThemeModule::t('ALL_INTERFACES', 'COMMENT_NEUTRAL'),
             'comment_negative' => ThemeModule::t('ALL_INTERFACES', 'COMMENT_NEGATIVE'),

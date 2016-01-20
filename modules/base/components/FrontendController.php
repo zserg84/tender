@@ -17,6 +17,8 @@ use yii\web\Controller;
 class FrontendController extends Controller
 {
 
+    public $accessForGuest = false;
+
     /**
      * @inheritdoc
      */
@@ -39,7 +41,7 @@ class FrontendController extends Controller
     }
 
     public function beforeAction($action){
-        if(\Yii::$app->getUser()->isGuest)
+        if(\Yii::$app->getUser()->isGuest && !$this->accessForGuest)
             $this->redirect('/');
         return parent::beforeAction($action);
     }

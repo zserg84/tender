@@ -79,7 +79,7 @@ Modal::begin([
                         <p><?=$orderForm->getAttributeLabel('budget')?></p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="gray"><?=$model->budget . ' '. $model->currency->name?></p>
+                        <p class="gray"><?=$model->getBudget() . ' '. $model->currency->short_name?></p>
                     </div>
                 </div>
 

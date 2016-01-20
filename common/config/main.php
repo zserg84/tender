@@ -68,7 +68,7 @@ return [
             'ruleTable' => '{{%auth_rule}}',
             /**/
             'defaultRoles' => [
-                'guest', 'user'
+                'guest', 'user', 'customer', 'performer'
 //                'user', 'customer', 'performer'
             ],
         ],

@@ -45,11 +45,15 @@ class OrderForm extends Model
 
     public $status;
 
+    public $subdirection_ids;
+
     public function rules(){
         return [
             [['short_description', 'description', 'date_performance', 'date_publish', 'material', 'count', 'budget',
-                'currency_id', 'material_belongs_customer', 'material_included_budget', 'has_modeling', 'status'], 'required'],
+                'currency_id', 'material_belongs_customer', 'material_included_budget', 'has_modeling', 'status', 'subdirection_ids'], 'required'],
             [['count', 'budget'], 'number'],
+            [['short_description'], 'string', 'max' => 80],
+            [['description'], 'string', 'max' => 1000],
             [['image_id', 'file_model_id'], 'safe'],
         ];
     }
@@ -93,12 +97,12 @@ class OrderForm extends Model
             'default' => [
                 'short_description', 'description', 'date_performance', 'date_publish', 'material', 'count', 'budget',
                 'currency_id', 'material_belongs_customer', 'material_included_budget', 'has_modeling', 'image_id', 'file_model_id',
-                'status',
+                'status', 'subdirection_ids'
             ],
             'ajax' => [
                 'short_description', 'description', 'date_performance', 'date_publish', 'material', 'count', 'budget',
                 'currency_id', 'material_belongs_customer', 'material_included_budget', 'has_modeling', 'image_id', 'file_model_id',
-                'status',
+                'status', 'subdirection_ids'
             ],
         ];
     }

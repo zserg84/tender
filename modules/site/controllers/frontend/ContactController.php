@@ -8,8 +8,7 @@
 
 namespace modules\site\controllers\frontend;
 
-
-use modules\site\components\Controller;
+use yii\web\Controller;
 
 class ContactController extends Controller
 {

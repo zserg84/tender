@@ -53,7 +53,8 @@ class Order extends \yii\db\ActiveRecord
     const STATUS_REFUSE = 5;        //  отказ от исполнения
     const STATUS_TEMP_REMOVE = 6;   //  временно снят
     const STATUS_DONE = 7;      //  выполнен
-    const STATUS_FINISHED = 8;        //  Закрыт
+    const STATUS_FINISHED_ACCEPT = 8;        //  Закрыт
+    const STATUS_FINISHED_FAIL = 9;     //  не выполнен
 
     public $image;
 
@@ -73,9 +74,9 @@ class Order extends \yii\db\ActiveRecord
         return [
             [['contract_id'], 'required'],
             [['id', 'contract_id', 'count', 'budget', 'material_belongs_customer', 'material_included_budget', 'has_modeling', 'status', 'currency_id', 'file_model_id', 'image_id', 'created_at'], 'integer'],
-            [['short_description'], 'string'],
+            [['short_description', 'description'], 'string'],
             [['date_performance', 'date_publish'], 'safe'],
-            [['description', 'material'], 'string', 'max' => 45]
+            [['material'], 'string', 'max' => 45]
         ];
     }
 
@@ -130,7 +131,8 @@ class Order extends \yii\db\ActiveRecord
             self::STATUS_REFUSE => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_REFUSE'),
             self::STATUS_TEMP_REMOVE => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_TEMP_REMOVE'),
             self::STATUS_DONE => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_DONE'),
-            self::STATUS_FINISHED => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_FINISHED'),
+            self::STATUS_FINISHED_ACCEPT => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_FINISHED_ACCEPT'),
+            self::STATUS_FINISHED_FAIL => ThemeModule::t('ALL_INTERFACES', 'ORDER_STATUS_FINISHED_FAIL'),
         ];
     }
 
@@ -262,5 +264,9 @@ class Order extends \yii\db\ActiveRecord
         ];
 
         return $scenarios;
+    }
+
+    public function getBudget(){
+        return number_format($this->budget, 2, '.', ',');
     }
 }

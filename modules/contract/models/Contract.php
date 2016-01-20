@@ -9,6 +9,7 @@ use modules\contract\models\query\ContractQuery;
 use modules\contract\Module as ContractModule;
 use modules\users\models\User;
 use Yii;
+use yii\base\Exception;
 use yii\helpers\VarDumper;
 
 /**
@@ -249,14 +250,22 @@ class Contract extends \yii\db\ActiveRecord
     public static function getCurContract(){
         $contract = null;
         $currentUser = User::getCurrentUser();
+        if(!$currentUser)
+            return false;
         if((ContractModule::module() && ContractModule::module()->interfaceType == 'customer') || $currentUser->customerContracts){
-            $contract = $currentUser->customerContracts ? $currentUser->customerContracts[0] : null;
-            $contract->contractType = 'customer';
+            if($currentUser->customerContracts){
+                $contract = $currentUser->customerContracts[0];
+                $contract->contractType = 'customer';
+            }
         }
         elseif((ContractModule::module() && ContractModule::module()->interfaceType == 'performer') || $currentUser->performerContracts){
-            $contract = $currentUser->performerContracts ? $currentUser->performerContracts[0] : null;
-            $contract->contractType = 'performer';
+            if($currentUser->performerContracts){
+                $contract = $currentUser->performerContracts[0];
+                $contract->contractType = 'performer';
+            }
         }
+        if(!$contract)
+            throw new Exception('Undefined contract');
         return $contract;
     }
 
@@ -269,5 +278,13 @@ class Contract extends \yii\db\ActiveRecord
             $user = $this->customer;
         }
         return $user;
+    }
+
+    public function isCustomer(){
+        return (bool) $this->customer;
+    }
+
+    public function isPerformer(){
+        return (bool) $this->performer;
     }
 }

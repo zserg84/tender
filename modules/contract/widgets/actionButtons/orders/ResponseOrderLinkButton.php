@@ -20,28 +20,37 @@ class ResponseOrderLinkButton extends Button
 {
     public function init()
     {
-        $this->button = Html::a(ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_1_2_ANSWER_TO_THE_ORDER_BUTTON'), "javascript:void(0)", [
-            'class' => 'response_order_link'
-        ]);
+        if(\Yii::$app->getUser()->isGuest){
+            $onlyReg = ContractModule::t('GUEST_INTERFACE', 'ACCES_DENIED_GUESTINTARFACE');
+            $this->button = Html::a(ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_1_2_ANSWER_TO_THE_ORDER_BUTTON'), Url::toRoute(['/signup/']), [
+                'data-confirm' => $onlyReg
+            ]);
+        }
+        else{
+            $this->button = Html::a(ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_1_2_ANSWER_TO_THE_ORDER_BUTTON'), "javascript:void(0)", [
+                'class' => 'response_order_link'
+            ]);
 
-        $this->jsHandler = '
-            $(".response_order_link").click(function(){
-                var url = "'.Url::toRoute(['response']).'";
-                $.pjax({
-                    url: url,
-                    container: "#'.$this->pjaxContainerId.'",
-                    data:{orderId: $(this).closest("tr").data("order")},
-                    push:false,
-                    replace:false
+            $this->jsHandler = '
+                $(".response_order_link").click(function(){
+                    var url = "'.Url::toRoute(['response']).'";
+                    $.pjax({
+                        url: url,
+                        container: "#'.$this->pjaxContainerId.'",
+                        data:{orderId: $(this).closest("tr").data("order")},
+                        push:false,
+                        replace:false
+                    });
                 });
-            });
 
-            $("#'.$this->pjaxContainerId.'").on("pjax:end", function() {
-                initPopup();
-                initPage();
-                $("#response-modal").modal();
-            });
-        ';
+                $("#'.$this->pjaxContainerId.'").on("pjax:end", function() {
+                    initPopup();
+                    initPage();
+                    $("#response-modal").modal();
+                });
+            ';
+        }
+
 
         parent::init();
     }

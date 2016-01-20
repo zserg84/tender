@@ -7,7 +7,7 @@ use yii\data\DataProviderInterface;
 abstract class FilterModelBase extends Model
 {
 
-    public $pageSize = 10;
+    public $pageSize = 12;
     /**
      * @var DataProviderInterface
      */

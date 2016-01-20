@@ -100,4 +100,8 @@ class OfferToCustomer extends \yii\db\ActiveRecord
         ];
         return $scenarios;
     }
+
+    public function getPrice(){
+        return number_format($this->price, 2, '.', ',');
+    }
 }

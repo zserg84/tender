@@ -13,7 +13,7 @@ Modal::begin([
         <div class="tip">
         <p style="text-align: left">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'ANSWER_OF_THE_PERFORMER_TO_ORDER_NOTE').'</p></div>
         <button id="response_form_submit">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'ANSWER_OF_THE_PERFORMER_TO_ORDER_OK_BUTTON').'</button>
-        <button class="cancelBtn">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'ANSWER_OF_THE_PERFORMER_TO_ORDER_CANCEL_BUTTON').'</button>',
+        <button class="cancelBtnResponse">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'ANSWER_OF_THE_PERFORMER_TO_ORDER_CANCEL_BUTTON').'</button>',
     'clientOptions' => false,
 ]);
 
@@ -59,5 +59,10 @@ Modal::end();
 $this->registerJS('
     $(document).on("click", "#response_form_submit", function(){
         $("#response_order_form").submit();
+    });
+
+    $(document).on("click", ".cancelBtnResponse", function(){
+        $(this).closest(".modal").modal("hide");
+        $("#order-modal").show();
     });
 ');

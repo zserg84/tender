@@ -42,6 +42,12 @@ class Module extends \modules\base\components\Module
                     ['label' => ThemeModule::t('CUSTOMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS1'), 'url' => ['/contract/order/list']],
                     ['label' => ThemeModule::t('CUSTOMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS2'), 'url' => ['/contract/order/list-mine']],
                 ], 'options' => ['class'=>'has']],
+                ['label' => ThemeModule::t('CUSTOMER_INTERFACE', 'VIEW_COMMENTS'), 'url' => ['/contract/comment/my-profile-list'], 'items' => [
+                    ['label' => ThemeModule::t('CUSTOMER_INTERFACE', 'VIEW_COMMENTS1'), 'url' => ['/contract/comment/my-profile-list']],
+                    ['label' => ThemeModule::t('CUSTOMER_INTERFACE', 'VIEW_COMMENTS2'), 'url' => ['/contract/comment/list']],
+                    ['label' => ThemeModule::t('CUSTOMER_INTERFACE', 'VIEW_COMMENTS3'), 'url' => ['/contract/comment-order/my-orders-list']],
+                    ['label' => ThemeModule::t('CUSTOMER_INTERFACE', 'VIEW_COMMENTS4'), 'url' => ['/contract/comment-order/list']],
+                ], 'options' => ['class'=>'has']],
             ];
         }
         elseif($user->role == 'performer'){
@@ -59,9 +65,11 @@ class Module extends \modules\base\components\Module
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS4'), 'url' => ['/contract/order/list-work']],
                     ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_TAPE_OF_ORDERS5'), 'url' => ['/contract/order/list-mine'],],
                 ], 'options' => ['class'=>'has']],
-                ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS'), 'url' => ['/contract/comment/list'], 'items' => [
-                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS1'), 'url' => ['/contract/comment/list']],
-                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS2'), 'url' => ['/contract/comment-order/list']],
+                ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS'), 'url' => ['/contract/comment/my-profile-list'], 'items' => [
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS1'), 'url' => ['/contract/comment/my-profile-list']],
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS2'), 'url' => ['/contract/comment/list']],
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS3'), 'url' => ['/contract/comment-order/my-orders-list']],
+                    ['label' => ThemeModule::t('PERFORMER_INTERFACE', 'VIEW_COMMENTS4'), 'url' => ['/contract/comment-order/list']],
                 ], 'options' => ['class'=>'has']],
             ];
         }

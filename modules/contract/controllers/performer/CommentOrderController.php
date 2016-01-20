@@ -21,32 +21,5 @@ use yii\helpers\VarDumper;
 class CommentOrderController extends \modules\contract\controllers\CommentOrderController
 {
 
-    public function actionList(){
-        $this->_buttons = [
-            ['class' => OrderLinkButton::className(), 'params' =>[
-                'title' => ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_ORDER')
-            ]],
-            ['class' => UpdateButton::className(), 'params' =>[]],
-            ['class' => ResponseButton::className(), 'params' =>[]],
-        ];
 
-        $curContract = Contract::getCurContract();
-        $query = OrderComment::find()->innerJoinWith([
-            'order' => function($query) use($curContract){
-                $query->andWhere([
-                    'order.contract_id' => $curContract->id
-                ]);
-            }
-        ]);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => new Pagination([
-                'pageSize' => 20
-            ])
-        ]);
-
-        return $this->render('list', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 }

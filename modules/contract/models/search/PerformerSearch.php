@@ -17,6 +17,7 @@ use yii\helpers\VarDumper;
 
 class PerformerSearch extends FilterModelBase
 {
+    public $pageSize = 12;
 
     public $filter_specialization;
 
@@ -54,11 +55,13 @@ class PerformerSearch extends FilterModelBase
         $query->where('performer_id IS NOT NULL');
 
         $query->innerJoinWith([
-            'performer' => function ($query) {
-                if($this->filter_specialization)
-                    $query->where(['specialization' => $this->filter_specialization]);
+            'performer.users' => function ($query) {
+
             }
         ]);
+        if($this->filter_specialization){
+            $query->andWhere(['company.specialization' => $this->filter_specialization]);
+        }
         $query->city($this->filter_territory_city);
         $query->state($this->filter_territory_state);
         $query->country($this->filter_territory_country);
@@ -85,6 +88,13 @@ class PerformerSearch extends FilterModelBase
         if($this->competitors){
             if($curContract)
                 $query->competitors($curContract);
+        }
+
+        if($this->favorite){
+            $query->orderBy('favorite_company.created_at desc');
+        }
+        else{
+            $query->orderBy('user.rate');
         }
 
         $this->_dataProvider = new ActiveDataProvider([

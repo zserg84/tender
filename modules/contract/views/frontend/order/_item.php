@@ -3,6 +3,7 @@ use modules\themes\tender\ThemeAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use modules\contract\Module as ContractModule;
+use modules\contract\models\Order;
 
 $zeroid=substr($model->id + 10000000000, 1, 11);
 $imgPath = ThemeAsset::imgSrc('', 'img');
@@ -12,13 +13,14 @@ $buttons = $this->context->getButtons();
     <td class="desc">
         <p>
             <span><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_ORDER_ID')?>: <?=$zeroid?></b></span>
-            <span><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_DATE_OF_PLACEMENT')?>: <?=$model->date_publish?></b></span>
+            <span><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_DATE_OF_PLACEMENT')?>: <?=Yii::$app->getFormatter()->asDate($model->date_publish)?></b></span>
         </p>
         <p><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_SHORT_DESCRIPTION')?>: <?=$model->short_description?></b></p>
     </td>
     <td>
-        <p><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUDGET')?>: <?=$model->budget?></b></p>
+        <p><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUDGET')?>: <?=$model->getBudget()?> <?=$model->currency->short_name?></b></p>
         <p><b><?=ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_NUMBER')?>: <?=$model->count?></b></p>
+        <p><b><?=ContractModule::t('ALL_INTERFACES', 'VIEW_ELEMENT_TAPE_OF_ORDERS_STATUS')?>: <?=Order::getStatus($model->status)?></b></p>
     </td>
     <td class="links">
         <?foreach ($buttons as $button) :

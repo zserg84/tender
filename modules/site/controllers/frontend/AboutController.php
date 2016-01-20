@@ -9,7 +9,7 @@
 namespace modules\site\controllers\frontend;
 
 use modules\lang\models\Lang;
-use modules\site\components\Controller;
+use yii\web\Controller;
 use modules\site\models\AboutLang;
 
 class AboutController extends Controller

@@ -339,7 +339,7 @@ function initPage() {
     );
 
     $(document).on("click", ".cancelBtn", function () {
-        $('.modal').modal('hide');
+        $(this).closest('.modal').modal('hide');
         return false;
     });
 

@@ -14,6 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $created_at
  * @property string $updated_at
  * @property string $text
+ * @property integer $parent_id
  *
  * @property Contract $contract
  * @property Order $order

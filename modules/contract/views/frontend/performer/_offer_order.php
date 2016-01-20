@@ -5,13 +5,12 @@ use yii\widgets\ActiveForm;
 use modules\contract\Module as ContractModule;
 
 $contract = $model;
-
 Modal::begin([
     'id' => 'offer-order-modal',
     'header' => '<p class="title">'.ContractModule::t('FORM_OFFER_OF_THE_ORDER_TO_PERFORMER', 'FORM_NAME_OFFER_OF_THE_ORDER_TO_PERFORMER').'</p>',
     'footer' => '
         <button id="offer_form_submit">'.ContractModule::t('FORM_OFFER_OF_THE_ORDER_TO_PERFORMER', 'OFFER_OF_THE_ORDER_TO_PERFORMER_CONFIRM').'</button>
-        <button class="cancelBtn">'.ContractModule::t('FORM_OFFER_OF_THE_ORDER_TO_PERFORMER', 'OFFER_OF_THE_ORDER_TO_PERFORMER_CANCEL_BUTTON').'</button>',
+        <button class="cancelBtnOfferOrder">'.ContractModule::t('FORM_OFFER_OF_THE_ORDER_TO_PERFORMER', 'OFFER_OF_THE_ORDER_TO_PERFORMER_CANCEL_BUTTON').'</button>',
     'clientOptions' => false,
     'options' => [
         'data-comment' => 'modal',
@@ -67,5 +66,10 @@ Modal::end();
 $this->registerJS('
     $(document).on("click", "#offer_form_submit", function(){
         $("#offer_order_form").submit();
+    });
+
+    $(document).on("click", ".cancelBtnOfferOrder", function(){
+        $(this).closest(".modal").modal("hide");
+        $("#profile-modal").show();
     });
 ');

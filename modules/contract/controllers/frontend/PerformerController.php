@@ -14,6 +14,7 @@ use modules\contract\widgets\actionButtons\performers\ProfileButton;
 
 class PerformerController extends \modules\contract\controllers\PerformerController
 {
+    public $accessForGuest = true;
 
     public function actionList(){
         $this->_buttons = [

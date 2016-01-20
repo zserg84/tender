@@ -13,6 +13,7 @@ use modules\contract\models\Contract;
 use modules\contract\models\ContractOrder;
 use modules\contract\models\OfferToCustomer;
 use modules\contract\models\Order;
+use modules\contract\widgets\actionButtons\orders\CustomerProfileButton;
 use modules\contract\widgets\actionButtons\orders\OrderDoneButton;
 use modules\contract\widgets\actionButtons\orders\OrderLinkButton;
 use modules\contract\widgets\actionButtons\orders\OrderResponsesButton;
@@ -34,6 +35,7 @@ class OrderController extends \modules\contract\controllers\OrderController
     public function actionList(){
         $this->_buttons = [
             ['class' => OrderLinkButton::className(), 'params' =>[]],
+            ['class' => CustomerProfileButton::className(), 'params' =>[]],
             ['class' => ResponseOrderLinkButton::className(), 'params' =>[]],
         ];
 
@@ -43,13 +45,14 @@ class OrderController extends \modules\contract\controllers\OrderController
     public function actionListMyResponse(){
         $this->_buttons = [
             ['class' => OrderLinkButton::className(), 'params' =>[]],
+            ['class' => CustomerProfileButton::className(), 'params' =>[]],
             ['class' => ResponseDeleteButton::className(), 'params' =>[]],
         ];
 
         $dataProvider = $this->getOrderList([
             'withMyResponse' => true,
             'visibleStatuses' => [
-                Order::STATUS_OPEN, Order::STATUS_PREPARED, Order::STATUS_CLOSE, Order::STATUS_REFUSE, Order::STATUS_TEMP_REMOVE, Order::STATUS_FINISHED
+                Order::STATUS_OPEN, Order::STATUS_PREPARED, Order::STATUS_CLOSE, Order::STATUS_REFUSE, Order::STATUS_TEMP_REMOVE, Order::STATUS_DONE, Order::STATUS_FINISHED_ACCEPT, Order::STATUS_FINISHED_FAIL
             ]
         ]);
         return $this->render('list',[
@@ -69,6 +72,7 @@ class OrderController extends \modules\contract\controllers\OrderController
     public function actionListOffers(){
         $this->_buttons = [
             ['class' => OrderLinkButton::className(), 'params' =>[]],
+            ['class' => CustomerProfileButton::className(), 'params' =>[]],
             ['class' => ResponseOrderLinkButton::className(), 'params' =>[]],
         ];
         $dataProvider = $this->getOrderList([
@@ -83,6 +87,7 @@ class OrderController extends \modules\contract\controllers\OrderController
     public function actionListWork(){
         $this->_buttons = [
             ['class' => OrderLinkButton::className(), 'params' =>[]],
+            ['class' => CustomerProfileButton::className(), 'params' =>[]],
             ['class' => OrderDoneButton::className(), 'params' =>[]],
             ['class' => RefuseButton::className(), 'params' =>[]],
         ];
@@ -96,6 +101,11 @@ class OrderController extends \modules\contract\controllers\OrderController
     }
 
     public function actionMyProfile(){
+        $this->_buttons = [
+            ['class' => OrderLinkButton::className(), 'params' =>[]],
+            ['class' => CustomerProfileButton::className(), 'params' =>[]],
+            ['class' => ResponseOrderLinkButton::className(), 'params' =>[]],
+        ];
         $dataProvider = $this->getOrderList([
             'myProfile' => true,
         ]);

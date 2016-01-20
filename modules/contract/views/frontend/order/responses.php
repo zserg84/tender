@@ -3,6 +3,9 @@ use common\components\Modal;
 use modules\contract\Module as ContractModule;
 use yii\widgets\Pjax;
 
+Pjax::begin(['id' => 'pjax-responses-modal-container', 'enablePushState' => false,]);
+Pjax::end();
+
 Modal::begin([
     'id' => 'response-list-popup',
     'header' => '<p class="title">'.ContractModule::t('FORM_ANSWER_OF_THE_PERFORMER_TO_ORDER', 'FORM_NAME_ANSWER_OF_THE_PERFORMER_TO_ORDER').'</p>',
@@ -34,7 +37,10 @@ Modal::begin([
                                 <?=$contract->city->country->name.', '.$contract->city->name?>
                             </span>
                         </p>
-                        <p><b><?=ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_PERFORMERS_RESPONSES_PERFORMER_OFFER')?></b> <span class="green"><b><?=$response->price?> руб</b></span></p>
+                        <p>
+                            <b><?=ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_PERFORMERS_RESPONSES_PERFORMER_OFFER')?></b>
+                            <span class="green"><b><?=$response->getPrice()?> <?=$response->currency->short_name?></b></span>
+                        </p>
                         <p><b><?=ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_PERFORMERS_RESPONSES_OFFER_COMMENTS')?>:</b><?=$response->description?></p>
                     </td>
                     <td class="links">
@@ -43,7 +49,7 @@ Modal::begin([
                                 $btn = $button['class'];
                                 $params = isset($button['params']) ? $button['params'] : [];
                                 $params = array_merge([
-                                    'pjaxContainerId' => 'pjax-order-modal-container',
+                                    'pjaxContainerId' => 'pjax-responses-modal-container',
                                 ], $params);
                                 ?>
                                 <p><?=$btn::widget($params)?>

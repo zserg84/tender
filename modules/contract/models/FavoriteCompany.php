@@ -3,6 +3,7 @@
 namespace modules\contract\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "favorite_company".
@@ -10,6 +11,7 @@ use Yii;
  * @property integer $id
  * @property integer $contract_id
  * @property integer $favorite_contract_id
+ * @property integer $created_at
  *
  * @property Contract $contract
  * @property Contract $favoriteContract
@@ -31,7 +33,7 @@ class FavoriteCompany extends \yii\db\ActiveRecord
     {
         return [
             [['contract_id', 'favorite_contract_id'], 'required'],
-            [['contract_id', 'favorite_contract_id'], 'integer']
+            [['contract_id', 'favorite_contract_id', 'created_at'], 'integer']
         ];
     }
 
@@ -44,6 +46,19 @@ class FavoriteCompany extends \yii\db\ActiveRecord
             'id' => Yii::t('favorite_company', 'ID'),
             'contract_id' => Yii::t('favorite_company', 'Contract ID'),
             'favorite_contract_id' => Yii::t('favorite_company', 'Favorite Contract ID'),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'timestampBehavior' => [
+                'class' => TimestampBehavior::className(),
+                'updatedAtAttribute' => false
+            ]
         ];
     }
 

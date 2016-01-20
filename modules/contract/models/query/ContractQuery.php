@@ -19,7 +19,7 @@ class ContractQuery extends ActiveQuery
         return $this->innerJoinWith([
             'city' => function($query) use($cityId){
                 if($cityId)
-                    $query->where(['city.ID' => $cityId]);
+                    $query->andWhere(['city.ID' => $cityId]);
             }
         ]);
     }
@@ -28,7 +28,7 @@ class ContractQuery extends ActiveQuery
         return $this->innerJoinWith([
             'city.state' => function($query) use($stateId){
                 if($stateId)
-                    $query->where(['state.id' => $stateId]);
+                    $query->andWhere(['state.id' => $stateId]);
             }
         ]);
     }
@@ -38,12 +38,12 @@ class ContractQuery extends ActiveQuery
             'city.country' => function($query) use($countryId){
                 $query->from('country c1');
                 if($countryId)
-                    $query->where(['c1.id' => $countryId]);
+                    $query->andWhere(['c1.id' => $countryId]);
             },
             'city.state.country' => function($query) use($countryId){
                 $query->from('country c2');
                 if($countryId)
-                    $query->where(['c2.id' => $countryId]);
+                    $query->andWhere(['c2.id' => $countryId]);
             }
         ]);
     }
@@ -54,7 +54,7 @@ class ContractQuery extends ActiveQuery
     public function favorite($contractId){
         return $this->innerJoinWith([
             'favoriteCompanies' => function($query) use($contractId){
-                $query->where(['contract_id' => $contractId]);
+                $query->andWhere(['contract_id' => $contractId]);
             }
         ]);
     }

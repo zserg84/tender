@@ -20,7 +20,7 @@ $form = ActiveForm::begin(
         'enableAjaxValidation' => true,
 //        'validateOnChange' => false,
 //        'validateOnBlur' => false,
-//        'enableClientValidation' => true,
+        'enableClientValidation' => false,
         'options' => [
             'id' => 'order_create_form',
             'enctype' => 'multipart/form-data',
@@ -72,7 +72,10 @@ if($orderId)
                             <div class="col-sm-12">
                                 <input type="hidden" name="order-direction-spec-main[]" value="<?=$direction->id?>" />
                                 <input type="hidden" name="order-direction-spec-second[]" value="<?=$subdirection->id?>" />
-                                <p class="spec-string"><?=$direction->getName()?>, <?=$subdirection->getName()?> <span class="close-ico"></span>
+                                <p class="spec-string"><?=$direction->getName()?>, <?=$subdirection->getName()?>
+                                    <?if(!$disabled):?>
+                                    <span class="close-ico"></span>
+                                    <?endif?>
                                 </p>
                             </div>
                         </div>
@@ -122,6 +125,9 @@ if($orderId)
                     </div>
                     <?endif?>
                 </div>
+                <?=$form->field($model, 'subdirection_ids')->hiddenInput([
+                    'disabled' => 'disabled'
+                ])->label(false)?>
             </div>
         </div>
 
@@ -274,8 +280,8 @@ if($orderId)
         </div>
 
         <?
-        $statuses = [Order::STATUS_OPEN => Order::STATUS_OPEN, Order::STATUS_PREPARED => Order::STATUS_PREPARED];
         if(!$order->isNewRecord){
+            $statuses = [];
             if($order->status == Order::STATUS_OPEN){
                 $statuses = [Order::STATUS_OPEN => Order::STATUS_OPEN,
                     Order::STATUS_TEMP_REMOVE => Order::STATUS_TEMP_REMOVE,
@@ -283,25 +289,58 @@ if($orderId)
                 ];
             }
             elseif($order->status == Order::STATUS_PREPARED){
-                $statuses = [Order::STATUS_OPEN => Order::STATUS_OPEN, Order::STATUS_PREPARED => Order::STATUS_PREPARED];
-            }
-            elseif($order->status == Order::STATUS_WORK){
-                $statuses = [Order::STATUS_WORK => Order::STATUS_WORK,
+                $statuses = [
+                    Order::STATUS_OPEN => Order::STATUS_OPEN,
+                    Order::STATUS_PREPARED => Order::STATUS_PREPARED,
                     Order::STATUS_CLOSE => Order::STATUS_CLOSE,
-                    Order::STATUS_FINISHED => Order::STATUS_FINISHED
                 ];
             }
+            elseif($order->status == Order::STATUS_WORK){
+                if($contract->isCustomer()){
+                    $statuses = [
+                        Order::STATUS_WORK => Order::STATUS_WORK,
+                        Order::STATUS_CLOSE => Order::STATUS_CLOSE,
+                    ];
+                }
+                elseif($contract->isPerformer()){
+                    $statuses = [
+                        Order::STATUS_WORK => Order::STATUS_WORK,
+                        Order::STATUS_REFUSE => Order::STATUS_REFUSE,
+                        Order::STATUS_DONE => Order::STATUS_DONE,
+                    ];
+                }
+            }
             elseif($order->status == Order::STATUS_TEMP_REMOVE){
-                $statuses = [Order::STATUS_OPEN => Order::STATUS_OPEN, Order::STATUS_TEMP_REMOVE => Order::STATUS_TEMP_REMOVE];
+                $statuses = [
+                    Order::STATUS_OPEN => Order::STATUS_OPEN,
+                    Order::STATUS_TEMP_REMOVE => Order::STATUS_TEMP_REMOVE,
+                    Order::STATUS_CLOSE => Order::STATUS_CLOSE,
+                ];
+            }
+            elseif($order->status == Order::STATUS_CLOSE){
+                $statuses = [
+                    Order::STATUS_CLOSE => Order::STATUS_CLOSE,
+                ];
+            }
+            elseif($order->status == Order::STATUS_REFUSE){
+                $statuses = [
+                    Order::STATUS_REFUSE => Order::STATUS_REFUSE,
+                ];
+            }
+            elseif($order->status == Order::STATUS_DONE){
+                $statuses = [
+                    Order::STATUS_DONE => Order::STATUS_DONE,
+                    Order::STATUS_FINISHED_ACCEPT => Order::STATUS_FINISHED_ACCEPT,
+                    Order::STATUS_FINISHED_FAIL => Order::STATUS_FINISHED_FAIL,
+                ];
             }
             else{
-                $statuses[Order::STATUS_CLOSE] = Order::STATUS_CLOSE;
-                $statuses[Order::STATUS_TEMP_REMOVE] = Order::STATUS_TEMP_REMOVE;
-                $statuses[Order::STATUS_DONE] = Order::STATUS_DONE;
-                $statuses[Order::STATUS_FINISHED] = Order::STATUS_FINISHED;
+                $statuses[$order->status] = $order->status;
             }
-
         }
+        else
+            $statuses = [Order::STATUS_OPEN => Order::STATUS_OPEN, Order::STATUS_PREPARED => Order::STATUS_PREPARED];
+
         $statusesArray = [];
         foreach($statuses as $k=>$status){
             $statuses[$k] = Order::getStatus($status);

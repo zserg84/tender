@@ -18,7 +18,7 @@ class UpdateButton extends Button
 
     public function init()
     {
-        $this->button = Html::a(ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_CUSTOMER_PROFILE'), "javascript:void(0)", [
+        $this->button = Html::a(ContractModule::t('GUEST_INTERFACE', 'VIEW_ELEMENT_TAPE_OF_ORDERS_BUTTON_BROWSING'), "javascript:void(0)", [
             'class' => 'order_update_link'
         ]);
 

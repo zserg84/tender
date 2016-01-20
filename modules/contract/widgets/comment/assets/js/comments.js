@@ -103,6 +103,41 @@
             }
         });
     });
+    $(document).on('submit', '[data-comment-action="update"]', function (evt) {
+        evt.preventDefault();
+
+        var $this = $(this);
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: $(this).serialize(),
+            beforeSend: function (xhr, settings) {
+                $this.find('[type="submit"]').attr('disabled', true);
+            },
+            complete: function (xhr, status) {
+                $this.find('[type="submit"]').attr('disabled', false);
+            },
+            error: function (xhr, status, error) {
+                $this.find('[type="submit"]').attr('disabled', false);
+                if (xhr.status === 400) {
+                    response = xhr.responseJSON;
+                    response = jQuery.parseJSON(response);
+                    $.comments('updateErrors', $this, response.error);
+                } else {
+                    alert(error);
+                }
+            },
+            success: function (response, status, xhr) {
+                if(response){
+                    response = jQuery.parseJSON(response);
+                    if(response.output == 'success'){
+                        location.reload();
+                    }
+                }
+            }
+        });
+    });
 
     var methods = {
         init: function (options) {

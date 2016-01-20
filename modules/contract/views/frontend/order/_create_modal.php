@@ -16,6 +16,7 @@ Modal::begin([
 echo $this->render('_create_form', [
     'model' => $model,
     'order' => $order,
+    'contract' => $contract,
 ]);
 
 Modal::end();

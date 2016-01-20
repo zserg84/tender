@@ -10,7 +10,7 @@ namespace modules\site\controllers\frontend;
 
 
 use modules\lang\models\Lang;
-use modules\site\components\Controller;
+use yii\web\Controller;
 use modules\site\models\Article;
 use modules\site\models\ArticleLang;
 use yii\data\ActiveDataProvider;

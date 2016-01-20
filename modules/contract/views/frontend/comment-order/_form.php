@@ -5,26 +5,29 @@ use yii\helpers\Html;
 use yii\captcha\Captcha;
 use yii\helpers\Url;
 
-$model = new OrderCommentForm();
-$model->order_id = $order ? $order->id : null;
+$action = isset($action) ? $action : Url::toRoute(['create']);
+$actionType = isset($actionType) ? $actionType : 'create';
 
 $form = ActiveForm::begin(
     [
         'enableAjaxValidation' => false,
-        'action' => Url::toRoute(['create']),
+        'action' => $action,
         'options' => [
             'id' => 'comment_form',
-            'data-comment-action' => 'create',
+            'data-comment-action' => $actionType,
         ]
     ]
 );
+
+$model = isset($model) ? $model : new OrderCommentForm();
+$model->order_id = $order ? $order->id : null;
 
 echo $form->field($model, 'order_id')->hiddenInput()->label(false);
 ?>
 <div class="form-group" data-comment="form-group">
     <div class="row">
         <div class="col-sm-4">
-            <p><?=$model->getAttributeLabel('add_comment')?></p>
+            <p><?=$actionType == 'create' ? $model->getAttributeLabel('add_comment') : $model->getAttributeLabel('text')?></p>
         </div>
         <div class="col-sm-8">
             <?=$form->field($model, 'text')->textarea(['rows' => 5])->label(false)?>
@@ -33,7 +36,7 @@ echo $form->field($model, 'order_id')->hiddenInput()->label(false);
 
     <div class="row capcha">
         <div class="cols-sm-3">
-            <?=Html::submitButton($model->getAttributeLabel('add_comment'))?>
+            <?=Html::submitButton($actionType == 'create' ? $model->getAttributeLabel('add_comment') : $model->getAttributeLabel('edit_comment'))?>
         </div>
     </div>
 </div>

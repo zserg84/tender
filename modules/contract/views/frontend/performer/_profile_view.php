@@ -32,7 +32,7 @@ Modal::begin([
             })
         ">'.ContractModule::t('PERFORMER_INTERFACE', 'PROFILE_MODAL_OFFER_ORDER_BUTTON').'</button>
         <a href="'.Url::toRoute(['favorite-add', 'favoriteContractId'=>$model->id]).'">'.ContractModule::t('PERFORMER_INTERFACE', 'VIEW_ELEMENT_PERFORMER_FAVOURITES_BUTTON').'</a>
-        <button class="cancelBtn">'.ContractModule::t('PERFORMER_INTERFACE', 'PROFILE_MODAL_CANCEL_BUTTON').'</button>',
+        <button class="cancelBtnProfile">'.ContractModule::t('PERFORMER_INTERFACE', 'PROFILE_MODAL_CANCEL_BUTTON').'</button>',
     'clientOptions' => false,
     'options' => [
         'data-comment' => 'modal',
@@ -207,3 +207,10 @@ Modal::begin([
 </div>
 <?
 Modal::end();
+
+$this->registerJS('
+    $(document).on("click", ".cancelBtnProfile", function(){
+        $(this).closest(".modal").modal("hide");
+        $("#response-list-popup").show();
+    });
+');

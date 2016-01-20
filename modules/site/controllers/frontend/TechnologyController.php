@@ -11,7 +11,7 @@ namespace modules\site\controllers\frontend;
 
 use modules\direction\models\Direction;
 use modules\lang\models\Lang;
-use modules\site\components\Controller;
+use yii\web\Controller;
 use modules\site\models\Technology;
 use modules\site\models\TechnologyLang;
 use yii\base\Exception;

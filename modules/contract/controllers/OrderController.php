@@ -62,6 +62,7 @@ class OrderController extends Controller
         $contract = Contract::getCurContract();
         $dataProvider = $this->getOrderList([
             'contract_id' => $contract->id,
+            'myOrders' => true,
         ]);
         return $this->render('list',[
             'dataProvider' => $dataProvider,
@@ -74,9 +75,11 @@ class OrderController extends Controller
         if($errors = $this->edit($model, $order))
             return $errors;
 
+        $contract = Contract::getCurContract();
         return $this->renderAjax('create', [
             'model' => $model,
             'order' => $order,
+            'contract' => $contract,
         ]);
     }
 
@@ -96,20 +99,29 @@ class OrderController extends Controller
             return $errors;
 
         $model->orderId = $orderId;
+        $contract = Contract::getCurContract();
 
         return $this->renderAjax('_create_modal', [
             'model' => $model,
             'order' => $order,
+            'contract' => $contract,
         ]);
     }
 
-    public function edit($model, $order){//VarDumper::dump($_POST);exit;
-        if (Yii::$app->request->isAjax) {
-            if($errors = $this->performAjaxValidation($model))
+    public function edit($model, $order){
+        $orderDirectionsSecond = Yii::$app->getRequest()->post('order-direction-spec-second');
+        $orderDirectionsSecond = $orderDirectionsSecond ? $orderDirectionsSecond : [];
+        $model->subdirection_ids = $orderDirectionsSecond ? 1 : null;
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            $model->subdirection_ids = $orderDirectionsSecond ? 1 : null;
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $model->setScenario('ajax');
+            $errors = ActiveForm::validate($model);
+            if($errors) {
                 return $errors;
+            }
         }
-        else
-            if($model->load(\Yii::$app->getRequest()->post())){
+        elseif($model->load(\Yii::$app->getRequest()->post())){
             if($model->validate()){
                 $curContract = Contract::getCurContract();
                 $order->setAttributes($model->attributes);
@@ -121,9 +133,6 @@ class OrderController extends Controller
 
                     $order->image = UploadedFile::getInstance($model, 'file_model_id');
                     $order->saveFileModel();
-
-                    $orderDirectionsSecond = Yii::$app->getRequest()->post('order-direction-spec-second');
-                    $orderDirectionsSecond = $orderDirectionsSecond ? $orderDirectionsSecond : [];
                     $ohds = [];
                     foreach($orderDirectionsSecond as $i => $direction){
                         $orderDirection = OrderHasDirection::find()->where([
@@ -158,7 +167,7 @@ class OrderController extends Controller
                 }
             }
             else{
-//                return Json::encode(['output'=>'error', 'error' => ActiveForm::validate($model)]);
+                return Json::encode(['output'=>'error', 'error' => ActiveForm::validate($model)]);
             }
         }
         return false;
@@ -190,28 +199,25 @@ class OrderController extends Controller
         }
     }
 
-    protected function performAjaxValidation($model)
-    {
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $model->setScenario('ajax');
-            if(ActiveForm::validate($model))
-                return Json::encode(ActiveForm::validate($model));
-//            \Yii::$app->end();
-        }
-    }
-
     public function actionResponses($orderId){
         $responses = OfferToCustomer::find()->andWhere([
             'order_id' => $orderId,
         ])->all();
 
+        $order = Order::findOne($orderId);
+
         $buttons = [
             ['class' => ProfileButton::className(), 'params' =>[]],
-            ['class' => ChoosePerformer::className(), 'params' =>[
-                'orderId' => $orderId
-            ]],
         ];
+        if(in_array($order->status, [Order::STATUS_OPEN])){
+            $buttons[] = [
+                'class' => ChoosePerformer::className(), 'params' =>[
+                    'orderId' => $orderId,
+                    'pjaxContainerId' => 'pjax-order-modal-container'
+                ]
+            ];
+        }
+
 
         $contractOrder = ContractOrder::findOne([
             'order_id' => $orderId,

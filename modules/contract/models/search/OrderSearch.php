@@ -19,6 +19,8 @@ use yii\helpers\VarDumper;
 
 class OrderSearch extends FilterModelBase
 {
+    public $pageSize = 16;
+
     public $filter_specialization;
 
     public $filter_territory_country;
@@ -37,6 +39,8 @@ class OrderSearch extends FilterModelBase
     public $offersToMe;
 
     public $visibleStatuses = [];
+
+    public $myOrders;
 
     public function rules(){
         return [
@@ -111,6 +115,12 @@ class OrderSearch extends FilterModelBase
             ]);
         }
 
+        if(!$this->myOrders){
+            $query->andWhere([
+                '<>', 'order.status', [Order::STATUS_PREPARED, Order::STATUS_TEMP_REMOVE]
+            ]);
+        }
+
         $query->innerJoinWith([
             'contract.city' => function($query) {
               if($this->filter_territory_city)
@@ -150,6 +160,8 @@ class OrderSearch extends FilterModelBase
                 'order.status' => $this->visibleStatuses
             ]);
         }
+
+        $query->orderBy('order.id desc');
 
         $this->_dataProvider = new ActiveDataProvider([
             'query' => $query,
